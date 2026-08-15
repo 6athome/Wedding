@@ -50,6 +50,133 @@ nav.topnav a.active{color:var(--accent)}
     animation-duration: 0s !important;
   }
 
+
+/* ===== AI DESIGN SYSTEM V2 ===== */
+:root{
+  --ai-heading-font:"Playfair Display",Georgia,serif;
+  --ai-body-font:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
+  --ai-heading-scale:1;
+  --ai-letter-spacing:0em;
+  --ai-section-spacing:1;
+  --ai-radius:6px;
+  --ai-photo-radius:6px;
+}
+body{font-family:var(--ai-body-font)}
+body.ai-v2 h1,body.ai-v2 h2,body.ai-v2 h3{font-family:var(--ai-heading-font)}
+body.ai-v2 section{margin-bottom:calc(100px * var(--ai-section-spacing))}
+body.ai-v2 .hero h1{font-size:calc(32px * var(--ai-heading-scale));letter-spacing:var(--ai-letter-spacing)}
+body.ai-v2 h2{font-size:calc(28px * var(--ai-heading-scale));letter-spacing:var(--ai-letter-spacing)}
+body.ai-v2 .invite-card h3{font-size:calc(24px * var(--ai-heading-scale));letter-spacing:var(--ai-letter-spacing)}
+body.ai-v2 .hero-illustration{aspect-ratio:var(--ai-hero-ratio,16/10);max-height:none}
+body.ai-v2 .hero-illustration img{width:100%;height:100%;object-fit:var(--ai-hero-fit,cover)}
+body.ai-title-left .hero,body.ai-title-left .label{text-align:left!important}
+body.ai-title-center .hero,body.ai-title-center .label{text-align:center!important}
+body.ai-title-right .hero,body.ai-title-right .label{text-align:right!important}
+body.ai-button-pill .rsvp a,body.ai-button-pill .map-buttons a{border-radius:999px}
+body.ai-button-solid .rsvp a,body.ai-button-solid .map-buttons a{background:var(--accent);color:var(--card-bg);border-color:var(--accent)}
+body.ai-button-text .rsvp a,body.ai-button-text .map-buttons a{border:0;border-bottom:1px solid currentColor;border-radius:0;padding-left:3px;padding-right:3px;background:transparent}
+body.ai-card-bordered .invite-card{border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+body.ai-card-paper .invite-card{box-shadow:0 20px 55px rgba(40,25,18,.12);transform:rotate(-.35deg)}
+body.ai-card-floating .invite-card{box-shadow:0 24px 65px rgba(0,0,0,.2);border-radius:18px}
+body.ai-card-soft .invite-card{border-radius:24px;overflow:hidden}
+body.ai-decoration-fine_line section::before{content:"";display:block;width:48px;height:1px;background:var(--accent);margin:0 auto 28px;opacity:.8}
+body.ai-decoration-tiny_star section::before{content:"✦";display:block;color:var(--accent);font-size:18px;text-align:center;margin-bottom:22px}
+body.ai-decoration-dot section::before{content:"•";display:block;color:var(--accent);font-size:26px;text-align:center;margin-bottom:16px}
+body.ai-decoration-italic_label section::before{content:"with love";display:block;color:var(--accent);font-family:var(--ai-heading-font);font-style:italic;text-align:center;margin-bottom:22px}
+body.ai-decoration-ribbon section::before{content:"〰";display:block;color:var(--accent);font-size:28px;text-align:center;margin-bottom:18px}
+body.ai-decoration-stamp section::before{content:"WEDDING";display:block;width:max-content;margin:0 auto 24px;padding:5px 9px;border:1px solid var(--accent);color:var(--accent);font-size:9px;letter-spacing:.22em;transform:rotate(-3deg)}
+
+/* Preset: Bordeaux Editorial */
+body.ai-preset-bordeaux_editorial .container{max-width:780px}
+body.ai-preset-bordeaux_editorial .hero{padding-top:52px;margin-bottom:120px}
+body.ai-preset-bordeaux_editorial .hero h1{text-transform:uppercase}
+body.ai-preset-bordeaux_editorial .hero-illustration{width:calc(100% + 70px);margin-left:-35px}
+body.ai-preset-bordeaux_editorial .program-cards{gap:26px}
+body.ai-preset-bordeaux_editorial .program-card .circle{border-radius:2px;width:155px;height:190px}
+
+/* Preset: Vintage Letter */
+body.ai-preset-vintage_letter{background-image:linear-gradient(rgba(255,255,255,.025),rgba(255,255,255,.025))}
+body.ai-preset-vintage_letter .container{max-width:640px}
+body.ai-preset-vintage_letter .hero h1{text-transform:none;font-style:italic}
+body.ai-preset-vintage_letter .hero-illustration{width:88%;margin-left:auto;margin-right:auto;transform:rotate(-1deg);box-shadow:0 12px 34px rgba(0,0,0,.16)}
+body.ai-preset-vintage_letter .program-card:nth-child(1){transform:rotate(-4deg)}
+body.ai-preset-vintage_letter .program-card:nth-child(2){transform:translateY(18px) rotate(2deg)}
+body.ai-preset-vintage_letter .program-card:nth-child(3){transform:rotate(4deg)}
+body.ai-preset-vintage_letter .invite-card{padding:72px 48px;background:var(--card-bg);box-shadow:0 14px 40px rgba(0,0,0,.12)}
+body.ai-preset-vintage_letter .details li{border-bottom-style:solid}
+
+/* Preset: Playful Dinner */
+body.ai-preset-playful_dinner .container{max-width:760px}
+body.ai-preset-playful_dinner .hero{text-align:left!important}
+body.ai-preset-playful_dinner .hero h1{font-size:calc(40px * var(--ai-heading-scale));line-height:1.05}
+body.ai-preset-playful_dinner .hero-illustration{border-radius:28px;overflow:hidden;transform:rotate(.8deg)}
+body.ai-preset-playful_dinner .program-cards{align-items:flex-start}
+body.ai-preset-playful_dinner .program-card:nth-child(2){margin-top:36px}
+body.ai-preset-playful_dinner .program-card .circle{border-radius:28px}
+body.ai-preset-playful_dinner .invite-card{border-radius:28px}
+
+/* Preset: Minimal Gallery */
+body.ai-preset-minimal_gallery nav.topnav{box-shadow:none;background:color-mix(in srgb,var(--bg) 96%,transparent)}
+body.ai-preset-minimal_gallery .container{max-width:900px}
+body.ai-preset-minimal_gallery .hero{margin-bottom:60px}
+body.ai-preset-minimal_gallery .hero-illustration{width:100%;aspect-ratio:16/7}
+body.ai-preset-minimal_gallery .program-cards{gap:12px}
+body.ai-preset-minimal_gallery .program-card .circle{width:190px;height:125px;border-radius:0}
+body.ai-preset-minimal_gallery .invite-wrapper{max-width:620px;margin-left:auto;margin-right:auto}
+
+/* Preset: Romantic Classic */
+body.ai-preset-romantic_classic .container{max-width:680px}
+body.ai-preset-romantic_classic .hero h1{font-style:italic;text-transform:none}
+body.ai-preset-romantic_classic .hero-illustration{border-radius:999px 999px 18px 18px;overflow:hidden}
+body.ai-preset-romantic_classic .program-card .circle{border-radius:999px}
+body.ai-preset-romantic_classic .invite-card{border-radius:160px 160px 20px 20px;padding-top:90px}
+
+/* Preset: Modern Typography */
+body.ai-preset-modern_typography .container{max-width:880px}
+body.ai-preset-modern_typography .hero{text-align:left!important}
+body.ai-preset-modern_typography .hero h1{font-family:var(--ai-body-font);font-style:normal;font-weight:500;font-size:calc(50px * var(--ai-heading-scale));line-height:.98;letter-spacing:-.035em}
+body.ai-preset-modern_typography .hero .date-info,body.ai-preset-modern_typography .hero .tagline{text-align:left}
+body.ai-preset-modern_typography .hero-illustration{aspect-ratio:3/2}
+body.ai-preset-modern_typography .program-cards{justify-content:flex-start}
+body.ai-preset-modern_typography .invite-card h3{text-align:left;font-family:var(--ai-body-font);font-style:normal}
+
+/* Preset: Natural Warm */
+body.ai-preset-natural_warm .hero-illustration{border-radius:45% 45% 8px 8px;overflow:hidden;width:90%;margin-left:auto;margin-right:auto}
+body.ai-preset-natural_warm .program-card .circle{border-radius:48% 52% 46% 54%}
+body.ai-preset-natural_warm .invite-card{border-radius:18px}
+
+/* Preset: Dark Editorial */
+body.ai-preset-dark_editorial .container{max-width:820px}
+body.ai-preset-dark_editorial .hero{text-align:left!important}
+body.ai-preset-dark_editorial .hero h1{font-size:calc(44px * var(--ai-heading-scale));line-height:1}
+body.ai-preset-dark_editorial .hero-illustration{width:calc(100% + 90px);margin-left:-45px;aspect-ratio:16/9}
+body.ai-preset-dark_editorial .program-card .circle{border-radius:0}
+body.ai-preset-dark_editorial .invite-card{box-shadow:none;border:1px solid var(--accent)}
+
+@media(max-width:600px){
+ body.ai-v2 section{margin-bottom:calc(76px * var(--ai-section-spacing))}
+ body.ai-v2 .hero h1{font-size:calc(26px * var(--ai-heading-scale))}
+ body.ai-preset-bordeaux_editorial .hero-illustration,
+ body.ai-preset-dark_editorial .hero-illustration{width:calc(100% + 48px);margin-left:-24px}
+ body.ai-preset-bordeaux_editorial .program-card .circle{width:105px;height:135px}
+ body.ai-preset-minimal_gallery .program-card .circle{width:105px;height:82px}
+ body.ai-preset-playful_dinner .hero h1{font-size:calc(34px * var(--ai-heading-scale))}
+ body.ai-preset-modern_typography .hero h1{font-size:calc(39px * var(--ai-heading-scale))}
+}
+
+/* Location preset treatments */
+body.ai-preset-bordeaux_editorial .map-illustration{max-width:620px}
+body.ai-preset-vintage_letter .map-illustration{width:88%;transform:rotate(-1deg);box-shadow:0 12px 34px rgba(0,0,0,.12);background:white;padding:12px}
+body.ai-preset-playful_dinner .map-illustration img{border-radius:28px}
+body.ai-preset-minimal_gallery .map-illustration{max-width:680px;margin-bottom:90px}
+body.ai-preset-minimal_gallery .divider{width:100%;opacity:.45}
+body.ai-preset-romantic_classic .map-illustration img{border-radius:999px 999px 20px 20px}
+body.ai-preset-modern_typography .info-block{text-align:left}
+body.ai-preset-modern_typography .map-buttons{justify-content:flex-start}
+body.ai-preset-modern_typography .info-block h2{font-family:var(--ai-body-font);font-size:34px;letter-spacing:-.03em}
+body.ai-preset-dark_editorial .info-block{text-align:left}
+body.ai-preset-dark_editorial .map-buttons{justify-content:flex-start}
+
 </style>
 </head>
 <body>
@@ -146,12 +273,43 @@ function link(id,value){const el=document.getElementById(id); if(!el)return; if(
   }
 
 
+
+function applyDesignSystemV2(config){
+  if(!config||typeof config!=="object")return;
+  const root=document.documentElement,body=document.body;
+  const map={background:"--bg",background_alt:"--bg-alt",foreground:"--fg",muted:"--muted",accent:"--accent",card_background:"--card-bg",card_text:"--card-text"};
+  Object.entries(map).forEach(([k,v])=>{if(config[k])root.style.setProperty(v,config[k])});
+  const fonts={
+    playfair:'"Playfair Display",Georgia,serif',
+    cormorant:'"Cormorant Garamond",Georgia,serif',
+    myeongjo:'"Nanum Myeongjo","Noto Serif KR",Georgia,serif',
+    noto_sans:'"Noto Sans KR",-apple-system,BlinkMacSystemFont,sans-serif'
+  };
+  root.style.setProperty("--ai-heading-font",fonts[config.heading_font]||fonts.playfair);
+  root.style.setProperty("--ai-body-font",fonts[config.body_font]||fonts.noto_sans);
+  root.style.setProperty("--ai-heading-scale",String(config.heading_scale||1));
+  root.style.setProperty("--ai-letter-spacing",String(config.letter_spacing||0)+"em");
+  root.style.setProperty("--ai-section-spacing",String(config.section_spacing||1));
+  const ratios={portrait:"4 / 5",landscape:"3 / 2",square:"1 / 1",cinematic:"16 / 7"};
+  root.style.setProperty("--ai-hero-ratio",ratios[config.hero_ratio]||"16 / 10");
+  root.style.setProperty("--ai-hero-fit",config.hero_fit||"cover");
+  [...body.classList].filter(x=>x.startsWith("ai-")).forEach(x=>body.classList.remove(x));
+  body.classList.add("ai-v2");
+  body.classList.add("ai-preset-"+(config.preset||"bordeaux_editorial"));
+  body.classList.add("ai-title-"+(config.title_alignment||"center"));
+  body.classList.add("ai-button-"+(config.button_style||"outline"));
+  body.classList.add("ai-card-"+(config.card_style||"flat"));
+  body.classList.add("ai-decoration-"+(config.decoration||"none"));
+  body.dataset.momentLayout=config.moment_layout||"grid_3x2";
+}
+
+
 async function loadLocation(){
  const {data,error}=await db.from("weddings")
  .select("location_address,location_detail_1,location_detail_2,parking_line_1,parking_line_2,parking_detail,map_image_url,naver_map_url,kakao_map_url,design_config")
  .eq("slug",slug).eq("is_published",true).single();
  if(error){const e=document.getElementById("loadError");e.style.display="block";e.textContent="위치 정보를 불러오지 못했습니다.";return;}
- applyDesignConfig(data.design_config);
+ applyDesignSystemV2(data.design_config);
  text("address",data.location_address);
  text("locationDetail1",data.location_detail_1);
  text("locationDetail2",data.location_detail_2);
