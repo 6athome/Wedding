@@ -312,6 +312,80 @@
     .login-panel { margin-top: 45px; padding: 24px; }
     .topbar { align-items: flex-start; }
   }
+
+  .upload-box {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #faf7f2;
+  }
+
+  .upload-preview {
+    width: 96px;
+    height: 96px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #eee8e0;
+    border: 1px solid #ded4c9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .upload-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .upload-controls input[type="file"] {
+    padding: 9px;
+    background: white;
+  }
+
+  .upload-status {
+    margin-top: 7px;
+    font-size: 12px;
+    color: var(--muted);
+    min-height: 18px;
+  }
+
+  .upload-status.uploading { color: var(--warn); }
+  .upload-status.done { color: var(--ok); }
+  .upload-status.error { color: var(--danger); }
+
+  .url-toggle {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  .url-toggle summary {
+    cursor: pointer;
+    color: var(--muted);
+  }
+
+  .url-toggle input {
+    margin-top: 8px;
+  }
+
+  @media (max-width: 520px) {
+    .upload-box {
+      grid-template-columns: 78px 1fr;
+    }
+    .upload-preview {
+      width: 78px;
+      height: 78px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -444,22 +518,67 @@
 
           <h3 class="section-title">IMAGES & RSVP</h3>
           <div class="form-grid">
+
             <div class="field full">
-              <label for="heroImage">Hero 이미지 URL</label>
-              <input id="heroImage" placeholder="https://.../main.jpg 또는 images/hannam-bg.jpg">
+              <label>Hero 이미지</label>
+              <div class="upload-box">
+                <div class="upload-preview" id="heroPreview">미리보기</div>
+                <div class="upload-controls">
+                  <input id="heroFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+                  <div class="upload-status" id="heroStatus">사진을 선택하면 저장 시 자동 업로드됩니다.</div>
+                  <details class="url-toggle">
+                    <summary>기존 URL 직접 입력</summary>
+                    <input id="heroImage" placeholder="https://... 또는 images/hannam-bg.jpg">
+                  </details>
+                </div>
+              </div>
             </div>
+
             <div class="field full">
-              <label for="spaceImage">Space 이미지 URL</label>
-              <input id="spaceImage">
+              <label>Space 이미지</label>
+              <div class="upload-box">
+                <div class="upload-preview" id="spacePreview">미리보기</div>
+                <div class="upload-controls">
+                  <input id="spaceFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+                  <div class="upload-status" id="spaceStatus">사진을 선택하면 저장 시 자동 업로드됩니다.</div>
+                  <details class="url-toggle">
+                    <summary>기존 URL 직접 입력</summary>
+                    <input id="spaceImage">
+                  </details>
+                </div>
+              </div>
             </div>
+
             <div class="field full">
-              <label for="diningImage">Dining 이미지 URL</label>
-              <input id="diningImage">
+              <label>Dining 이미지</label>
+              <div class="upload-box">
+                <div class="upload-preview" id="diningPreview">미리보기</div>
+                <div class="upload-controls">
+                  <input id="diningFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+                  <div class="upload-status" id="diningStatus">사진을 선택하면 저장 시 자동 업로드됩니다.</div>
+                  <details class="url-toggle">
+                    <summary>기존 URL 직접 입력</summary>
+                    <input id="diningImage">
+                  </details>
+                </div>
+              </div>
             </div>
+
             <div class="field full">
-              <label for="dessertImage">Dessert 이미지 URL</label>
-              <input id="dessertImage">
+              <label>Dessert 이미지</label>
+              <div class="upload-box">
+                <div class="upload-preview" id="dessertPreview">미리보기</div>
+                <div class="upload-controls">
+                  <input id="dessertFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+                  <div class="upload-status" id="dessertStatus">사진을 선택하면 저장 시 자동 업로드됩니다.</div>
+                  <details class="url-toggle">
+                    <summary>기존 URL 직접 입력</summary>
+                    <input id="dessertImage">
+                  </details>
+                </div>
+              </div>
             </div>
+
             <div class="field full">
               <label for="rsvpUrl">RSVP URL</label>
               <input id="rsvpUrl" placeholder="https://docs.google.com/forms/...">
@@ -483,6 +602,8 @@
   const SUPABASE_URL = "https://gfpdjxdoxjonramxrlgi.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_NUhd1LmMj09rtA5RMcgAxA_cMKIuZB6";
   const SITE_BASE = "https://6athome.github.io/Wedding/";
+  const STORAGE_BUCKET = "wedding-images";
+  const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 
   const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
@@ -531,6 +652,126 @@
     $("slug").value = normalizeSlug($("slug").value);
     try { $("slug").setSelectionRange(start, start); } catch (_) {}
     setPreviewLink();
+  });
+
+
+  const imageFields = [
+    { fileId: "heroFile", urlId: "heroImage", previewId: "heroPreview", statusId: "heroStatus", kind: "hero" },
+    { fileId: "spaceFile", urlId: "spaceImage", previewId: "spacePreview", statusId: "spaceStatus", kind: "space" },
+    { fileId: "diningFile", urlId: "diningImage", previewId: "diningPreview", statusId: "diningStatus", kind: "dining" },
+    { fileId: "dessertFile", urlId: "dessertImage", previewId: "dessertPreview", statusId: "dessertStatus", kind: "dessert" }
+  ];
+
+  function setImagePreview(previewId, url) {
+    const box = $(previewId);
+    if (!box) return;
+    if (!url) {
+      box.innerHTML = "미리보기";
+      return;
+    }
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = "";
+    img.onerror = () => { box.innerHTML = "미리보기 실패"; };
+    box.replaceChildren(img);
+  }
+
+  function setUploadStatus(statusId, message, type = "") {
+    const el = $(statusId);
+    if (!el) return;
+    el.textContent = message;
+    el.className = "upload-status" + (type ? " " + type : "");
+  }
+
+  function safeExtension(file) {
+    const mimeMap = {
+      "image/jpeg": "jpg",
+      "image/png": "png",
+      "image/webp": "webp",
+      "image/gif": "gif"
+    };
+    return mimeMap[file.type] || "jpg";
+  }
+
+  function validateImage(file) {
+    if (!file) return;
+    const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!allowed.includes(file.type)) {
+      throw new Error("JPG, PNG, WEBP, GIF 이미지만 업로드할 수 있습니다.");
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      throw new Error("이미지는 10MB 이하만 업로드할 수 있습니다.");
+    }
+  }
+
+  async function uploadImageForWedding(slug, field) {
+    const input = $(field.fileId);
+    const file = input.files?.[0];
+    if (!file) return $(field.urlId).value.trim() || null;
+
+    validateImage(file);
+    setUploadStatus(field.statusId, "업로드 중...", "uploading");
+
+    const extension = safeExtension(file);
+    const filePath = `${slug}/${field.kind}-${Date.now()}-${crypto.randomUUID()}.${extension}`;
+
+    const { error: uploadError } = await db.storage
+      .from(STORAGE_BUCKET)
+      .upload(filePath, file, {
+        cacheControl: "3600",
+        contentType: file.type,
+        upsert: false
+      });
+
+    if (uploadError) {
+      setUploadStatus(field.statusId, "업로드 실패: " + uploadError.message, "error");
+      throw uploadError;
+    }
+
+    const { data } = db.storage
+      .from(STORAGE_BUCKET)
+      .getPublicUrl(filePath);
+
+    const publicUrl = data?.publicUrl;
+    if (!publicUrl) {
+      const error = new Error("공개 URL을 생성하지 못했습니다.");
+      setUploadStatus(field.statusId, error.message, "error");
+      throw error;
+    }
+
+    $(field.urlId).value = publicUrl;
+    setImagePreview(field.previewId, publicUrl);
+    setUploadStatus(field.statusId, "업로드 완료", "done");
+    input.value = "";
+    return publicUrl;
+  }
+
+  async function uploadSelectedImages(slug) {
+    const urls = {};
+    for (const field of imageFields) {
+      urls[field.kind] = await uploadImageForWedding(slug, field);
+    }
+    return urls;
+  }
+
+  imageFields.forEach(field => {
+    $(field.fileId).addEventListener("change", () => {
+      const file = $(field.fileId).files?.[0];
+      if (!file) return;
+      try {
+        validateImage(file);
+        const localUrl = URL.createObjectURL(file);
+        setImagePreview(field.previewId, localUrl);
+        setUploadStatus(field.statusId, `${file.name} · 저장 시 업로드`, "");
+      } catch (error) {
+        $(field.fileId).value = "";
+        setUploadStatus(field.statusId, error.message, "error");
+      }
+    });
+
+    $(field.urlId).addEventListener("change", () => {
+      setImagePreview(field.previewId, $(field.urlId).value.trim());
+    });
   });
 
   async function checkAdmin() {
@@ -691,6 +932,15 @@
     val("dessertImage", w.dessert_image_url);
     val("rsvpUrl", w.rsvp_url);
 
+    setImagePreview("heroPreview", w.hero_image_url);
+    setImagePreview("spacePreview", w.space_image_url);
+    setImagePreview("diningPreview", w.dining_image_url);
+    setImagePreview("dessertPreview", w.dessert_image_url);
+    imageFields.forEach(field => {
+      $(field.fileId).value = "";
+      setUploadStatus(field.statusId, "새 사진을 선택하면 저장 시 교체됩니다.");
+    });
+
     $("editorHeading").textContent =
       [w.groom_name, w.bride_name].filter(Boolean).join(" · ") || "청첩장 수정";
     $("editorSub").textContent = customerUrl(w.slug);
@@ -703,6 +953,11 @@
     form.reset();
     $("recordId").value = "";
     $("pageTitle").value = "초대합니다";
+    imageFields.forEach(field => {
+      $(field.fileId).value = "";
+      setImagePreview(field.previewId, "");
+      setUploadStatus(field.statusId, "사진을 선택하면 저장 시 자동 업로드됩니다.");
+    });
     $("editorHeading").textContent = "새 청첩장";
     $("editorSub").textContent = "고객 정보를 입력하면 하나의 사이트에서 개별 URL이 생성됩니다.";
     $("unpublishBtn").style.display = "none";
@@ -749,6 +1004,21 @@
     }
 
     $("saveBtn").disabled = true;
+    $("saveBtn").textContent = "사진 업로드 중...";
+
+    try {
+      const uploaded = await uploadSelectedImages(payload.slug);
+      payload.hero_image_url = uploaded.hero;
+      payload.space_image_url = uploaded.space;
+      payload.dining_image_url = uploaded.dining;
+      payload.dessert_image_url = uploaded.dessert;
+    } catch (error) {
+      $("saveBtn").disabled = false;
+      $("saveBtn").textContent = "저장";
+      notice($("formNotice"), "사진 업로드 실패: " + error.message, "error");
+      return;
+    }
+
     $("saveBtn").textContent = "저장 중...";
 
     let result;
