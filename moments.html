@@ -204,6 +204,31 @@ body[data-moment-layout="asymmetric_grid"] .gallery-item:nth-child(3n+1) .photo-
  body[data-moment-layout="film_strip"] .gallery-item{flex-basis:68%}
 }
 
+
+/* DESIGN FAMILY V2.1 — Moments */
+body.family-photo_frame .gallery{grid-template-columns:repeat(2,1fr);gap:14px;background:#f8f7f3;padding:18px;border-radius:22px}
+body.family-photo_frame .gallery-item{padding:8px 8px 34px;transform:none!important}
+body.family-photo_frame .gallery-item:nth-child(odd){border-radius:10px}
+body.family-doodle_wedding .gallery{grid-template-columns:repeat(2,1fr);gap:24px}
+body.family-doodle_wedding .gallery-item{padding:8px;border:3px solid #171717;box-shadow:none;transform:rotate(-1deg)!important}
+body.family-doodle_wedding .gallery-item:nth-child(even){transform:rotate(2deg)!important}
+body.family-kitsch_collage .gallery{grid-template-columns:1.3fr .7fr;grid-auto-rows:180px;gap:10px;background:#222;padding:10px}
+body.family-kitsch_collage .gallery-item{padding:0;transform:none!important;height:100%;box-shadow:none}
+body.family-kitsch_collage .gallery-item .photo-frame{height:100%;aspect-ratio:auto}
+body.family-kitsch_collage .gallery-item:nth-child(1),body.family-kitsch_collage .gallery-item:nth-child(5){grid-row:span 2}
+body.family-retro_romance{background:#181818;color:#f5ece8}
+body.family-retro_romance .gallery{grid-template-columns:repeat(2,1fr);gap:34px 22px}
+body.family-retro_romance .gallery-item{background:transparent;padding:12px;border:5px double #f4ece7;border-radius:48% 48% 38% 38% / 30% 30% 25% 25%;transform:none!important}
+body.family-retro_romance .gallery-item .photo-frame{border-radius:45% 45% 35% 35% / 28% 28% 24% 24%;overflow:hidden}
+body.family-paper_poetry .gallery{grid-template-columns:repeat(2,1fr);gap:34px 28px;padding:30px 10px}
+body.family-paper_poetry .gallery-item{padding:10px 10px 40px;background:#fff;box-shadow:0 8px 22px rgba(55,45,35,.12)}
+body.family-paper_poetry .gallery-item:nth-child(odd){transform:rotate(-3deg)!important}
+body.family-paper_poetry .gallery-item:nth-child(even){transform:rotate(2deg)!important;margin-top:28px}
+@media(max-width:600px){
+ body.family-kitsch_collage .gallery{grid-auto-rows:145px}
+ body.family-retro_romance .gallery{gap:22px 12px}
+}
+
 </style>
 </head>
 <body>
@@ -320,10 +345,18 @@ function applyDesignSystemV2(config){
 }
 
 
+
+function applyFamilyClassV21(config){
+  if(!config)return;
+  [...document.body.classList].filter(c=>c.startsWith("family-")).forEach(c=>document.body.classList.remove(c));
+  document.body.classList.add("family-"+(config.family||"photo_frame"));
+}
+
 async function loadGallery(){
   const {data,error}=await sdb.from("weddings").select("moment_images,design_config").eq("slug",slug).eq("is_published",true).single();
   if(error){ document.getElementById("loadError").style.display="block"; document.getElementById("loadError").textContent="갤러리를 불러오지 못했습니다."; return; }
   applyDesignSystemV2(data.design_config);
+  applyFamilyClassV21(data.design_config);
   const images=Array.isArray(data.moment_images)?data.moment_images.slice(0,6):[];
   const gallery=document.getElementById("gallery");
   gallery.innerHTML="";

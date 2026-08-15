@@ -21,6 +21,15 @@ label{display:block;font-size:13px;font-weight:500;margin-bottom:8px}textarea,in
 .theme-info{padding:15px}.theme-info strong{display:block;margin-bottom:5px}.theme-info p{font-size:12px;color:var(--muted);line-height:1.55;margin:0}.preset{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9b8e84;margin-top:8px}
 .bottom{display:none;text-align:center;margin-top:26px}.refine{max-width:700px;margin:15px auto 0;display:flex;gap:8px}.refine input{flex:1}.loading{text-align:center;padding:45px;color:var(--muted)}
 @media(max-width:840px){.themes{grid-template-columns:1fr;max-width:430px;margin:auto}.usage{width:100%;margin-left:0}.phone{aspect-ratio:9/14}.refine{flex-direction:column}}
+
+/* DESIGN FAMILY V2.1 PREVIEWS */
+.v21-preview{height:390px;overflow:hidden;position:relative}
+.v21-photo{background:#eee9df;padding:12px;height:100%}.v21-photo .film{background:white;border-radius:15px;padding:10px;height:100%}.v21-photo .shot{height:62%;overflow:hidden;border-radius:9px;background:#ddd}.v21-photo .shot img{width:100%;height:100%;object-fit:cover}.v21-photo .rail{display:flex;justify-content:space-between;font-size:7px;padding-top:7px}.v21-photo .caption{text-align:center;padding-top:24px}.v21-photo .caption strong{display:block;font-size:20px}
+.v21-doodle{background:#fffdf8;color:#111;height:100%;padding:18px;text-align:center}.v21-doodle .hand{font-family:"Comic Sans MS",cursive;font-size:23px;transform:rotate(-2deg)}.v21-doodle .poster{border:3px solid #111;margin:18px auto 0;padding:8px;width:78%;transform:rotate(1deg)}.v21-doodle .poster img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(1)}.v21-doodle .gb{display:flex;justify-content:space-between;font-family:"Comic Sans MS",cursive;font-size:15px}
+.v21-kitsch{height:100%;background:#222;position:relative;overflow:hidden}.v21-kitsch>img{width:100%;height:100%;object-fit:cover;filter:grayscale(.8)}.v21-kitsch .heart{position:absolute;left:9%;right:9%;bottom:8%;height:42%;background:#ff4774;clip-path:polygon(50% 100%,5% 42%,10% 16%,29% 5%,50% 22%,71% 5%,90% 16%,95% 42%);display:flex;align-items:center;justify-content:center;text-align:center;color:#111;padding:36px 20px 10px}.v21-kitsch .dots span{position:absolute;width:20px;height:20px;border-radius:50%;background:#ff4774;color:#111;font-size:8px;display:grid;place-items:center}.v21-kitsch .dots span:nth-child(1){left:8%;top:38%}.v21-kitsch .dots span:nth-child(2){right:12%;top:43%}.v21-kitsch .dots span:nth-child(3){left:28%;top:48%}
+.v21-retro{height:100%;background:#181818;color:#f5ece8;text-align:center;padding:22px}.v21-retro .script{font-family:"Cormorant Garamond",serif;font-style:italic;color:#e78aab;font-size:30px}.v21-retro .lace{border:6px double #f5ece8;width:72%;margin:22px auto 20px;padding:9px;border-radius:48% 48% 40% 40% / 28% 28% 33% 33%}.v21-retro .lace img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:45% 45% 37% 37% / 26% 26% 31% 31%}.v21-retro .small{font-size:9px;line-height:1.7}
+.v21-paper{height:100%;background:#f4f0e6;color:#4b463f;text-align:center;padding:20px}.v21-paper .inv{font-size:8px;letter-spacing:.3em}.v21-paper .polaroid{width:50%;margin:32px auto 24px;background:white;padding:7px 7px 23px;box-shadow:0 4px 15px rgba(0,0,0,.12);transform:rotate(-2deg);position:relative}.v21-paper .polaroid::before{content:"";position:absolute;width:45px;height:10px;background:rgba(202,181,140,.48);top:-5px;left:50%;transform:translateX(-50%) rotate(2deg)}.v21-paper .polaroid img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(.7)}.v21-paper .poem{font-size:9px;line-height:1.9}
+
 </style></head><body><div class="shell">
 <header class="header"><small>6ATHOME WEDDING</small><h1>AI Wedding Designer</h1><p>취향만 알려주세요.<br>같은 사진과 내용으로 서로 다른 세 가지 청첩장 방향을 제안합니다.</p></header>
 <div id="loading" class="panel loading">디자인 페이지를 준비하고 있습니다...</div>
@@ -46,16 +55,27 @@ async function call(action,p={}){let r=await fetch(F,{method:"POST",headers:{"Co
 document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{if(!b.classList.contains("active")&&document.querySelectorAll(".chip.active").length>=3)return;b.classList.toggle("active");moods=[...document.querySelectorAll(".chip.active")].map(x=>x.dataset.value)});
 function cols(d){return {grid_3x2:"repeat(3,1fr)",editorial_mosaic:"1.5fr .8fr 1fr",polaroid_stack:"repeat(3,1fr)",film_strip:"repeat(6,1fr)",large_pair:"repeat(2,1fr)",asymmetric_grid:"1.4fr .8fr"}[d.moment_layout]||"repeat(3,1fr)"}
 function renderMoments(d){let a=(preview.moment_images||[]).slice(0,6);while(a.length<6)a.push("");return a.map(u=>u?`<img src="${esc(u)}">`:`<div class="ph"></div>`).join("")}
+
+function mainPhoto(){return preview.hero_image_url||((preview.moment_images||[])[0])||""}
+function familyPreview(t){
+  const d=t.design||{}, family=d.family||"photo_frame", img=esc(mainPhoto());
+  const names=`${esc(preview.groom_name||"GROOM")} & ${esc(preview.bride_name||"BRIDE")}`;
+  const date=esc(preview.date_summary||"OUR WEDDING DAY");
+  if(family==="doodle_wedding") return `<div class="v21-preview v21-doodle"><div class="hand">Save the date!</div><div class="poster">${img?`<img src="${img}">`:""}<div class="gb"><span>GROOM</span><span>BRIDE</span></div></div><div class="hand" style="font-size:15px;margin-top:16px">${names}</div></div>`;
+  if(family==="kitsch_collage") return `<div class="v21-preview v21-kitsch">${img?`<img src="${img}">`:""}<div class="dots"><span>K</span><span>I</span><span>T</span></div><div class="heart"><div><strong>${names}</strong><br><span style="font-size:9px">${date}</span></div></div></div>`;
+  if(family==="retro_romance") return `<div class="v21-preview v21-retro"><div class="script">Save the Date</div><div class="lace">${img?`<img src="${img}">`:""}</div><div class="small">${names}<br>${date}<br><span style="color:#e78aab">YOU'RE INVITED TO OUR WEDDING</span></div></div>`;
+  if(family==="paper_poetry") return `<div class="v21-preview v21-paper"><div class="inv">INVITATION</div><div class="polaroid">${img?`<img src="${img}">`:""}</div><div class="poem"><strong>${names}</strong><br><br>좋은 친구 사이로 시작해<br>함께 내일을 만들어가려 합니다.</div></div>`;
+  return `<div class="v21-preview v21-photo"><div class="film"><div class="shot">${img?`<img src="${img}">`:""}</div><div class="rail"><span>${date}</span><span>▲13A</span></div><div class="caption"><span style="font-size:8px;letter-spacing:.18em">SAVE THE DATE</span><strong>${names}</strong></div></div></div>`;
+}
 function render(){
- let w=$("themes");w.innerHTML="";
- themes.forEach((t,i)=>{let d=t.design,c=document.createElement("article");c.className="theme"+(i===sel?" selected":"");c.onclick=()=>{sel=i;render();$("bottom").style.display="block"};
- let hero=preview.hero_image_url?`<img src="${esc(preview.hero_image_url)}">`:"";
- let h=d.hero_ratio==="cinematic"?39:d.hero_ratio==="landscape"?45:d.hero_ratio==="square"?50:56;
- c.innerHTML=`<div class="phone-wrap"><div class="phone" style="background:${d.background};color:${d.foreground};font-family:${ff(d.body_font)}">
- <div class="p-hero ${hero?"":"noimg"}" style="height:${h}%">${hero}<div class="p-copy" style="text-align:${d.title_alignment};align-items:${d.title_alignment==="center"?"center":d.title_alignment==="right"?"flex-end":"flex-start"}">
- <div class="p-kicker">SAVE THE DATE</div><h3 class="p-names" style="font-family:${ff(d.heading_font)};font-size:${25*d.heading_scale}px;letter-spacing:${d.letter_spacing}em">${esc(preview.groom_name||"GROOM")}<br>& ${esc(preview.bride_name||"BRIDE")}</h3><div class="p-date">${esc(preview.date_summary||"OUR WEDDING DAY")}</div></div></div>
- <div class="p-body" style="background:${d.background_alt};gap:${8*d.section_spacing}px"><div class="p-line" style="background:${d.accent}"></div><div class="p-text">We invite you to celebrate<br>our beginning together.</div><div class="p-moments" style="grid-template-columns:${cols(d)}">${renderMoments(d)}</div></div></div></div>
- <div class="theme-info"><strong>${esc(t.name)}</strong><p>${esc(t.description)}</p><div class="preset">${esc((d.preset||"").replaceAll("_"," "))}</div></div>`;w.appendChild(c)})
+  const w=$("themes");w.innerHTML="";
+  themes.forEach((t,i)=>{
+    const c=document.createElement("article");
+    c.className="theme"+(i===sel?" selected":"");
+    c.onclick=()=>{sel=i;render();$("bottom").style.display="block"};
+    c.innerHTML=`<div class="phone-wrap">${familyPreview(t)}</div><div class="theme-info"><strong>${esc(t.name)}</strong><p>${esc(t.description)}</p><div class="preset">${esc((t.design.family||"photo_frame").replaceAll("_"," "))}</div></div>`;
+    w.appendChild(c);
+  });
 }
 $("generateBtn").onclick=async()=>{let p=$("prompt").value.trim();if(p.length<10){note("원하는 분위기를 조금 더 자세히 적어주세요.","error");return}let b=$("generateBtn");b.disabled=true;b.textContent="AI가 세 가지 방향을 디자인 중...";try{let d=await call("generate",{prompt:p,moods,colors:$("colors").value.trim()});themes=d.themes||[];sel=-1;render();$("bottom").style.display="none";$("usage").textContent=`AI 생성권 ${d.used} / ${d.max}회 사용`;note("같은 콘텐츠로 서로 다른 세 가지 디자인을 만들었습니다.")}catch(e){note(e.message,"error")}finally{b.disabled=false;b.textContent="✨ 우리 취향으로 디자인하기"}};
 $("refineBtn").onclick=async()=>{if(sel<0)return;let q=$("refineInput").value.trim();if(q.length<2){note("어떻게 바꾸고 싶은지 짧게 적어주세요.","error");return}let b=$("refineBtn");b.disabled=true;b.textContent="조정 중...";try{let d=await call("refine",{request:q,current:themes[sel]});themes[sel]=d.theme;render();$("usage").textContent=`AI 생성권 ${d.used} / ${d.max}회 사용`;note("선택한 시안을 기준으로 미세조정했습니다.")}catch(e){note(e.message,"error")}finally{b.disabled=false;b.textContent="AI로 미세조정"}};

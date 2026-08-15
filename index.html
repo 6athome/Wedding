@@ -741,6 +741,95 @@ body.ai-preset-dark_editorial .invite-card{box-shadow:none;border:1px solid var(
  body.ai-preset-modern_typography .hero h1{font-size:calc(39px * var(--ai-heading-scale))}
 }
 
+
+/* ===========================
+   DESIGN FAMILY V2.1
+   Completely different DOMs
+=========================== */
+#family-root{display:none}
+body.family-active > .container{display:none}
+body.family-active #family-root{display:block}
+.family-page{min-height:100vh;background:var(--bg);color:var(--fg);font-family:var(--ai-body-font)}
+.family-inner{max-width:720px;margin:0 auto;padding:38px 22px 90px}
+.family-page img{max-width:100%;display:block}
+.family-kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase}
+.family-btn{display:inline-flex;text-decoration:none;color:inherit;border:1px solid currentColor;padding:11px 18px;font-size:12px;letter-spacing:.08em}
+.family-copy{white-space:pre-line;line-height:1.9}
+.family-details{list-style:none;padding:0;margin:0}
+.family-details li{display:flex;justify-content:space-between;gap:20px;padding:9px 0;border-bottom:1px solid color-mix(in srgb,currentColor 22%,transparent)}
+.family-navlinks{display:flex;justify-content:center;gap:18px;margin-top:58px;font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+.family-navlinks a{color:inherit;text-decoration:none}
+
+/* 01 PHOTO FRAME */
+.family-photo .film-shell{background:#f8f7f3;color:#1d1d1d;border-radius:24px;padding:18px;margin-top:12px}
+.family-photo .film-photo{position:relative;border-radius:13px;overflow:hidden;aspect-ratio:4/5;background:#ddd}
+.family-photo .film-photo img{width:100%;height:100%;object-fit:cover}
+.family-photo .film-rail{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.1em;padding:10px 2px 0}
+.family-photo .photo-title{text-align:center;padding:38px 8px 28px}
+.family-photo .photo-title h1{font-family:var(--ai-heading-font);font-size:32px;font-weight:400;margin:0 0 12px}
+.family-photo .photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:40px 0}
+.family-photo .photo-pair img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:10px}
+.family-photo .photo-copy{text-align:center;max-width:520px;margin:34px auto}
+.family-photo .photo-invite{background:var(--bg-alt);padding:30px;border-radius:14px;margin-top:45px}
+
+/* 02 DOODLE */
+.family-doodle{background:#fffdf8;color:#171717}
+.family-doodle .family-inner{max-width:660px}
+.family-doodle .doodle-head{text-align:center;padding:28px 0 24px}
+.family-doodle .doodle-head h1{font-family:"Comic Sans MS","Nanum Pen Script",cursive;font-size:42px;margin:0;transform:rotate(-1deg)}
+.family-doodle .doodle-poster{border:4px solid currentColor;padding:18px;margin:20px auto 45px;max-width:460px;position:relative;transform:rotate(.6deg)}
+.family-doodle .doodle-poster::before{content:"✦";position:absolute;left:-19px;top:20%;font-size:24px}
+.family-doodle .doodle-poster::after{content:"♡";position:absolute;right:-20px;bottom:18%;font-size:28px}
+.family-doodle .doodle-image{aspect-ratio:1/1;overflow:hidden;filter:grayscale(1) contrast(1.1)}
+.family-doodle .doodle-image img{width:100%;height:100%;object-fit:cover}
+.family-doodle .doodle-labels{display:flex;justify-content:space-between;font-family:"Comic Sans MS",cursive;font-size:25px;margin-top:12px}
+.family-doodle .doodle-copy{font-family:"Comic Sans MS","Nanum Pen Script",cursive;font-size:19px;text-align:center;max-width:520px;margin:0 auto 50px}
+.family-doodle .doodle-invite{border:3px dashed currentColor;padding:28px;transform:rotate(-.5deg)}
+.family-doodle .family-btn{border-width:2px;transform:rotate(1deg)}
+
+/* 03 KITSCH COLLAGE */
+.family-kitsch{background:var(--bg);color:var(--fg)}
+.family-kitsch .family-inner{max-width:760px;padding-left:14px;padding-right:14px}
+.family-kitsch .kitsch-hero{position:relative;min-height:610px;background:#222;overflow:hidden}
+.family-kitsch .kitsch-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.8) contrast(1.05)}
+.family-kitsch .kitsch-heart{position:absolute;width:78%;height:42%;left:11%;bottom:8%;background:var(--accent);clip-path:polygon(50% 100%,5% 45%,10% 18%,28% 5%,50% 22%,72% 5%,90% 18%,95% 45%);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--card-text);padding:50px 35px 20px}
+.family-kitsch .kitsch-heart h1{font-family:var(--ai-heading-font);font-size:27px;margin:0 0 10px}
+.family-kitsch .scatter{position:absolute;inset:0;pointer-events:none}
+.family-kitsch .scatter span{position:absolute;width:28px;height:28px;border-radius:50%;background:#ff4774;color:#181818;display:grid;place-items:center;font-size:11px;font-weight:700}
+.family-kitsch .scatter span:nth-child(1){left:8%;top:38%}.family-kitsch .scatter span:nth-child(2){left:18%;top:44%}.family-kitsch .scatter span:nth-child(3){right:12%;top:42%}.family-kitsch .scatter span:nth-child(4){right:25%;top:35%}.family-kitsch .scatter span:nth-child(5){left:28%;top:50%}.family-kitsch .scatter span:nth-child(6){right:33%;top:49%}
+.family-kitsch .kitsch-copy{background:var(--card-bg);color:var(--card-text);padding:34px 25px;margin-top:16px;transform:rotate(-1deg)}
+.family-kitsch .kitsch-program{display:grid;grid-template-columns:1.4fr .8fr;gap:10px;margin:18px 0}
+.family-kitsch .kitsch-program img{width:100%;height:230px;object-fit:cover}
+.family-kitsch .kitsch-program img:nth-child(2){height:180px;margin-top:50px}
+
+/* 04 RETRO ROMANCE */
+.family-retro{background:#181818;color:#f7f0eb}
+.family-retro .family-inner{max-width:650px}
+.family-retro .retro-title{text-align:center;padding:18px 0 38px}
+.family-retro .retro-title .script{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;color:#e78aab;font-size:54px;line-height:.9}
+.family-retro .retro-frame{margin:0 auto 38px;width:82%;padding:18px;border:8px double #f1eee8;border-radius:48% 48% 42% 42% / 28% 28% 35% 35%;position:relative}
+.family-retro .retro-frame::before,.family-retro .retro-frame::after{content:"✿ ❀ ✿";position:absolute;color:#f1eee8;font-size:20px;left:50%;transform:translateX(-50%)}
+.family-retro .retro-frame::before{top:-25px}.family-retro .retro-frame::after{bottom:-25px}
+.family-retro .retro-frame img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:45% 45% 38% 38% / 24% 24% 34% 34%}
+.family-retro .retro-copy{text-align:center;margin:55px auto;max-width:480px}
+.family-retro .retro-invite{text-align:center;border-top:1px solid #e78aab;border-bottom:1px solid #e78aab;padding:30px 12px}
+.family-retro .family-btn{color:#e78aab;border-color:#e78aab}
+
+/* 05 PAPER & POETRY */
+.family-paper{background:#f4f0e6;color:#4b463f}
+.family-paper .family-inner{max-width:640px}
+.family-paper .paper-top{text-align:center;padding:14px 0 45px;letter-spacing:.3em;font-size:12px}
+.family-paper .paper-polaroid{width:45%;min-width:180px;margin:0 auto 42px;background:#fff;padding:10px 10px 34px;box-shadow:0 5px 18px rgba(60,50,40,.12);transform:rotate(-1.4deg);position:relative}
+.family-paper .paper-polaroid::before{content:"";position:absolute;width:72px;height:18px;background:rgba(209,190,150,.45);top:-8px;left:50%;transform:translateX(-50%) rotate(2deg)}
+.family-paper .paper-polaroid img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(.75)}
+.family-paper .paper-copy{text-align:center;line-height:2.05;max-width:500px;margin:0 auto 60px}
+.family-paper .paper-envelope{background:#ebe4d5;padding:35px 28px;margin:20px 0 45px;position:relative;clip-path:polygon(0 8%,50% 0,100% 8%,100% 100%,0 100%)}
+.family-paper .paper-envelope::before{content:"happy wedding day";position:absolute;right:20px;top:12px;font-family:var(--ai-heading-font);font-style:italic;color:var(--accent);transform:rotate(4deg)}
+.family-paper .paper-program{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.family-paper .paper-program figure{margin:0;background:#fff;padding:8px 8px 26px;box-shadow:0 5px 14px rgba(0,0,0,.08)}
+.family-paper .paper-program figure:nth-child(2){transform:rotate(2deg);margin-top:28px}
+.family-paper .paper-program img{width:100%;aspect-ratio:1;object-fit:cover}
+
 </style>
 </head>
 <body data-wedding-loading="true">
@@ -755,6 +844,8 @@ body.ai-preset-dark_editorial .invite-card{box-shadow:none;border:1px solid var(
       <li><a href="#invitation">Invite</a></li>
     </ul>
   </nav>
+  <main id="family-root"></main>
+
 
   <div class="container">
 
@@ -1002,6 +1093,81 @@ function applyDesignSystemV2(config){
 }
 
 
+
+function familySafe(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
+function familyLines(v){return familySafe(v||"").replace(/\n/g,"<br>")}
+function familyDetails(data){
+  return `<ul class="family-details">
+    <li><span>DATE</span><span>${familySafe(data.date_detail||"")}</span></li>
+    <li><span>TIME</span><span>${familySafe(data.time_detail||"")}</span></li>
+    <li><span>PLACE</span><span>${familySafe(data.venue_name||"")}</span></li>
+  </ul>`;
+}
+function familyNav(slug){
+  return `<div class="family-navlinks">
+    <a href="moments.html?slug=${encodeURIComponent(slug)}">Moments</a>
+    <a href="location.html?slug=${encodeURIComponent(slug)}">Location</a>
+  </div>`;
+}
+function renderFamilyHome(data,slug){
+  const d=data.design_config||{}, family=d.family||"photo_frame";
+  const root=document.getElementById("family-root");
+  if(!root)return;
+  document.body.classList.add("family-active");
+  const hero=familySafe(data.hero_image_url||"images/hannam-bg.jpg");
+  const p1=familySafe(data.space_image_url||hero),p2=familySafe(data.dining_image_url||hero),p3=familySafe(data.dessert_image_url||hero);
+  const names=[data.groom_name,data.bride_name].filter(Boolean).join(" & ");
+  const rsvp=familySafe(data.rsvp_url||"#");
+  const message=familyLines(data.invite_message_1||"");
+  const intro=familyLines(data.intro_line||"");
+  const detail=familyDetails(data);
+
+  if(family==="doodle_wedding"){
+    root.innerHTML=`<div class="family-page family-doodle"><div class="family-inner">
+      <div class="doodle-head"><div class="family-kicker">SAVE THE DATE</div><h1>We are getting married!</h1></div>
+      <div class="doodle-poster"><div class="doodle-image"><img src="${hero}" alt=""></div><div class="doodle-labels"><span>GROOM</span><span>BRIDE</span></div></div>
+      <div class="doodle-copy">${intro}<br><br>${message}</div>
+      <div class="doodle-invite"><h2 style="text-align:center;font-family:var(--ai-heading-font)">${familySafe(names)}</h2>${detail}<p style="text-align:center;margin-top:22px"><a class="family-btn" href="${rsvp}" target="_blank">RSVP →</a></p></div>
+      ${familyNav(slug)}
+    </div></div>`;
+  } else if(family==="kitsch_collage"){
+    root.innerHTML=`<div class="family-page family-kitsch"><div class="family-inner">
+      <div class="kitsch-hero"><img src="${hero}" alt=""><div class="scatter"><span>K</span><span>I</span><span>T</span><span>S</span><span>C</span><span>H</span></div>
+      <div class="kitsch-heart"><div><div class="family-kicker">YOU'RE INVITED</div><h1>${familySafe(names)}</h1><div>${familySafe(data.date_summary||"")}</div></div></div></div>
+      <div class="kitsch-copy"><div class="family-kicker">OUR PARTY</div><p class="family-copy">${message}</p>${detail}<p><a class="family-btn" href="${rsvp}" target="_blank">RSVP</a></p></div>
+      <div class="kitsch-program"><img src="${p1}"><img src="${p2}"></div>
+      ${familyNav(slug)}
+    </div></div>`;
+  } else if(family==="retro_romance"){
+    root.innerHTML=`<div class="family-page family-retro"><div class="family-inner">
+      <div class="retro-title"><div class="script">Save the Date</div><div style="margin-top:18px">${familySafe(names)}</div></div>
+      <div class="retro-frame"><img src="${hero}" alt=""></div>
+      <div class="retro-copy"><div class="family-kicker" style="color:#e78aab">YOU'RE INVITED TO OUR WEDDING</div><p class="family-copy">${message}</p></div>
+      <div class="retro-invite">${detail}<p style="margin-top:24px"><a class="family-btn" href="${rsvp}" target="_blank">RSVP</a></p></div>
+      ${familyNav(slug)}
+    </div></div>`;
+  } else if(family==="paper_poetry"){
+    root.innerHTML=`<div class="family-page family-paper"><div class="family-inner">
+      <div class="paper-top">INVITATION</div>
+      <div class="paper-polaroid"><img src="${hero}" alt=""></div>
+      <div class="paper-copy"><div style="font-family:var(--ai-heading-font);font-size:25px;margin-bottom:28px">${familySafe(names)}</div>${intro}<br><br>${message}</div>
+      <div class="paper-envelope">${detail}<p style="margin-top:24px"><a class="family-btn" href="${rsvp}" target="_blank">RSVP</a></p></div>
+      <div class="paper-program"><figure><img src="${p1}"></figure><figure><img src="${p3}"></figure></div>
+      ${familyNav(slug)}
+    </div></div>`;
+  } else {
+    root.innerHTML=`<div class="family-page family-photo"><div class="family-inner">
+      <div class="film-shell"><div class="film-photo"><img src="${hero}" alt=""></div><div class="film-rail"><span>${familySafe(data.date_summary||"")}</span><span>▲ 13A</span></div></div>
+      <div class="photo-title"><div class="family-kicker">SAVE THE DATE</div><h1>${familySafe(names)}</h1><p>${familySafe(data.tagline||"")}</p></div>
+      <div class="photo-pair"><img src="${p1}"><img src="${p2}"></div>
+      <div class="photo-copy family-copy">${message}</div>
+      <div class="photo-invite">${detail}<p style="text-align:center;margin-top:24px"><a class="family-btn" href="${rsvp}" target="_blank">RSVP</a></p></div>
+      ${familyNav(slug)}
+    </div></div>`;
+  }
+}
+
+
     async function loadWedding() {
       const params = new URLSearchParams(window.location.search);
       const slug = (params.get("slug") || "jisoo").trim().toLowerCase();
@@ -1044,6 +1210,8 @@ function applyDesignSystemV2(config){
 
         const rsvp = document.getElementById("rsvp-link");
         if (rsvp && data.rsvp_url) rsvp.href = data.rsvp_url;
+
+        renderFamilyHome(data, slug);
 
         // Preserve the current wedding slug when moving to other pages.
         document.querySelectorAll('a[href="moments.html"], a[href="location.html"]').forEach(a => {
