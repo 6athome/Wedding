@@ -386,6 +386,63 @@
     }
   }
 
+
+  .multi-dropzone {
+    border: 1.5px dashed #cdbbad;
+    border-radius: 14px;
+    padding: 18px;
+    background: #faf7f2;
+    text-align: center;
+    transition: border-color .15s, background .15s;
+    cursor: pointer;
+  }
+  .multi-dropzone.dragover {
+    border-color: var(--accent);
+    background: #f3e8df;
+  }
+  .multi-dropzone strong { display:block; margin-bottom:6px; }
+  .multi-dropzone span { color:var(--muted); font-size:12px; }
+  .moment-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:14px;
+  }
+  .moment-slot {
+    aspect-ratio:1;
+    border-radius:10px;
+    overflow:hidden;
+    background:#eee8e0;
+    border:1px solid #ded4c9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    color:var(--muted);
+    font-size:12px;
+  }
+  .moment-slot img {
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .moment-slot .num {
+    position:absolute;
+    top:6px; left:6px;
+    width:22px; height:22px;
+    border-radius:50%;
+    background:rgba(255,255,255,.88);
+    color:#44352b;
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:700;
+  }
+  .moment-upload-status {
+    margin-top:9px;
+    font-size:12px;
+    color:var(--muted);
+  }
+  @media (max-width:520px) {
+    .moment-grid { grid-template-columns:repeat(2,1fr); }
+  }
+
 </style>
 </head>
 <body>
@@ -585,6 +642,71 @@
             </div>
           </div>
 
+
+          <h3 class="section-title">MOMENTS · GALLERY 6</h3>
+          <div class="field full">
+            <label>갤러리 사진 6장</label>
+            <div class="multi-dropzone" id="momentsDropzone">
+              <strong>사진 6장을 드래그하거나 클릭해서 선택</strong>
+              <span>선택 순서대로 1~6번에 배치됩니다 · JPG/PNG/WEBP/GIF · 각 10MB 이하</span>
+              <input id="momentsFiles" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden>
+            </div>
+            <div class="moment-grid" id="momentGrid"></div>
+            <div class="moment-upload-status" id="momentsStatus">기존 사진이 있으면 그대로 유지됩니다.</div>
+          </div>
+
+          <h3 class="section-title">LOCATION</h3>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="locationAddress">주소</label>
+              <input id="locationAddress" placeholder="서울 용산구 한남대로 150-10">
+            </div>
+            <div class="field full">
+              <label for="locationDetail1">위치 안내 1</label>
+              <input id="locationDetail1" placeholder="지하철 6호선 한강진역 2번 출구 도보 4분">
+            </div>
+            <div class="field full">
+              <label for="locationDetail2">위치 안내 2</label>
+              <input id="locationDetail2" placeholder="버스 서울시중부기술교육원/블루스퀘어역 도보 1분">
+            </div>
+            <div class="field">
+              <label for="naverMapUrl">네이버 지도 링크</label>
+              <input id="naverMapUrl" placeholder="https://map.naver.com/...">
+            </div>
+            <div class="field">
+              <label for="kakaoMapUrl">카카오맵 링크</label>
+              <input id="kakaoMapUrl" placeholder="https://map.kakao.com/...">
+            </div>
+
+            <div class="field full">
+              <label>약도 이미지</label>
+              <div class="upload-box">
+                <div class="upload-preview" id="mapPreview">미리보기</div>
+                <div class="upload-controls">
+                  <input id="mapFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+                  <div class="upload-status" id="mapStatus">약도를 선택하면 저장 시 자동 업로드됩니다.</div>
+                  <details class="url-toggle">
+                    <summary>기존 URL 직접 입력</summary>
+                    <input id="mapImage" placeholder="https://...">
+                  </details>
+                </div>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label for="parkingLine1">주차 안내 1</label>
+              <input id="parkingLine1" placeholder="볼보빌딩 / 블루스퀘어">
+            </div>
+            <div class="field full">
+              <label for="parkingLine2">주차 안내 2</label>
+              <input id="parkingLine2" placeholder="한강진공영 / 한남역공영">
+            </div>
+            <div class="field full">
+              <label for="parkingDetail">주차 상세 안내</label>
+              <textarea id="parkingDetail" placeholder="주말이라 공영주차장도 혼잡할 수 있습니다.&#10;너그러운 마음으로 양해 부탁드립니다."></textarea>
+            </div>
+          </div>
+
           <div class="actions">
             <button class="btn primary" type="submit" id="saveBtn">저장</button>
             <button class="btn" type="button" id="copyBtn">고객 URL 복사</button>
@@ -659,7 +781,8 @@
     { fileId: "heroFile", urlId: "heroImage", previewId: "heroPreview", statusId: "heroStatus", kind: "hero" },
     { fileId: "spaceFile", urlId: "spaceImage", previewId: "spacePreview", statusId: "spaceStatus", kind: "space" },
     { fileId: "diningFile", urlId: "diningImage", previewId: "diningPreview", statusId: "diningStatus", kind: "dining" },
-    { fileId: "dessertFile", urlId: "dessertImage", previewId: "dessertPreview", statusId: "dessertStatus", kind: "dessert" }
+    { fileId: "dessertFile", urlId: "dessertImage", previewId: "dessertPreview", statusId: "dessertStatus", kind: "dessert" },
+    { fileId: "mapFile", urlId: "mapImage", previewId: "mapPreview", statusId: "mapStatus", kind: "map" }
   ];
 
   function setImagePreview(previewId, url) {
@@ -773,6 +896,105 @@
       setImagePreview(field.previewId, $(field.urlId).value.trim());
     });
   });
+
+
+  let selectedMomentFiles = [];
+  let existingMomentImages = [];
+
+  const momentsInput = $("momentsFiles");
+  const momentsDropzone = $("momentsDropzone");
+
+  function renderMomentGrid(images = []) {
+    const grid = $("momentGrid");
+    grid.innerHTML = "";
+    for (let i = 0; i < 6; i++) {
+      const slot = document.createElement("div");
+      slot.className = "moment-slot";
+      const source = images[i];
+      if (source) {
+        const img = document.createElement("img");
+        img.src = source;
+        img.alt = "";
+        slot.appendChild(img);
+      } else {
+        slot.appendChild(document.createTextNode("사진 없음"));
+      }
+      const num = document.createElement("span");
+      num.className = "num";
+      num.textContent = i + 1;
+      slot.appendChild(num);
+      grid.appendChild(slot);
+    }
+  }
+
+  function acceptMomentFiles(fileList) {
+    const files = Array.from(fileList || []);
+    if (files.length !== 6) {
+      $("momentsStatus").textContent = "갤러리는 정확히 6장을 선택해 주세요.";
+      $("momentsStatus").style.color = "var(--danger)";
+      return;
+    }
+    try {
+      files.forEach(validateImage);
+    } catch (error) {
+      $("momentsStatus").textContent = error.message;
+      $("momentsStatus").style.color = "var(--danger)";
+      return;
+    }
+    selectedMomentFiles = files;
+    const localUrls = files.map(file => URL.createObjectURL(file));
+    renderMomentGrid(localUrls);
+    $("momentsStatus").textContent = "6장 선택 완료 · 저장 시 자동 업로드됩니다.";
+    $("momentsStatus").style.color = "var(--ok)";
+  }
+
+  momentsDropzone.addEventListener("click", () => momentsInput.click());
+  momentsInput.addEventListener("change", () => acceptMomentFiles(momentsInput.files));
+  momentsDropzone.addEventListener("dragover", e => {
+    e.preventDefault();
+    momentsDropzone.classList.add("dragover");
+  });
+  momentsDropzone.addEventListener("dragleave", () => momentsDropzone.classList.remove("dragover"));
+  momentsDropzone.addEventListener("drop", e => {
+    e.preventDefault();
+    momentsDropzone.classList.remove("dragover");
+    acceptMomentFiles(e.dataTransfer.files);
+  });
+
+  async function uploadMomentImages(slug) {
+    if (!selectedMomentFiles.length) return existingMomentImages;
+    $("momentsStatus").textContent = "갤러리 6장 업로드 중...";
+    $("momentsStatus").style.color = "var(--warn)";
+    const uploaded = [];
+
+    for (let i = 0; i < selectedMomentFiles.length; i++) {
+      const file = selectedMomentFiles[i];
+      const ext = safeExtension(file);
+      const path = `${slug}/moments/moment-${i + 1}-${Date.now()}-${crypto.randomUUID()}.${ext}`;
+      const { error } = await db.storage
+        .from(STORAGE_BUCKET)
+        .upload(path, file, {
+          cacheControl: "3600",
+          contentType: file.type,
+          upsert: false
+        });
+      if (error) throw error;
+
+      const { data } = db.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+      if (!data?.publicUrl) throw new Error(`갤러리 ${i + 1}번 공개 URL 생성 실패`);
+      uploaded.push(data.publicUrl);
+    }
+
+    $("momentsStatus").textContent = "갤러리 6장 업로드 완료";
+    $("momentsStatus").style.color = "var(--ok)";
+    selectedMomentFiles = [];
+    momentsInput.value = "";
+    existingMomentImages = uploaded;
+    renderMomentGrid(uploaded);
+    return uploaded;
+  }
+
+  renderMomentGrid([]);
 
   async function checkAdmin() {
     const { data: { user } } = await db.auth.getUser();
@@ -932,6 +1154,25 @@
     val("dessertImage", w.dessert_image_url);
     val("rsvpUrl", w.rsvp_url);
 
+    existingMomentImages = Array.isArray(w.moment_images) ? w.moment_images.slice(0, 6) : [];
+    selectedMomentFiles = [];
+    momentsInput.value = "";
+    renderMomentGrid(existingMomentImages);
+    $("momentsStatus").textContent = existingMomentImages.length === 6
+      ? "기존 갤러리 6장이 저장되어 있습니다."
+      : "새 사진 6장을 선택해 주세요.";
+    $("momentsStatus").style.color = "var(--muted)";
+
+    val("locationAddress", w.location_address);
+    val("locationDetail1", w.location_detail_1);
+    val("locationDetail2", w.location_detail_2);
+    val("naverMapUrl", w.naver_map_url);
+    val("kakaoMapUrl", w.kakao_map_url);
+    val("mapImage", w.map_image_url);
+    val("parkingLine1", w.parking_line_1);
+    val("parkingLine2", w.parking_line_2);
+    val("parkingDetail", w.parking_detail);
+
     setImagePreview("heroPreview", w.hero_image_url);
     setImagePreview("spacePreview", w.space_image_url);
     setImagePreview("diningPreview", w.dining_image_url);
@@ -958,6 +1199,12 @@
       setImagePreview(field.previewId, "");
       setUploadStatus(field.statusId, "사진을 선택하면 저장 시 자동 업로드됩니다.");
     });
+    selectedMomentFiles = [];
+    existingMomentImages = [];
+    momentsInput.value = "";
+    renderMomentGrid([]);
+    $("momentsStatus").textContent = "사진 6장을 선택하면 저장 시 자동 업로드됩니다.";
+    $("momentsStatus").style.color = "var(--muted)";
     $("editorHeading").textContent = "새 청첩장";
     $("editorSub").textContent = "고객 정보를 입력하면 하나의 사이트에서 개별 URL이 생성됩니다.";
     $("unpublishBtn").style.display = "none";
@@ -990,6 +1237,18 @@
       dining_image_url: $("diningImage").value.trim() || null,
       dessert_image_url: $("dessertImage").value.trim() || null,
       rsvp_url: $("rsvpUrl").value.trim() || null,
+
+      moment_images: existingMomentImages,
+      location_address: $("locationAddress").value.trim() || null,
+      location_detail_1: $("locationDetail1").value.trim() || null,
+      location_detail_2: $("locationDetail2").value.trim() || null,
+      naver_map_url: $("naverMapUrl").value.trim() || null,
+      kakao_map_url: $("kakaoMapUrl").value.trim() || null,
+      map_image_url: $("mapImage").value.trim() || null,
+      parking_line_1: $("parkingLine1").value.trim() || null,
+      parking_line_2: $("parkingLine2").value.trim() || null,
+      parking_detail: $("parkingDetail").value.trim() || null,
+
       updated_at: new Date().toISOString()
     };
   }
@@ -1004,7 +1263,7 @@
     }
 
     $("saveBtn").disabled = true;
-    $("saveBtn").textContent = "사진 업로드 중...";
+    $("saveBtn").textContent = "사진/갤러리 업로드 중...";
 
     try {
       const uploaded = await uploadSelectedImages(payload.slug);
@@ -1012,6 +1271,10 @@
       payload.space_image_url = uploaded.space;
       payload.dining_image_url = uploaded.dining;
       payload.dessert_image_url = uploaded.dessert;
+      payload.map_image_url = uploaded.map;
+
+      const moments = await uploadMomentImages(payload.slug);
+      payload.moment_images = moments;
     } catch (error) {
       $("saveBtn").disabled = false;
       $("saveBtn").textContent = "저장";
