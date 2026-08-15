@@ -448,6 +448,34 @@
   .ai-access-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
   .ai-access-url{flex:1;min-width:220px;background:white}
   .ai-usage{margin-top:8px;color:var(--muted);font-size:12px}
+
+  /* V4 account/contact editor */
+  .v4-account-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+  }
+  .v4-account-card{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    background:#faf7f2;
+  }
+  .v4-account-card h4{
+    margin:0 0 12px;
+    font-size:13px;
+    color:var(--accent);
+  }
+  .v4-mini-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+  }
+  .v4-mini-grid .full{grid-column:1/-1}
+  @media(max-width:720px){
+    .v4-account-grid{grid-template-columns:1fr}
+  }
+
 </style>
 </head>
 <body>
@@ -712,6 +740,74 @@
             </div>
           </div>
 
+
+
+          <h3 class="section-title">CONTACT & 마음 전하실 곳</h3>
+          <div class="form-grid">
+            <div class="field">
+              <label for="groomPhone">신랑 연락처</label>
+              <input id="groomPhone" placeholder="010-1234-5678">
+            </div>
+            <div class="field">
+              <label for="bridePhone">신부 연락처</label>
+              <input id="bridePhone" placeholder="010-1234-5678">
+            </div>
+          </div>
+
+          <div class="hint" style="margin:14px 0 12px;">
+            계좌 정보가 비어 있는 카드는 실제 청첩장에 표시되지 않습니다.
+          </div>
+
+          <div class="v4-account-grid">
+            <div class="v4-account-card">
+              <h4>신랑</h4>
+              <div class="v4-mini-grid">
+                <input id="groomAccName" placeholder="예금주">
+                <input id="groomAccBank" placeholder="은행">
+                <input class="full" id="groomAccNumber" placeholder="계좌번호">
+              </div>
+            </div>
+            <div class="v4-account-card">
+              <h4>신랑 아버지</h4>
+              <div class="v4-mini-grid">
+                <input id="groomFatherAccName" placeholder="예금주">
+                <input id="groomFatherAccBank" placeholder="은행">
+                <input class="full" id="groomFatherAccNumber" placeholder="계좌번호">
+              </div>
+            </div>
+            <div class="v4-account-card">
+              <h4>신랑 어머니</h4>
+              <div class="v4-mini-grid">
+                <input id="groomMotherAccName" placeholder="예금주">
+                <input id="groomMotherAccBank" placeholder="은행">
+                <input class="full" id="groomMotherAccNumber" placeholder="계좌번호">
+              </div>
+            </div>
+            <div class="v4-account-card">
+              <h4>신부</h4>
+              <div class="v4-mini-grid">
+                <input id="brideAccName" placeholder="예금주">
+                <input id="brideAccBank" placeholder="은행">
+                <input class="full" id="brideAccNumber" placeholder="계좌번호">
+              </div>
+            </div>
+            <div class="v4-account-card">
+              <h4>신부 아버지</h4>
+              <div class="v4-mini-grid">
+                <input id="brideFatherAccName" placeholder="예금주">
+                <input id="brideFatherAccBank" placeholder="은행">
+                <input class="full" id="brideFatherAccNumber" placeholder="계좌번호">
+              </div>
+            </div>
+            <div class="v4-account-card">
+              <h4>신부 어머니</h4>
+              <div class="v4-mini-grid">
+                <input id="brideMotherAccName" placeholder="예금주">
+                <input id="brideMotherAccBank" placeholder="은행">
+                <input class="full" id="brideMotherAccNumber" placeholder="계좌번호">
+              </div>
+            </div>
+          </div>
 
           <h3 class="section-title">AI DESIGN CUSTOMIZER</h3>
           <div class="ai-access-card">
@@ -1226,6 +1322,43 @@
     $(id).value = value ?? "";
   }
 
+
+  function normalizeAccounts(value) {
+    const base = { groom: [], bride: [] };
+    if (!value || typeof value !== "object") return base;
+    base.groom = Array.isArray(value.groom) ? value.groom : [];
+    base.bride = Array.isArray(value.bride) ? value.bride : [];
+    return base;
+  }
+
+  function accountValue(accounts, side, role, key) {
+    const row = (accounts[side] || []).find(item => item && item.role === role);
+    return row?.[key] || "";
+  }
+
+  function accountRow(role, label, nameId, bankId, numberId) {
+    const name = $(nameId).value.trim();
+    const bank = $(bankId).value.trim();
+    const number = $(numberId).value.trim();
+    if (!name && !bank && !number) return null;
+    return { role, label, name, bank, number };
+  }
+
+  function accountsFromForm() {
+    return {
+      groom: [
+        accountRow("groom","신랑","groomAccName","groomAccBank","groomAccNumber"),
+        accountRow("father","신랑 아버지","groomFatherAccName","groomFatherAccBank","groomFatherAccNumber"),
+        accountRow("mother","신랑 어머니","groomMotherAccName","groomMotherAccBank","groomMotherAccNumber")
+      ].filter(Boolean),
+      bride: [
+        accountRow("bride","신부","brideAccName","brideAccBank","brideAccNumber"),
+        accountRow("father","신부 아버지","brideFatherAccName","brideFatherAccBank","brideFatherAccNumber"),
+        accountRow("mother","신부 어머니","brideMotherAccName","brideMotherAccBank","brideMotherAccNumber")
+      ].filter(Boolean)
+    };
+  }
+
   function fillForm(w) {
     $("recordId").value = w.id || "";
     val("slug", w.slug);
@@ -1266,6 +1399,30 @@
     val("parkingLine1", w.parking_line_1);
     val("parkingLine2", w.parking_line_2);
     val("parkingDetail", w.parking_detail);
+
+    val("groomPhone", w.groom_phone);
+    val("bridePhone", w.bride_phone);
+
+    const accounts = normalizeAccounts(w.wedding_accounts);
+    val("groomAccName", accountValue(accounts,"groom","groom","name"));
+    val("groomAccBank", accountValue(accounts,"groom","groom","bank"));
+    val("groomAccNumber", accountValue(accounts,"groom","groom","number"));
+    val("groomFatherAccName", accountValue(accounts,"groom","father","name"));
+    val("groomFatherAccBank", accountValue(accounts,"groom","father","bank"));
+    val("groomFatherAccNumber", accountValue(accounts,"groom","father","number"));
+    val("groomMotherAccName", accountValue(accounts,"groom","mother","name"));
+    val("groomMotherAccBank", accountValue(accounts,"groom","mother","bank"));
+    val("groomMotherAccNumber", accountValue(accounts,"groom","mother","number"));
+
+    val("brideAccName", accountValue(accounts,"bride","bride","name"));
+    val("brideAccBank", accountValue(accounts,"bride","bride","bank"));
+    val("brideAccNumber", accountValue(accounts,"bride","bride","number"));
+    val("brideFatherAccName", accountValue(accounts,"bride","father","name"));
+    val("brideFatherAccBank", accountValue(accounts,"bride","father","bank"));
+    val("brideFatherAccNumber", accountValue(accounts,"bride","father","number"));
+    val("brideMotherAccName", accountValue(accounts,"bride","mother","name"));
+    val("brideMotherAccBank", accountValue(accounts,"bride","mother","bank"));
+    val("brideMotherAccNumber", accountValue(accounts,"bride","mother","number"));
 
     setImagePreview("heroPreview", w.hero_image_url);
     setImagePreview("spacePreview", w.space_image_url);
@@ -1345,6 +1502,10 @@
       parking_line_1: $("parkingLine1").value.trim() || null,
       parking_line_2: $("parkingLine2").value.trim() || null,
       parking_detail: $("parkingDetail").value.trim() || null,
+
+      groom_phone: $("groomPhone").value.trim() || null,
+      bride_phone: $("bridePhone").value.trim() || null,
+      wedding_accounts: accountsFromForm(),
 
       updated_at: new Date().toISOString()
     };

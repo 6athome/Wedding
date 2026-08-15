@@ -2,1271 +2,266 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="index,follow">
 <title>초대합니다</title>
-
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-
-<!--
-  Deployment target:
-  GitHub repo: 6athome/Wedding
-  GitHub Pages: https://6athome.github.io/Wedding/
-  Supabase-backed multi-wedding URL example:
-  https://6athome.github.io/Wedding/?slug=jisoo
--->
-
-<!-- 카톡/SMS 미리보기 (Open Graph) -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="초대합니다">
-<meta property="og:description" content="11월 7일 오후 5시 틸티드한남">
-<meta property="og:image" content="https://6athome.github.io/Wedding/images/main.jpeg">
-<meta property="og:url" content="https://6athome.github.io/Wedding/">
-<meta property="og:site_name" content="초대합니다">
-<meta property="og:locale" content="ko_KR">
-
-<!-- 트위터/X 미리보기 -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="초대합니다">
-<meta name="twitter:description" content="11월 7일 오후 5시 틸티드한남">
-<meta name="twitter:image" content="https://6athome.github.io/Wedding/images/main.jpeg">
-
-<meta name="description" content="11월 7일 오후 5시 틸티드한남">
-<link rel="canonical" href="https://6athome.github.io/Wedding/">
 <style>
-  :root {
-    --bg: #7d2a1f;
-    --bg-alt: #6a1f16;
-    --fg: #fff6ea;
-    --muted: #d4c0a8;
-    --line: #a04030;
-    --accent: #f0c56b;
-    --accent-soft: #e8a598;
-    --card-bg: #fffaf0;
-    --card-text: #3a2818;
-    --card-muted: #8a7452;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
-    background: var(--bg);
-    color: var(--fg);
-    line-height: 1.7;
-    font-weight: 300;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* Top Navigation */
-  nav.topnav {
-    position: sticky;
-    top: 0;
-    background: rgba(125, 42, 31, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 246, 234, 0.15);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-  }
-
-  nav.topnav ul {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 20px 32px;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    list-style: none;
-  }
-
-  nav.topnav a {
-    position: relative;
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    transition: color 0.2s ease;
-    padding: 4px 0;
-  }
-
-  nav.topnav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -4px;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.25s ease;
-  }
-
-  nav.topnav a:hover { color: var(--accent); }
-  nav.topnav a:hover::after { transform: scaleX(1); }
-  nav.topnav a.active { color: var(--accent); }
-  nav.topnav a.active::after { transform: scaleX(1); }
-
-  /* Photo — clean, no border */
-  .photo {
-    background: linear-gradient(135deg, #f5ead2, #e8d8b0);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  }
-
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 60px 32px;
-  }
-
-  /* Hero */
-  .hero {
-    text-align: center;
-    margin-bottom: 100px;
-    padding-top: 20px;
-  }
-
-  /* Illustration at top of hero */
-  .hero-illustration {
-    width: 100%;
-    margin: 60px 0 20px;
-    overflow: hidden;
-  }
-
-  .hero-illustration img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .photo {
-    width: 100%;
-    max-width: 720px;
-    margin: 0 auto 40px;
-    overflow: hidden;
-    border-radius: 6px;
-    background: linear-gradient(135deg, #e8e4dc, #d4cec2);
-  }
-
-  .photo img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .hero .ribbon-decor {
-    display: block;
-    width: 74px;
-    height: auto;
-    margin: 0 auto 18px;
-    opacity: 0.9;
-  }
-
-  .hero h1 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 32px;
-    font-weight: 500;
-    letter-spacing: 0.28em;
-    margin-bottom: 16px;
-    color: var(--accent);
-    text-indent: 0.28em; /* compensate letter-spacing */
-  }
-
-  .hero .date-info {
-    color: var(--fg);
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    margin-bottom: 12px;
-  }
-
-  .hero .tagline {
-    color: var(--muted);
-    font-size: 17px;
-    letter-spacing: 0.02em;
-  }
-
-  .hero .divider-line {
-    width: 60px;
-    height: 1px;
-    background: var(--accent);
-    margin: 24px auto 0;
-    opacity: 0.5;
-  }
-
-  /* Program Cards — Circle icon style */
-  .program-cards {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 48px;
-    margin-bottom: 60px;
-  }
-
-  .program-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease;
-  }
-
-  .program-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .program-card .circle {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #f0e5cd, #d4c5a5);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--card-muted);
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  }
-
-  .program-card .circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .program-card .label-en {
-    margin-top: 18px;
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--accent);
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  }
-
-  @media (max-width: 500px) {
-    .program-cards { gap: 20px; }
-    .program-card .circle { width: 105px; height: 105px; }
-    .program-card .label-en { font-size: 11px; margin-top: 14px; letter-spacing: 0.2em; }
-  }
-
-  /* Program Card as Link */
-  a.program-card {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-  }
-
-  /* Modal (CSS-only using :target) */
-  .modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  .modal:target {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .modal-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-
-  .modal-content {
-    position: relative;
-    width: min(90vw, 500px);
-    aspect-ratio: 1;
-    background: white;
-    padding: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    transform: scale(0.95);
-    transition: transform 0.25s ease;
-  }
-
-  .modal:target .modal-content {
-    transform: scale(1);
-  }
-
-  .modal-content img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: -40px;
-    right: 0;
-    color: white;
-    font-size: 32px;
-    text-decoration: none;
-    line-height: 1;
-    z-index: 3;
-    transition: transform 0.2s ease;
-  }
-
-  .modal-close:hover {
-    transform: scale(1.2);
-  }
-
-  /* Form Modal — larger for Google Form iframe */
-  .modal.form-modal .modal-content {
-    width: min(95vw, 640px);
-    aspect-ratio: auto;
-    height: min(88vh, 780px);
-    padding: 0;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .modal.form-modal .modal-content iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-  }
-
-  .modal.form-modal .modal-close {
-    top: -44px;
-    right: 4px;
-  }
-
-  /* Section */
-  section {
-    margin-bottom: 100px;
-    scroll-margin-top: 80px;
-  }
-
-  .label {
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 24px;
-    font-weight: 500;
-  }
-
-  h2 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 28px;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    margin-bottom: 32px;
-    color: var(--fg);
-  }
-
-  p {
-    color: var(--fg);
-    margin-bottom: 20px;
-    font-size: 17px;
-  }
-
-  p.invite-text {
-    font-size: 14px;
-    line-height: 2;
-    color: var(--fg);
-    text-align: center;
-    letter-spacing: 0.02em;
-    margin-bottom: 32px;
-    opacity: 0.9;
-  }
-
-  p.invite-text:last-child {
-    margin-bottom: 0;
-  }
-
-  /* Envelope wrapper — shadow lives here so it follows the WHOLE paper */
-  .invite-wrapper {
-    position: relative;
-    margin: 148px 0 0;
-    perspective: 1600px;
-
-    /* Entrance state */
-    opacity: 0;
-    transform: translateY(60px);
-    transition:
-      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-      filter 0.4s ease;
-
-    /* One unified drop-shadow follows the combined outline (rectangle → pentagon) */
-    filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.3))
-            drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
-  }
-
-  .invite-wrapper.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .invite-wrapper:hover {
-    filter: drop-shadow(0 24px 34px rgba(0, 0, 0, 0.38))
-            drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
-  }
-
-  /* Letter body — rectangle, no border/shadow of its own */
-  .invite-card {
-    position: relative;
-    padding: 60px 40px 56px;
-    background: var(--card-bg);
-    color: var(--card-text);
-  }
-
-  /* Hide old ∨ lines / shading */
-  .invite-card::before,
-  .invite-card::after {
-    content: none;
-  }
-
-  /* Flap = the pentagon's top pointed portion.
-     Same color as body, no separate shadow — feels like one piece of paper.
-     Initial: rotated 180° (folded DOWN inside body, hiding content).
-     Animated: rotateX(0) (folded UP → completes the pentagon). */
-  .invite-flap {
-    position: absolute;
-    top: -100px;
-    left: 0;
-    right: 0;
-    height: 100px;
-    background: var(--card-bg);
-    clip-path: polygon(50% 0%, 100% 100%, 0 100%);
-    transform-origin: bottom center;
-    transform: rotateX(180deg);
-    transition: transform 1.5s cubic-bezier(0.72, 0.02, 0.28, 1) 0.9s;
-    z-index: 2;
-  }
-
-  .invite-wrapper.animate-in .invite-flap {
-    transform: rotateX(0deg);
-  }
-
-  /* Envelope flap ∨ (two soft diagonal lines meeting at center) */
-  .invite-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 110px;
-    background:
-      linear-gradient(to bottom right,
-        transparent calc(100% - 0.0px),
-        #13110e calc(0% - 0.0px),
-        #d8c8a8 calc(50% + 0.6px),
-        transparent calc(50% + 0.6px))
-      top left / 50% 100% no-repeat,
-      linear-gradient(to bottom left,
-        transparent calc(100% - 0.6px),
-        #d8c8a8 calc(50% - 0.6px),
-        #d8c8a8 calc(50% + 0.6px),
-        transparent calc(50% + 0.6px))
-      top right / 50% 100% no-repeat;
-    pointer-events: none;
-  }
-
-  /* Subtle shading under the flap for paper depth */
-  .invite-card::after {
-    content: "";
-    position: absolute;
-    top: 110px;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.025), transparent);
-    pointer-events: none;
-  }
-
-  .invite-card h3 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 24px;
-    font-weight: 400;
-    font-style: italic;
-    margin-top: 8px;
-    margin-bottom: 32px;
-    text-align: center;
-    letter-spacing: 0.02em;
-    color: #9a2f1e;
-  }
-
-  .details {
-    list-style: none;
-  }
-
-  .details li {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px 0;
-    border-bottom: 1px dashed  #d8c8a8;
-    font-size: 15px;
-  }
-
-  .details li:last-child { border-bottom: none; }
-
-  .details .key {
-    color: var(--card-muted);
-    letter-spacing: 0.05em;
-    font-family: "Playfair Display", Georgia, serif;
-    font-style: italic;
-  }
-
-  .details .value {
-    color: var(--card-text);
-    text-align: right;
-  }
-
-  .rsvp {
-    text-align: center;
-    margin-top: 40px;
-  }
-
-  .rsvp a {
-    display: inline-block;
-    padding: 14px 36px;
-    border: 1px solid #9a2f1e;
-    color: #9a2f1e;
-    background: transparent;
-    text-decoration: none;
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    transition: all 0.2s ease;
-    font-family: "Playfair Display", Georgia, serif;
-    font-style: italic;
-  }
-
-  .rsvp a:hover {
-    background: #9a2f1e;
-    color: #fffaf0;
-    border-color:  #9a2f1e;
-  }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(255, 246, 234, 0.15);
-    letter-spacing: 0.05em;
-    opacity: 0.75;
-  }
-
-  @media (max-width: 600px) {
-    nav.topnav ul { gap: 22px; padding: 16px 16px; }
-    nav.topnav a { font-size: 13px; letter-spacing: 0.1em; }
-    .container { padding: 40px 24px; }
-    .hero { margin-bottom: 80px; padding-top: 10px; }
-    .hero-illustration { margin-top: 48px; }
-    .hero h1 { font-size: 26px; letter-spacing: 0.22em; }
-    .invite-wrapper { margin: 120px 0 0; }
-    .invite-card { padding: 40px 24px 40px; }
-    .invite-flap { top: -80px; height: 80px; }
-    .details li { flex-direction: column; gap: 4px; }
-    .details .value { text-align: left; }
-  }
-
-  /* Supabase loading state */
-  body[data-wedding-loading="true"] .container {
-    opacity: 0.35;
-    transition: opacity 0.2s ease;
-  }
-
-  #wedding-load-error {
-    display: none;
-    max-width: 640px;
-    margin: 28px auto;
-    padding: 14px 18px;
-    background: rgba(255, 250, 240, 0.95);
-    color: #6a1f16;
-    font-size: 14px;
-    line-height: 1.6;
-    border-radius: 6px;
-    text-align: center;
-  }
-
-
-  /* AI design tokens */
-  :root {
-    --ai-heading-font: Georgia, "Times New Roman", serif;
-    --ai-body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
-    --ai-radius: 6px;
-    --ai-photo-radius: 6px;
-  }
-  body { font-family: var(--ai-body-font); }
-  body.ai-theme-editorial h1, body.ai-theme-editorial h2, body.ai-theme-editorial h3,
-  body.ai-theme-romantic h1, body.ai-theme-romantic h2, body.ai-theme-romantic h3 {
-    font-family: var(--ai-heading-font);
-  }
-  body.ai-photo-rounded img { border-radius: var(--ai-photo-radius); }
-  body.ai-photo-polaroid .photo-frame { padding: 8px; background: #fff; }
-  body.ai-photo-polaroid .photo-frame img { border-radius: 2px; }
-  body.ai-animation-none *, body.ai-animation-none *::before, body.ai-animation-none *::after {
-    transition-duration: 0s !important;
-    animation-duration: 0s !important;
-  }
-
-
-/* ===== AI DESIGN SYSTEM V2 ===== */
-:root{
-  --ai-heading-font:"Playfair Display",Georgia,serif;
-  --ai-body-font:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
-  --ai-heading-scale:1;
-  --ai-letter-spacing:0em;
-  --ai-section-spacing:1;
-  --ai-radius:6px;
-  --ai-photo-radius:6px;
-}
-body{font-family:var(--ai-body-font)}
-body.ai-v2 h1,body.ai-v2 h2,body.ai-v2 h3{font-family:var(--ai-heading-font)}
-body.ai-v2 section{margin-bottom:calc(100px * var(--ai-section-spacing))}
-body.ai-v2 .hero h1{font-size:calc(32px * var(--ai-heading-scale));letter-spacing:var(--ai-letter-spacing)}
-body.ai-v2 h2{font-size:calc(28px * var(--ai-heading-scale));letter-spacing:var(--ai-letter-spacing)}
-body.ai-v2 .invite-card h3{font-size:calc(24px * var(--ai-heading-scale));letter-spacing:var(--ai-letter-spacing)}
-body.ai-v2 .hero-illustration{aspect-ratio:var(--ai-hero-ratio,16/10);max-height:none}
-body.ai-v2 .hero-illustration img{width:100%;height:100%;object-fit:var(--ai-hero-fit,cover)}
-body.ai-title-left .hero,body.ai-title-left .label{text-align:left!important}
-body.ai-title-center .hero,body.ai-title-center .label{text-align:center!important}
-body.ai-title-right .hero,body.ai-title-right .label{text-align:right!important}
-body.ai-button-pill .rsvp a,body.ai-button-pill .map-buttons a{border-radius:999px}
-body.ai-button-solid .rsvp a,body.ai-button-solid .map-buttons a{background:var(--accent);color:var(--card-bg);border-color:var(--accent)}
-body.ai-button-text .rsvp a,body.ai-button-text .map-buttons a{border:0;border-bottom:1px solid currentColor;border-radius:0;padding-left:3px;padding-right:3px;background:transparent}
-body.ai-card-bordered .invite-card{border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
-body.ai-card-paper .invite-card{box-shadow:0 20px 55px rgba(40,25,18,.12);transform:rotate(-.35deg)}
-body.ai-card-floating .invite-card{box-shadow:0 24px 65px rgba(0,0,0,.2);border-radius:18px}
-body.ai-card-soft .invite-card{border-radius:24px;overflow:hidden}
-body.ai-decoration-fine_line section::before{content:"";display:block;width:48px;height:1px;background:var(--accent);margin:0 auto 28px;opacity:.8}
-body.ai-decoration-tiny_star section::before{content:"✦";display:block;color:var(--accent);font-size:18px;text-align:center;margin-bottom:22px}
-body.ai-decoration-dot section::before{content:"•";display:block;color:var(--accent);font-size:26px;text-align:center;margin-bottom:16px}
-body.ai-decoration-italic_label section::before{content:"with love";display:block;color:var(--accent);font-family:var(--ai-heading-font);font-style:italic;text-align:center;margin-bottom:22px}
-body.ai-decoration-ribbon section::before{content:"〰";display:block;color:var(--accent);font-size:28px;text-align:center;margin-bottom:18px}
-body.ai-decoration-stamp section::before{content:"WEDDING";display:block;width:max-content;margin:0 auto 24px;padding:5px 9px;border:1px solid var(--accent);color:var(--accent);font-size:9px;letter-spacing:.22em;transform:rotate(-3deg)}
-
-/* Preset: Bordeaux Editorial */
-body.ai-preset-bordeaux_editorial .container{max-width:780px}
-body.ai-preset-bordeaux_editorial .hero{padding-top:52px;margin-bottom:120px}
-body.ai-preset-bordeaux_editorial .hero h1{text-transform:uppercase}
-body.ai-preset-bordeaux_editorial .hero-illustration{width:calc(100% + 70px);margin-left:-35px}
-body.ai-preset-bordeaux_editorial .program-cards{gap:26px}
-body.ai-preset-bordeaux_editorial .program-card .circle{border-radius:2px;width:155px;height:190px}
-
-/* Preset: Vintage Letter */
-body.ai-preset-vintage_letter{background-image:linear-gradient(rgba(255,255,255,.025),rgba(255,255,255,.025))}
-body.ai-preset-vintage_letter .container{max-width:640px}
-body.ai-preset-vintage_letter .hero h1{text-transform:none;font-style:italic}
-body.ai-preset-vintage_letter .hero-illustration{width:88%;margin-left:auto;margin-right:auto;transform:rotate(-1deg);box-shadow:0 12px 34px rgba(0,0,0,.16)}
-body.ai-preset-vintage_letter .program-card:nth-child(1){transform:rotate(-4deg)}
-body.ai-preset-vintage_letter .program-card:nth-child(2){transform:translateY(18px) rotate(2deg)}
-body.ai-preset-vintage_letter .program-card:nth-child(3){transform:rotate(4deg)}
-body.ai-preset-vintage_letter .invite-card{padding:72px 48px;background:var(--card-bg);box-shadow:0 14px 40px rgba(0,0,0,.12)}
-body.ai-preset-vintage_letter .details li{border-bottom-style:solid}
-
-/* Preset: Playful Dinner */
-body.ai-preset-playful_dinner .container{max-width:760px}
-body.ai-preset-playful_dinner .hero{text-align:left!important}
-body.ai-preset-playful_dinner .hero h1{font-size:calc(40px * var(--ai-heading-scale));line-height:1.05}
-body.ai-preset-playful_dinner .hero-illustration{border-radius:28px;overflow:hidden;transform:rotate(.8deg)}
-body.ai-preset-playful_dinner .program-cards{align-items:flex-start}
-body.ai-preset-playful_dinner .program-card:nth-child(2){margin-top:36px}
-body.ai-preset-playful_dinner .program-card .circle{border-radius:28px}
-body.ai-preset-playful_dinner .invite-card{border-radius:28px}
-
-/* Preset: Minimal Gallery */
-body.ai-preset-minimal_gallery nav.topnav{box-shadow:none;background:color-mix(in srgb,var(--bg) 96%,transparent)}
-body.ai-preset-minimal_gallery .container{max-width:900px}
-body.ai-preset-minimal_gallery .hero{margin-bottom:60px}
-body.ai-preset-minimal_gallery .hero-illustration{width:100%;aspect-ratio:16/7}
-body.ai-preset-minimal_gallery .program-cards{gap:12px}
-body.ai-preset-minimal_gallery .program-card .circle{width:190px;height:125px;border-radius:0}
-body.ai-preset-minimal_gallery .invite-wrapper{max-width:620px;margin-left:auto;margin-right:auto}
-
-/* Preset: Romantic Classic */
-body.ai-preset-romantic_classic .container{max-width:680px}
-body.ai-preset-romantic_classic .hero h1{font-style:italic;text-transform:none}
-body.ai-preset-romantic_classic .hero-illustration{border-radius:999px 999px 18px 18px;overflow:hidden}
-body.ai-preset-romantic_classic .program-card .circle{border-radius:999px}
-body.ai-preset-romantic_classic .invite-card{border-radius:160px 160px 20px 20px;padding-top:90px}
-
-/* Preset: Modern Typography */
-body.ai-preset-modern_typography .container{max-width:880px}
-body.ai-preset-modern_typography .hero{text-align:left!important}
-body.ai-preset-modern_typography .hero h1{font-family:var(--ai-body-font);font-style:normal;font-weight:500;font-size:calc(50px * var(--ai-heading-scale));line-height:.98;letter-spacing:-.035em}
-body.ai-preset-modern_typography .hero .date-info,body.ai-preset-modern_typography .hero .tagline{text-align:left}
-body.ai-preset-modern_typography .hero-illustration{aspect-ratio:3/2}
-body.ai-preset-modern_typography .program-cards{justify-content:flex-start}
-body.ai-preset-modern_typography .invite-card h3{text-align:left;font-family:var(--ai-body-font);font-style:normal}
-
-/* Preset: Natural Warm */
-body.ai-preset-natural_warm .hero-illustration{border-radius:45% 45% 8px 8px;overflow:hidden;width:90%;margin-left:auto;margin-right:auto}
-body.ai-preset-natural_warm .program-card .circle{border-radius:48% 52% 46% 54%}
-body.ai-preset-natural_warm .invite-card{border-radius:18px}
-
-/* Preset: Dark Editorial */
-body.ai-preset-dark_editorial .container{max-width:820px}
-body.ai-preset-dark_editorial .hero{text-align:left!important}
-body.ai-preset-dark_editorial .hero h1{font-size:calc(44px * var(--ai-heading-scale));line-height:1}
-body.ai-preset-dark_editorial .hero-illustration{width:calc(100% + 90px);margin-left:-45px;aspect-ratio:16/9}
-body.ai-preset-dark_editorial .program-card .circle{border-radius:0}
-body.ai-preset-dark_editorial .invite-card{box-shadow:none;border:1px solid var(--accent)}
-
-@media(max-width:600px){
- body.ai-v2 section{margin-bottom:calc(76px * var(--ai-section-spacing))}
- body.ai-v2 .hero h1{font-size:calc(26px * var(--ai-heading-scale))}
- body.ai-preset-bordeaux_editorial .hero-illustration,
- body.ai-preset-dark_editorial .hero-illustration{width:calc(100% + 48px);margin-left:-24px}
- body.ai-preset-bordeaux_editorial .program-card .circle{width:105px;height:135px}
- body.ai-preset-minimal_gallery .program-card .circle{width:105px;height:82px}
- body.ai-preset-playful_dinner .hero h1{font-size:calc(34px * var(--ai-heading-scale))}
- body.ai-preset-modern_typography .hero h1{font-size:calc(39px * var(--ai-heading-scale))}
-}
-
-
-/* ===========================
-   DESIGN FAMILY V2.1
-   Completely different DOMs
-=========================== */
-#family-root{display:none}
-body.family-active > .container{display:none}
-body.family-active #family-root{display:block}
-.family-page{min-height:100vh;background:var(--bg);color:var(--fg);font-family:var(--ai-body-font)}
-.family-inner{max-width:720px;margin:0 auto;padding:38px 22px 90px}
-.family-page img{max-width:100%;display:block}
-.family-kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase}
-.family-btn{display:inline-flex;text-decoration:none;color:inherit;border:1px solid currentColor;padding:11px 18px;font-size:12px;letter-spacing:.08em}
-.family-copy{white-space:pre-line;line-height:1.9}
-.family-details{list-style:none;padding:0;margin:0}
-.family-details li{display:flex;justify-content:space-between;gap:20px;padding:9px 0;border-bottom:1px solid color-mix(in srgb,currentColor 22%,transparent)}
-.family-navlinks{display:flex;justify-content:center;gap:18px;margin-top:58px;font-size:11px;text-transform:uppercase;letter-spacing:.12em}
-.family-navlinks a{color:inherit;text-decoration:none}
-
-/* 01 PHOTO FRAME */
-.family-photo .film-shell{background:#f8f7f3;color:#1d1d1d;border-radius:24px;padding:18px;margin-top:12px}
-.family-photo .film-photo{position:relative;border-radius:13px;overflow:hidden;aspect-ratio:4/5;background:#ddd}
-.family-photo .film-photo img{width:100%;height:100%;object-fit:cover}
-.family-photo .film-rail{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.1em;padding:10px 2px 0}
-.family-photo .photo-title{text-align:center;padding:38px 8px 28px}
-.family-photo .photo-title h1{font-family:var(--ai-heading-font);font-size:32px;font-weight:400;margin:0 0 12px}
-.family-photo .photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:40px 0}
-.family-photo .photo-pair img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:10px}
-.family-photo .photo-copy{text-align:center;max-width:520px;margin:34px auto}
-.family-photo .photo-invite{background:var(--bg-alt);padding:30px;border-radius:14px;margin-top:45px}
-
-/* 02 DOODLE */
-.family-doodle{background:#fffdf8;color:#171717}
-.family-doodle .family-inner{max-width:660px}
-.family-doodle .doodle-head{text-align:center;padding:28px 0 24px}
-.family-doodle .doodle-head h1{font-family:"Comic Sans MS","Nanum Pen Script",cursive;font-size:42px;margin:0;transform:rotate(-1deg)}
-.family-doodle .doodle-poster{border:4px solid currentColor;padding:18px;margin:20px auto 45px;max-width:460px;position:relative;transform:rotate(.6deg)}
-.family-doodle .doodle-poster::before{content:"✦";position:absolute;left:-19px;top:20%;font-size:24px}
-.family-doodle .doodle-poster::after{content:"♡";position:absolute;right:-20px;bottom:18%;font-size:28px}
-.family-doodle .doodle-image{aspect-ratio:1/1;overflow:hidden;filter:grayscale(1) contrast(1.1)}
-.family-doodle .doodle-image img{width:100%;height:100%;object-fit:cover}
-.family-doodle .doodle-labels{display:flex;justify-content:space-between;font-family:"Comic Sans MS",cursive;font-size:25px;margin-top:12px}
-.family-doodle .doodle-copy{font-family:"Comic Sans MS","Nanum Pen Script",cursive;font-size:19px;text-align:center;max-width:520px;margin:0 auto 50px}
-.family-doodle .doodle-invite{border:3px dashed currentColor;padding:28px;transform:rotate(-.5deg)}
-.family-doodle .family-btn{border-width:2px;transform:rotate(1deg)}
-
-/* 03 KITSCH COLLAGE */
-.family-kitsch{background:var(--bg);color:var(--fg)}
-.family-kitsch .family-inner{max-width:760px;padding-left:14px;padding-right:14px}
-.family-kitsch .kitsch-hero{position:relative;min-height:610px;background:#222;overflow:hidden}
-.family-kitsch .kitsch-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.8) contrast(1.05)}
-.family-kitsch .kitsch-heart{position:absolute;width:78%;height:42%;left:11%;bottom:8%;background:var(--accent);clip-path:polygon(50% 100%,5% 45%,10% 18%,28% 5%,50% 22%,72% 5%,90% 18%,95% 45%);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--card-text);padding:50px 35px 20px}
-.family-kitsch .kitsch-heart h1{font-family:var(--ai-heading-font);font-size:27px;margin:0 0 10px}
-.family-kitsch .scatter{position:absolute;inset:0;pointer-events:none}
-.family-kitsch .scatter span{position:absolute;width:28px;height:28px;border-radius:50%;background:#ff4774;color:#181818;display:grid;place-items:center;font-size:11px;font-weight:700}
-.family-kitsch .scatter span:nth-child(1){left:8%;top:38%}.family-kitsch .scatter span:nth-child(2){left:18%;top:44%}.family-kitsch .scatter span:nth-child(3){right:12%;top:42%}.family-kitsch .scatter span:nth-child(4){right:25%;top:35%}.family-kitsch .scatter span:nth-child(5){left:28%;top:50%}.family-kitsch .scatter span:nth-child(6){right:33%;top:49%}
-.family-kitsch .kitsch-copy{background:var(--card-bg);color:var(--card-text);padding:34px 25px;margin-top:16px;transform:rotate(-1deg)}
-.family-kitsch .kitsch-program{display:grid;grid-template-columns:1.4fr .8fr;gap:10px;margin:18px 0}
-.family-kitsch .kitsch-program img{width:100%;height:230px;object-fit:cover}
-.family-kitsch .kitsch-program img:nth-child(2){height:180px;margin-top:50px}
-
-/* 04 RETRO ROMANCE */
-.family-retro{background:#181818;color:#f7f0eb}
-.family-retro .family-inner{max-width:650px}
-.family-retro .retro-title{text-align:center;padding:18px 0 38px}
-.family-retro .retro-title .script{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;color:#e78aab;font-size:54px;line-height:.9}
-.family-retro .retro-frame{margin:0 auto 38px;width:82%;padding:18px;border:8px double #f1eee8;border-radius:48% 48% 42% 42% / 28% 28% 35% 35%;position:relative}
-.family-retro .retro-frame::before,.family-retro .retro-frame::after{content:"✿ ❀ ✿";position:absolute;color:#f1eee8;font-size:20px;left:50%;transform:translateX(-50%)}
-.family-retro .retro-frame::before{top:-25px}.family-retro .retro-frame::after{bottom:-25px}
-.family-retro .retro-frame img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:45% 45% 38% 38% / 24% 24% 34% 34%}
-.family-retro .retro-copy{text-align:center;margin:55px auto;max-width:480px}
-.family-retro .retro-invite{text-align:center;border-top:1px solid #e78aab;border-bottom:1px solid #e78aab;padding:30px 12px}
-.family-retro .family-btn{color:#e78aab;border-color:#e78aab}
-
-/* 05 PAPER & POETRY */
-.family-paper{background:#f4f0e6;color:#4b463f}
-.family-paper .family-inner{max-width:640px}
-.family-paper .paper-top{text-align:center;padding:14px 0 45px;letter-spacing:.3em;font-size:12px}
-.family-paper .paper-polaroid{width:45%;min-width:180px;margin:0 auto 42px;background:#fff;padding:10px 10px 34px;box-shadow:0 5px 18px rgba(60,50,40,.12);transform:rotate(-1.4deg);position:relative}
-.family-paper .paper-polaroid::before{content:"";position:absolute;width:72px;height:18px;background:rgba(209,190,150,.45);top:-8px;left:50%;transform:translateX(-50%) rotate(2deg)}
-.family-paper .paper-polaroid img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(.75)}
-.family-paper .paper-copy{text-align:center;line-height:2.05;max-width:500px;margin:0 auto 60px}
-.family-paper .paper-envelope{background:#ebe4d5;padding:35px 28px;margin:20px 0 45px;position:relative;clip-path:polygon(0 8%,50% 0,100% 8%,100% 100%,0 100%)}
-.family-paper .paper-envelope::before{content:"happy wedding day";position:absolute;right:20px;top:12px;font-family:var(--ai-heading-font);font-style:italic;color:var(--accent);transform:rotate(4deg)}
-.family-paper .paper-program{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.family-paper .paper-program figure{margin:0;background:#fff;padding:8px 8px 26px;box-shadow:0 5px 14px rgba(0,0,0,.08)}
-.family-paper .paper-program figure:nth-child(2){transform:rotate(2deg);margin-top:28px}
-.family-paper .paper-program img{width:100%;aspect-ratio:1;object-fit:cover}
-
-
-/* ===== V3 CURATED TEMPLATES ===== */
-#v3-root{display:none}.v3-active>.container,.v3-active>nav.topnav{display:none}.v3-active #v3-root{display:block}
-.v3{min-height:100vh;background:var(--v3-bg);color:var(--v3-ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif}.v3-inner{max-width:640px;margin:auto}.v3 img{display:block;width:100%}.v3-serif{font-family:Georgia,"Times New Roman",serif}.v3-nav{display:flex;justify-content:center;gap:24px;padding:55px 20px 70px;font-size:10px;letter-spacing:.14em}.v3-nav a{color:inherit;text-decoration:none}.v3-copy{line-height:2;white-space:pre-line;font-size:13px}.v3-info{padding:42px 28px}.v3-info dl{margin:0}.v3-info div{display:grid;grid-template-columns:80px 1fr;padding:10px 0;border-bottom:1px solid color-mix(in srgb,currentColor 16%,transparent)}.v3-info dt{font-size:9px;letter-spacing:.12em}.v3-info dd{margin:0;font-size:12px}.v3-rsvp{display:inline-block;margin-top:25px;padding:11px 20px;border:1px solid currentColor;color:inherit;text-decoration:none;font-size:10px;letter-spacing:.12em}
-/* A Quiet Editorial */
-.v3-qe .qe-hero{position:relative}.v3-qe .qe-hero img{height:78vh;min-height:590px;object-fit:cover}.v3-qe .qe-save{position:absolute;left:28px;top:35px;color:#fff;font:12px/1.5 Georgia,serif;letter-spacing:.2em}.v3-qe .qe-meta{padding:38px 28px 65px}.v3-qe .qe-names{font:42px/.98 Georgia,serif;letter-spacing:-.03em}.v3-qe .qe-date{color:var(--v3-accent);font-size:10px;letter-spacing:.15em;margin-top:18px}.v3-qe .qe-copy{padding:70px 28px;text-align:center;background:color-mix(in srgb,var(--v3-bg) 90%,white)}.v3-qe .qe-photo{padding:0 28px 50px}.v3-qe .qe-photo img{aspect-ratio:4/5;object-fit:cover}
-/* B Type & Image */
-.v3-ti{padding-top:1px}.v3-ti .ti-head{padding:48px 28px 24px}.v3-ti .ti-save{font:11px Georgia,serif;letter-spacing:.16em;color:var(--v3-accent)}.v3-ti .ti-name{font:clamp(54px,14vw,90px)/.86 Georgia,serif;letter-spacing:-.055em;margin-top:70px}.v3-ti .ti-amp{font:48px Georgia,serif;color:var(--v3-accent);margin:15px 0}.v3-ti .ti-photo{margin:35px 28px 0}.v3-ti .ti-photo img{aspect-ratio:4/5;object-fit:cover;filter:grayscale(1)}.v3-ti .ti-script{text-align:right;padding:35px 28px;font:italic 26px/1.2 Georgia,serif;color:var(--v3-accent)}.v3-ti .ti-copy{padding:65px 28px;max-width:520px}
-/* C Letter & Photobook */
-.v3-lp .lp-letter{min-height:650px;position:relative;background:color-mix(in srgb,var(--v3-bg) 82%,white);overflow:hidden}.v3-lp .lp-flap{position:absolute;left:0;right:0;top:0;height:330px;background:color-mix(in srgb,var(--v3-bg) 70%,white);clip-path:polygon(0 0,100% 0,50% 100%)}.v3-lp .lp-card{position:absolute;z-index:2;left:10%;right:10%;top:110px;background:#fffdf8;padding:65px 28px;text-align:center;box-shadow:0 12px 35px rgba(55,45,35,.08);transform:rotate(-.7deg)}.v3-lp .lp-card h1{font:italic 42px/1.05 Georgia,serif;margin:0 0 30px}.v3-lp .lp-card .names{font:13px Georgia,serif;letter-spacing:.12em}.v3-lp .lp-card .date{font-size:10px;letter-spacing:.13em;color:var(--v3-accent);margin-top:10px}.v3-lp .lp-copy{padding:55px 34px;text-align:center}.v3-lp .lp-book{background:color-mix(in srgb,var(--v3-accent) 20%,var(--v3-bg));padding:55px 25px 65px}.v3-lp .lp-shot{background:#fff;padding:9px 9px 30px;box-shadow:0 7px 18px rgba(40,35,30,.12);margin-bottom:26px}.v3-lp .lp-shot:nth-child(odd){transform:rotate(-1.4deg)}.v3-lp .lp-shot:nth-child(even){transform:rotate(1.2deg)}.v3-lp .lp-shot img{aspect-ratio:3/2;object-fit:cover}.v3-lp .lp-note{text-align:right;font:italic 21px Georgia,serif;margin-top:25px}
-
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;400&display=swap');
+*{box-sizing:border-box}
+:root{--bg:#f3eee3;--accent:#6f251d;--ink:#211c18;--muted:#7f746b;--card:#fffdf9;--line:rgba(40,30,25,.14);--serif:"Cormorant Garamond","Noto Serif KR",serif;--sans:"Noto Sans KR",sans-serif}
+html{scroll-behavior:smooth}body{margin:0;background:#e9e5df;color:var(--ink);font-family:var(--sans);font-weight:300}
+#app{width:min(100%,480px);margin:0 auto;min-height:100vh;background:var(--bg);box-shadow:0 0 40px rgba(0,0,0,.08)}
+.loading{padding:100px 24px;text-align:center;color:var(--muted)}
+section{position:relative}
+img{display:block;width:100%}
+.kicker{font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.serif{font-family:var(--serif)}
+.copy{font-size:13px;line-height:2;white-space:pre-line}
+.rule{width:34px;height:1px;background:var(--accent);margin:24px auto}
+.section-pad{padding:68px 28px}
+.center{text-align:center}
+.muted{color:var(--muted)}
+.section-title{font:400 25px/1 var(--serif);letter-spacing:.05em;margin:0 0 30px;text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--ink);border:1px solid currentColor;background:transparent;padding:12px 17px;font-size:11px;letter-spacing:.08em;min-height:42px}
+.btn.accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.two-btn{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.hidden{display:none!important}
+
+/* Hero A */
+.qe-hero{position:relative;background:#161412;color:white}
+.qe-hero img{height:78svh;min-height:570px;object-fit:cover}
+.photo-warm{filter:saturate(.85) sepia(.08)}
+.photo-soft{filter:saturate(.78) contrast(.96)}
+.photo-bw{filter:grayscale(1)}
+.photo-muted{filter:saturate(.65)}
+.qe-save{position:absolute;top:34px;left:28px;font:400 12px/1.45 var(--serif);letter-spacing:.18em}
+.qe-overlay{position:absolute;inset:auto 0 0;padding:100px 28px 34px;background:linear-gradient(transparent,rgba(0,0,0,.58))}
+.qe-names{font:400 40px/.98 var(--serif);letter-spacing:-.02em}
+.qe-date{margin-top:16px;font-size:10px;letter-spacing:.13em}
+.qe-intro{padding:70px 36px;text-align:center}
+
+/* Hero B */
+.ti-hero{padding:44px 28px 36px;min-height:660px}
+.ti-top{display:flex;justify-content:space-between;align-items:flex-start;font:400 11px/1.25 var(--serif);letter-spacing:.16em;color:var(--accent)}
+.ti-name{font:400 clamp(60px,19vw,92px)/.82 var(--serif);letter-spacing:-.055em;margin-top:60px}
+.ti-amp{font:italic 42px/1 var(--serif);color:var(--accent);margin:15px 0}
+.ti-photo{margin-top:42px}
+.ti-photo img{aspect-ratio:4/5;object-fit:cover;filter:grayscale(1)}
+.ti-script{text-align:right;font:italic 25px/1.1 var(--serif);color:var(--accent);margin-top:25px}
+
+/* Hero C */
+.lp-letter{min-height:630px;background:color-mix(in srgb,var(--bg) 82%,white);position:relative;overflow:hidden}
+.lp-flap{height:330px;background:color-mix(in srgb,var(--bg) 68%,white);clip-path:polygon(0 0,100% 0,50% 100%)}
+.lp-card{position:absolute;z-index:2;left:10%;right:10%;top:100px;background:#fffdf8;padding:65px 22px;text-align:center;box-shadow:0 10px 30px rgba(45,35,28,.08);transform:rotate(-.8deg)}
+.lp-card h1{font:italic 43px/1.02 var(--serif);margin:0 0 28px}
+.lp-card .names{font:400 13px var(--serif);letter-spacing:.12em}
+.lp-card .date{font-size:9px;letter-spacing:.13em;color:var(--accent);margin-top:11px}
+.star{position:absolute;color:var(--accent);font-size:16px;opacity:.6}
+.lp-copy{padding:60px 34px;text-align:center}
+.lp-book{padding:58px 25px 70px;background:color-mix(in srgb,var(--accent) 22%,var(--bg))}
+.lp-shot{background:#fff;padding:8px 8px 28px;margin-bottom:24px;box-shadow:0 7px 18px rgba(40,35,30,.12)}
+.lp-shot:nth-child(odd){transform:rotate(-1.2deg)}.lp-shot:nth-child(even){transform:rotate(1.2deg)}
+.lp-shot img{aspect-ratio:3/2;object-fit:cover}
+.lp-note{text-align:right;font:italic 23px var(--serif);margin-top:28px}
+
+/* Moments */
+.moments{padding:70px 18px}
+.m-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.m-grid img{aspect-ratio:1;object-fit:cover}
+.tpl-quiet_editorial .m-grid img:first-child{grid-column:span 2;aspect-ratio:16/10}
+.tpl-type_image .moments{background:var(--card)}
+.tpl-type_image .m-grid{grid-template-columns:1.35fr .65fr}
+.tpl-type_image .m-grid img:nth-child(3n+1){grid-row:span 2;height:100%}
+.tpl-letter_photobook .moments{display:none}
+
+/* Wedding day */
+.day{padding:70px 28px;text-align:center;border-top:1px solid var(--line)}
+.big-date{font:400 64px/.85 var(--serif);color:var(--accent)}
+.day-sub{margin-top:9px;font-size:11px;letter-spacing:.2em}
+.day-meta{display:grid;grid-template-columns:1fr 1fr;margin-top:34px}
+.day-meta>div{padding:10px;border-left:1px solid var(--line)}
+.day-meta>div:first-child{border-left:0}
+.day-meta b{display:block;font-size:12px;font-weight:400;margin-top:6px}
+
+/* Location */
+.location{padding:68px 22px;border-top:1px solid var(--line)}
+.map{margin:25px 0 18px;background:#eee;overflow:hidden}
+.map img{aspect-ratio:16/9;object-fit:cover}
+.location-copy{font-size:12px;line-height:1.9;text-align:center}
+.parking{margin-top:28px;padding:22px;background:color-mix(in srgb,var(--accent) 7%,white);font-size:11px;line-height:1.8}
+
+/* RSVP */
+.rsvp{padding:66px 28px;text-align:center;border-top:1px solid var(--line)}
+.rsvp p{font-size:12px;line-height:1.8}
+
+/* Accounts */
+.accounts{padding:68px 18px;border-top:1px solid var(--line)}
+.accounts-intro{text-align:center;font-size:12px;line-height:1.9;margin-bottom:26px}
+.acc-group{margin-bottom:10px;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:color-mix(in srgb,var(--accent) 6%,white)}
+.acc-head{width:100%;border:0;background:transparent;padding:15px 16px;display:flex;justify-content:space-between;align-items:center;font:inherit;color:inherit;cursor:pointer}
+.acc-head b{font-size:12px;font-weight:500}.acc-head span{font-size:17px;transition:.2s}
+.acc-group.open .acc-head span{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 10px 10px}.acc-group.open .acc-body{display:block}
+.acc-card{background:white;border-radius:11px;padding:14px;margin-top:8px}
+.acc-top{display:flex;justify-content:space-between;gap:10px;font-size:10px;margin-bottom:12px}
+.acc-box{background:#f5f3f2;border-radius:8px;padding:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.acc-bank{font-size:9px;color:var(--muted)}.acc-number{font-size:11px;margin-top:3px;letter-spacing:.04em}
+.copy-btn{border:0;background:none;font:inherit;font-size:10px;cursor:pointer;color:var(--ink);padding:8px}
+
+/* Contact */
+.contact{padding:58px 24px;text-align:center;border-top:1px solid var(--line)}
+.contact-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.contact a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;padding:7px 3px;font-size:11px}
+
+/* Ending */
+.ending{padding:80px 28px 95px;text-align:center}
+.tpl-type_image .ending{background:var(--accent);color:#fff}
+.tpl-letter_photobook .ending{background:color-mix(in srgb,var(--accent) 20%,var(--bg))}
+.end-script{font:italic 31px var(--serif);margin-bottom:18px}
+.error{padding:80px 24px;text-align:center;color:#7c2a22}
+@media(min-width:481px){body{padding:24px 0}}
 </style>
 </head>
-<body data-wedding-loading="true">
-<main id="v3-root"></main>
-  <div id="wedding-load-error"></div>
+<body>
+<div id="app"><div class="loading">청첩장을 준비하고 있습니다...</div></div>
 
-  <!-- Top Navigation -->
-  <nav class="topnav">
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="moments.html">Moments</a></li>
-      <li><a href="location.html">Location</a></li>
-      <li><a href="#invitation">Invite</a></li>
-    </ul>
-  </nav>
-  <main id="family-root"></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://gfpdjxdoxjonramxrlgi.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_NUhd1LmMj09rtA5RMcgAxA_cMKIuZB6";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+const app=document.getElementById("app");
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const lines=v=>esc(v||"").replace(/\n/g,"<br>");
+const validHex=(v,f)=>/^#[0-9A-Fa-f]{6}$/.test(String(v||""))?v:f;
 
-
-  <div class="container">
-
-    <!-- Hero -->
-    <header class="hero">
-      <h1>SAVE THE DATE</h1>
-      <p class="date-info" id="wedding-date-summary">11월 7일 오후 5시 - 7시</p>
-      <p class="tagline" id="wedding-tagline">웨딩 파티에 여러분을 초대합니다</p>
-      <div class="divider-line"></div>
-    </header>
-
-    <!-- About -->
-    <section id="about">
-      <div class="hero-illustration">
-        <img id="hero-image" src="images/hannam-bg.jpg" alt="Tilted Hannam">
-      </div>
-
-      <p class="invite-text" style="margin-top: 60px;">
-        <span id="intro-line">저희.. 결혼합니다... &gt;0&lt;</span>
-      </p>
-      <p class="invite-text">
-        <span id="invite-message-1">격식 있는 예식 대신,<br>
-        소중한 분들과 함께 즐거운 저녁을 보내고 싶었습니다.<br>
-        잠시 들러 인사만 나누셔도 좋고,<br>
-        웃고 떠들며 오래 머무르셔도 좋습니다.<br>
-        편한 마음으로 오셔서, 저희의 새로운 시작을 함께해 주세요.</span>
-      </p>
-      <p class="invite-text">
-        <span id="invite-message-2">공간이 아담하여 이번 자리는<br>
-        가까운 분들만 모시는 파티 형식으로 진행될 예정입니다.<br>
-        많은 분들을 모두 초대하지 못한 점,<br>
-        너그럽게 이해해 주시면 감사하겠습니다.</span>
-      </p>
-      <p class="invite-text">
-        <span id="invite-message-3">함께해 주시는 마음만으로도<br>
-        저희에겐 큰 기쁨이 될 것입니다.<br>
-        감사합니다.<br><br>
-        <span id="couple-signoff">이건호 &amp; 은지수 드림</span></span>
-      </p>
-
-      <div class="label" style="text-align: center; margin-top: 80px;">About</div>
-
-      <!-- 파티 프로그램 미리보기 -->
-      <div class="program-cards">
-        <a href="#modal-space" class="program-card">
-          <div class="circle">
-            <img id="space-image" src="images/space.jpeg" alt="Space">
-          </div>
-          <div class="label-en">Space</div>
-        </a>
-        <a href="#modal-dining" class="program-card">
-          <div class="circle">
-            <img id="dining-image" src="images/dining.jpeg" alt="Dining">
-          </div>
-          <div class="label-en">Dining</div>
-        </a>
-        <a href="#modal-dessert" class="program-card">
-          <div class="circle">
-            <img id="dessert-image" src="images/dessert.jpeg" alt="Dessert">
-          </div>
-          <div class="label-en">Dessert</div>
-        </a>
-      </div>
-    </section>
-
-    <!-- Party Invitation -->
-    <section id="invitation">
-      <div class="label" style="text-align: center;">Invitation</div>
-      <p style="text-align: center;">
-        원활한 준비를 위해 참석 여부와 인원을 아래 RSVP로 알려주시면 감사하겠습니다.
-      </p>
-
-      <div class="invite-wrapper">
-        <div class="invite-flap"></div>
-        <div class="invite-card">
-        <h3>You're Invited</h3>
-        <ul class="details">
-          <li><span class="key">DATE</span><span class="value" id="wedding-date-detail">2026년 11월 7일 토요일</span></li>
-          <li><span class="key">TIME</span><span class="value" id="wedding-time-detail">오후 5시</span></li>
-          <li><span class="key">PLACE</span><span class="value" id="wedding-place-detail">틸티드한남</span></li>
-        </ul>
-
-        <div class="rsvp">
-          <a id="rsvp-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfiFAhDgYlvdzncNMGs9yTtY3xOA3wY0JwpQ93u06sIYZITvg/viewform" target="_blank" rel="noopener">RSVP</a>
-        </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      Made with care · 2026
-    </footer>
-
-  </div>
-
-  <!-- Modals -->
-  <div id="modal-space" class="modal">
-    <a href="#" class="modal-bg"></a>
-    <div class="modal-content">
-      <a href="#" class="modal-close" aria-label="닫기">×</a>
-      <img id="space-image-modal" src="images/space.jpeg" alt="Space">
-    </div>
-  </div>
-
-  <div id="modal-dining" class="modal">
-    <a href="#" class="modal-bg"></a>
-    <div class="modal-content">
-      <a href="#" class="modal-close" aria-label="닫기">×</a>
-      <img id="dining-image-modal" src="images/dining.jpeg" alt="Dining">
-    </div>
-  </div>
-
-  <div id="modal-dessert" class="modal">
-    <a href="#" class="modal-bg"></a>
-    <div class="modal-content">
-      <a href="#" class="modal-close" aria-label="닫기">×</a>
-      <img id="dessert-image-modal" src="images/dessert.jpeg" alt="Dessert">
-    </div>
-  </div>
-
-  <!-- Envelope opening animation trigger -->
-  <script>
-    (function() {
-      const wrappers = document.querySelectorAll('.invite-wrapper');
-      if (!('IntersectionObserver' in window)) {
-        wrappers.forEach(w => w.classList.add('animate-in'));
-        return;
-      }
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
-      wrappers.forEach(w => observer.observe(w));
-    })();
-  </script>
-
-  <!-- Supabase: one frontend, many wedding records -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const SUPABASE_URL = "https://gfpdjxdoxjonramxrlgi.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_NUhd1LmMj09rtA5RMcgAxA_cMKIuZB6";
-    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-
-    function setText(id, value) {
-      if (value == null || value === "") return;
-      const el = document.getElementById(id);
-      if (el) el.textContent = value;
-    }
-
-    function setHtmlLines(id, value) {
-      if (value == null || value === "") return;
-      const el = document.getElementById(id);
-      if (!el) return;
-      // DB에는 줄바꿈(\n)만 저장하고, HTML은 여기서 안전하게 변환
-      el.textContent = value;
-      el.innerHTML = el.innerHTML.replace(/\n/g, "<br>");
-    }
-
-    function setImage(id, value) {
-      if (!value) return;
-      const el = document.getElementById(id);
-      if (el) el.src = value;
-    }
-
-    function showLoadError(message) {
-      const el = document.getElementById("wedding-load-error");
-      if (!el) return;
-      el.textContent = message;
-      el.style.display = "block";
-    }
-
-
-  function applyDesignConfig(config) {
-    if (!config || typeof config !== "object") return;
-    const root = document.documentElement;
-    const colorMap = {
-      background: "--bg",
-      background_alt: "--bg-alt",
-      foreground: "--fg",
-      muted: "--muted",
-      accent: "--accent",
-      card_background: "--card-bg",
-      card_text: "--card-text"
-    };
-    Object.entries(colorMap).forEach(([key, cssVar]) => {
-      if (config[key]) root.style.setProperty(cssVar, config[key]);
-    });
-
-    const fontMap = {
-      playfair: '"Playfair Display", Georgia, serif',
-      cormorant: '"Cormorant Garamond", Georgia, serif',
-      myeongjo: '"Nanum Myeongjo", "Noto Serif KR", Georgia, serif',
-      noto_sans: '"Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif'
-    };
-    root.style.setProperty("--ai-heading-font", fontMap[config.heading_font] || fontMap.playfair);
-    root.style.setProperty("--ai-body-font", fontMap[config.body_font] || fontMap.noto_sans);
-
-    const radiusMap = { none: "0px", small: "6px", medium: "14px", large: "24px" };
-    root.style.setProperty("--ai-radius", radiusMap[config.border_radius] || "6px");
-    root.style.setProperty("--ai-photo-radius", radiusMap[config.border_radius] || "6px");
-
-    document.body.classList.remove(
-      "ai-theme-minimal","ai-theme-editorial","ai-theme-romantic","ai-theme-playful",
-      "ai-photo-square","ai-photo-rounded","ai-photo-polaroid","ai-photo-full",
-      "ai-animation-none","ai-animation-subtle","ai-animation-soft","ai-animation-playful"
-    );
-    document.body.classList.add("ai-theme-" + (config.layout || "editorial"));
-    document.body.classList.add("ai-photo-" + (config.photo_style || "square"));
-    document.body.classList.add("ai-animation-" + (config.animation || "soft"));
-  }
-
-
-
-function applyDesignSystemV2(config){
-  if(!config||typeof config!=="object")return;
-  const root=document.documentElement,body=document.body;
-  const map={background:"--bg",background_alt:"--bg-alt",foreground:"--fg",muted:"--muted",accent:"--accent",card_background:"--card-bg",card_text:"--card-text"};
-  Object.entries(map).forEach(([k,v])=>{if(config[k])root.style.setProperty(v,config[k])});
-  const fonts={
-    playfair:'"Playfair Display",Georgia,serif',
-    cormorant:'"Cormorant Garamond",Georgia,serif',
-    myeongjo:'"Nanum Myeongjo","Noto Serif KR",Georgia,serif',
-    noto_sans:'"Noto Sans KR",-apple-system,BlinkMacSystemFont,sans-serif'
-  };
-  root.style.setProperty("--ai-heading-font",fonts[config.heading_font]||fonts.playfair);
-  root.style.setProperty("--ai-body-font",fonts[config.body_font]||fonts.noto_sans);
-  root.style.setProperty("--ai-heading-scale",String(config.heading_scale||1));
-  root.style.setProperty("--ai-letter-spacing",String(config.letter_spacing||0)+"em");
-  root.style.setProperty("--ai-section-spacing",String(config.section_spacing||1));
-  const ratios={portrait:"4 / 5",landscape:"3 / 2",square:"1 / 1",cinematic:"16 / 7"};
-  root.style.setProperty("--ai-hero-ratio",ratios[config.hero_ratio]||"16 / 10");
-  root.style.setProperty("--ai-hero-fit",config.hero_fit||"cover");
-  [...body.classList].filter(x=>x.startsWith("ai-")).forEach(x=>body.classList.remove(x));
-  body.classList.add("ai-v2");
-  body.classList.add("ai-preset-"+(config.preset||"bordeaux_editorial"));
-  body.classList.add("ai-title-"+(config.title_alignment||"center"));
-  body.classList.add("ai-button-"+(config.button_style||"outline"));
-  body.classList.add("ai-card-"+(config.card_style||"flat"));
-  body.classList.add("ai-decoration-"+(config.decoration||"none"));
-  body.dataset.momentLayout=config.moment_layout||"grid_3x2";
+function textInk(bg){return bg.toLowerCase()==="#181818"?"#f6efe7":"#211c18"}
+function photoClass(tone){return {"warm":"photo-warm","soft":"photo-soft","bw":"photo-bw","muted":"photo-muted"}[tone]||""}
+function navButtons(d){
+ const out=[];
+ if(d.naver_map_url)out.push(`<a class="btn" href="${esc(d.naver_map_url)}" target="_blank">네이버 지도</a>`);
+ if(d.kakao_map_url)out.push(`<a class="btn" href="${esc(d.kakao_map_url)}" target="_blank">카카오맵</a>`);
+ return out.join("");
 }
-
-
-
-function familySafe(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
-function familyLines(v){return familySafe(v||"").replace(/\n/g,"<br>")}
-function familyDetails(data){
-  return `<ul class="family-details">
-    <li><span>DATE</span><span>${familySafe(data.date_detail||"")}</span></li>
-    <li><span>TIME</span><span>${familySafe(data.time_detail||"")}</span></li>
-    <li><span>PLACE</span><span>${familySafe(data.venue_name||"")}</span></li>
-  </ul>`;
+function infoSection(d){
+ return `<section class="day">
+   <div class="kicker">WEDDING DAY</div>
+   <div class="big-date">${esc((d.date_summary||"").match(/\d{1,2}[./월 ]+\d{1,2}/)?.[0]||"10.25")}</div>
+   <div class="day-sub">${esc(d.date_detail||"")}</div>
+   <div class="day-meta">
+    <div><div class="kicker">TIME</div><b>${esc(d.time_detail||"")}</b></div>
+    <div><div class="kicker">PLACE</div><b>${esc(d.venue_name||"")}</b></div>
+   </div>
+ </section>`;
 }
-function familyNav(slug){
-  return `<div class="family-navlinks">
-    <a href="moments.html?slug=${encodeURIComponent(slug)}">Moments</a>
-    <a href="location.html?slug=${encodeURIComponent(slug)}">Location</a>
-  </div>`;
+function locationSection(d){
+ if(!d.location_address&&!d.map_image_url&&!d.venue_name)return "";
+ return `<section class="location">
+  <h2 class="section-title">LOCATION</h2>
+  <div class="location-copy"><b>${esc(d.venue_name||"")}</b><br>${esc(d.location_address||"")}<br>${esc(d.location_detail_1||"")}<br>${esc(d.location_detail_2||"")}</div>
+  ${d.map_image_url?`<div class="map"><img src="${esc(d.map_image_url)}" alt="약도"></div>`:""}
+  <div class="two-btn">${navButtons(d)}</div>
+  ${(d.parking_line_1||d.parking_line_2||d.parking_detail)?`<div class="parking"><div class="kicker" style="margin-bottom:8px">PARKING</div>${esc(d.parking_line_1||"")}<br>${esc(d.parking_line_2||"")}<br><br>${lines(d.parking_detail||"")}</div>`:""}
+ </section>`;
 }
-function renderFamilyHome(data,slug){
-  const d=data.design_config||{}, family=d.family||"photo_frame";
-  const root=document.getElementById("family-root");
-  if(!root)return;
-  document.body.classList.add("family-active");
-  const hero=familySafe(data.hero_image_url||"images/hannam-bg.jpg");
-  const p1=familySafe(data.space_image_url||hero),p2=familySafe(data.dining_image_url||hero),p3=familySafe(data.dessert_image_url||hero);
-  const names=[data.groom_name,data.bride_name].filter(Boolean).join(" & ");
-  const rsvp=familySafe(data.rsvp_url||"#");
-  const message=familyLines(data.invite_message_1||"");
-  const intro=familyLines(data.intro_line||"");
-  const detail=familyDetails(data);
-
-  if(family==="doodle_wedding"){
-    root.innerHTML=`<div class="family-page family-doodle"><div class="family-inner">
-      <div class="doodle-head"><div class="family-kicker">SAVE THE DATE</div><h1>We are getting married!</h1></div>
-      <div class="doodle-poster"><div class="doodle-image"><img src="${hero}" alt=""></div><div class="doodle-labels"><span>GROOM</span><span>BRIDE</span></div></div>
-      <div class="doodle-copy">${intro}<br><br>${message}</div>
-      <div class="doodle-invite"><h2 style="text-align:center;font-family:var(--ai-heading-font)">${familySafe(names)}</h2>${detail}<p style="text-align:center;margin-top:22px"><a class="family-btn" href="${rsvp}" target="_blank">RSVP →</a></p></div>
-      ${familyNav(slug)}
-    </div></div>`;
-  } else if(family==="kitsch_collage"){
-    root.innerHTML=`<div class="family-page family-kitsch"><div class="family-inner">
-      <div class="kitsch-hero"><img src="${hero}" alt=""><div class="scatter"><span>K</span><span>I</span><span>T</span><span>S</span><span>C</span><span>H</span></div>
-      <div class="kitsch-heart"><div><div class="family-kicker">YOU'RE INVITED</div><h1>${familySafe(names)}</h1><div>${familySafe(data.date_summary||"")}</div></div></div></div>
-      <div class="kitsch-copy"><div class="family-kicker">OUR PARTY</div><p class="family-copy">${message}</p>${detail}<p><a class="family-btn" href="${rsvp}" target="_blank">RSVP</a></p></div>
-      <div class="kitsch-program"><img src="${p1}"><img src="${p2}"></div>
-      ${familyNav(slug)}
-    </div></div>`;
-  } else if(family==="retro_romance"){
-    root.innerHTML=`<div class="family-page family-retro"><div class="family-inner">
-      <div class="retro-title"><div class="script">Save the Date</div><div style="margin-top:18px">${familySafe(names)}</div></div>
-      <div class="retro-frame"><img src="${hero}" alt=""></div>
-      <div class="retro-copy"><div class="family-kicker" style="color:#e78aab">YOU'RE INVITED TO OUR WEDDING</div><p class="family-copy">${message}</p></div>
-      <div class="retro-invite">${detail}<p style="margin-top:24px"><a class="family-btn" href="${rsvp}" target="_blank">RSVP</a></p></div>
-      ${familyNav(slug)}
-    </div></div>`;
-  } else if(family==="paper_poetry"){
-    root.innerHTML=`<div class="family-page family-paper"><div class="family-inner">
-      <div class="paper-top">INVITATION</div>
-      <div class="paper-polaroid"><img src="${hero}" alt=""></div>
-      <div class="paper-copy"><div style="font-family:var(--ai-heading-font);font-size:25px;margin-bottom:28px">${familySafe(names)}</div>${intro}<br><br>${message}</div>
-      <div class="paper-envelope">${detail}<p style="margin-top:24px"><a class="family-btn" href="${rsvp}" target="_blank">RSVP</a></p></div>
-      <div class="paper-program"><figure><img src="${p1}"></figure><figure><img src="${p3}"></figure></div>
-      ${familyNav(slug)}
-    </div></div>`;
-  } else {
-    root.innerHTML=`<div class="family-page family-photo"><div class="family-inner">
-      <div class="film-shell"><div class="film-photo"><img src="${hero}" alt=""></div><div class="film-rail"><span>${familySafe(data.date_summary||"")}</span><span>▲ 13A</span></div></div>
-      <div class="photo-title"><div class="family-kicker">SAVE THE DATE</div><h1>${familySafe(names)}</h1><p>${familySafe(data.tagline||"")}</p></div>
-      <div class="photo-pair"><img src="${p1}"><img src="${p2}"></div>
-      <div class="photo-copy family-copy">${message}</div>
-      <div class="photo-invite">${detail}<p style="text-align:center;margin-top:24px"><a class="family-btn" href="${rsvp}" target="_blank">RSVP</a></p></div>
-      ${familyNav(slug)}
-    </div></div>`;
-  }
+function rsvpSection(d){
+ if(!d.rsvp_url)return "";
+ return `<section class="rsvp"><h2 class="section-title">RSVP</h2><p>참석 여부를 알려주세요.</p><a class="btn accent" href="${esc(d.rsvp_url)}" target="_blank">참석여부 전달하기</a></section>`;
 }
-
-
-
-function v3Esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-function v3Hex(v,f){return /^#[0-9A-Fa-f]{6}$/.test(String(v||""))?v:f}
-function renderV3(data,slug){
- const d=data.design_config||{}; if(!d.template)return;
- const bg=v3Hex(d.background_hex,"#f3eee3"),ac=v3Hex(d.accent_hex,"#6f251d");
- const ink=(bg.toLowerCase()==="#181818"?"#f7f1e9":"#211c18");
- const root=document.getElementById("v3-root");document.body.classList.add("v3-active");
- const hero=v3Esc(data.hero_image_url||""),imgs=(Array.isArray(data.moment_images)?data.moment_images:[]).filter(Boolean).slice(0,6);
- const names=[data.groom_name,data.bride_name].filter(Boolean),copy=v3Esc(data.invite_message_1||"").replace(/\n/g,"<br>");
- const info=`<div class="v3-info"><dl><div><dt>DATE</dt><dd>${v3Esc(data.date_detail||data.date_summary||"")}</dd></div><div><dt>TIME</dt><dd>${v3Esc(data.time_detail||"")}</dd></div><div><dt>PLACE</dt><dd>${v3Esc(data.venue_name||"")}</dd></div></dl>${data.rsvp_url?`<a class="v3-rsvp" href="${v3Esc(data.rsvp_url)}" target="_blank">RSVP</a>`:""}</div>`;
- const nav=`<div class="v3-nav"><a href="moments.html?slug=${encodeURIComponent(slug)}">MOMENTS</a><a href="location.html?slug=${encodeURIComponent(slug)}">LOCATION</a></div>`;
- if(d.template==="type_image"){
- root.innerHTML=`<div class="v3 v3-ti" style="--v3-bg:${bg};--v3-accent:${ac};--v3-ink:${ink}"><div class="v3-inner"><div class="ti-head"><div class="ti-save">SAVE THE DATE</div><div class="ti-name">${v3Esc(names[0]||"GROOM")}</div><div class="ti-amp">&</div><div class="ti-name">${v3Esc(names[1]||"BRIDE")}</div></div><div class="ti-photo">${hero?`<img src="${hero}">`:""}</div><div class="ti-script">we are getting married</div><div class="ti-copy v3-copy">${copy}</div>${info}${nav}</div></div>`;
- }else if(d.template==="letter_photobook"){
- const shots=(imgs.length?imgs:[data.hero_image_url]).filter(Boolean).map(x=>`<div class="lp-shot"><img src="${v3Esc(x)}"></div>`).join("");
- root.innerHTML=`<div class="v3 v3-lp" style="--v3-bg:${bg};--v3-accent:${ac};--v3-ink:${ink}"><div class="v3-inner"><section class="lp-letter"><div class="lp-flap"></div><div class="lp-card"><h1>Save<br>the Date</h1><div class="names">${v3Esc(names.join(" & "))}</div><div class="date">${v3Esc(data.date_summary||"")}</div></div></section><section class="lp-copy v3-copy">${copy}</section><section class="lp-book">${shots}<div class="lp-note">with all our love ♡</div></section>${info}${nav}</div></div>`;
- }else{
- const second=imgs[1]||imgs[0]||hero;
- root.innerHTML=`<div class="v3 v3-qe" style="--v3-bg:${bg};--v3-accent:${ac};--v3-ink:${ink}"><div class="v3-inner"><section class="qe-hero">${hero?`<img src="${hero}">`:""}<div class="qe-save">SAVE<br>THE<br>DATE</div></section><section class="qe-meta"><div class="qe-names">${v3Esc(names[0]||"GROOM")}<br>& ${v3Esc(names[1]||"BRIDE")}</div><div class="qe-date">${v3Esc(data.date_summary||"")}</div></section><section class="qe-copy v3-copy">${copy}</section>${second?`<div class="qe-photo"><img src="${v3Esc(second)}"></div>`:""}${info}${nav}</div></div>`;
- }
+function normalizeAccounts(v){
+ if(!v||typeof v!=="object")return {groom:[],bride:[]};
+ return {groom:Array.isArray(v.groom)?v.groom:[],bride:Array.isArray(v.bride)?v.bride:[]};
 }
-
-
-    async function loadWedding() {
-      const params = new URLSearchParams(window.location.search);
-      const slug = (params.get("slug") || "jisoo").trim().toLowerCase();
-
-      try {
-        const { data, error } = await db
-          .from("weddings")
-          .select("*")
-          .eq("slug", slug)
-          .eq("is_published", true)
-          .single();
-
-        if (error) throw error;
-
-        document.title = data.page_title || "초대합니다";
-
-        applyDesignSystemV2(data.design_config);
-
-        setText("wedding-date-summary", data.date_summary);
-        setText("wedding-tagline", data.tagline);
-        setHtmlLines("intro-line", data.intro_line);
-        setHtmlLines("invite-message-1", data.invite_message_1);
-        setHtmlLines("invite-message-2", data.invite_message_2);
-        setHtmlLines("invite-message-3", data.invite_message_3);
-
-        const signoff = [data.groom_name, data.bride_name].filter(Boolean).join(" & ");
-        if (signoff) setText("couple-signoff", signoff + " 드림");
-
-        setText("wedding-date-detail", data.date_detail);
-        setText("wedding-time-detail", data.time_detail);
-        setText("wedding-place-detail", data.venue_name);
-
-        setImage("hero-image", data.hero_image_url);
-        setImage("space-image", data.space_image_url);
-        setImage("space-image-modal", data.space_image_url);
-        setImage("dining-image", data.dining_image_url);
-        setImage("dining-image-modal", data.dining_image_url);
-        setImage("dessert-image", data.dessert_image_url);
-        setImage("dessert-image-modal", data.dessert_image_url);
-
-        const rsvp = document.getElementById("rsvp-link");
-        if (rsvp && data.rsvp_url) rsvp.href = data.rsvp_url;
-
-        renderV3(data, slug);
-
-        // Preserve the current wedding slug when moving to other pages.
-        document.querySelectorAll('a[href="moments.html"], a[href="location.html"]').forEach(a => {
-          const base = a.getAttribute("href");
-          a.setAttribute("href", base + "?slug=" + encodeURIComponent(slug));
-        });
-
-      } catch (err) {
-        console.error("Wedding data load failed:", err);
-        showLoadError(
-          "청첩장 정보를 불러오지 못했습니다. Supabase의 weddings 테이블과 slug를 확인해 주세요."
-        );
-      } finally {
-        document.body.dataset.weddingLoading = "false";
-      }
-    }
-
-    loadWedding();
-  </script>
-
+function accountCard(a){
+ if(!a||(!a.name&&!a.bank&&!a.number))return "";
+ return `<div class="acc-card"><div class="acc-top"><span>${esc(a.label||"")}</span><span>${esc(a.name||"")}</span></div>
+ <div class="acc-box"><div><div class="acc-bank">${esc(a.bank||"")}</div><div class="acc-number">${esc(a.number||"")}</div></div>
+ <button class="copy-btn" data-copy="${esc(a.number||"")}">복사</button></div></div>`;
+}
+function accountGroup(title,rows){
+ if(!rows.length)return "";
+ return `<div class="acc-group"><button class="acc-head" type="button"><b>${title}</b><span>⌄</span></button><div class="acc-body">${rows.map(accountCard).join("")}</div></div>`;
+}
+function accountsSection(d){
+ const a=normalizeAccounts(d.wedding_accounts);
+ if(!a.groom.length&&!a.bride.length)return "";
+ return `<section class="accounts"><h2 class="section-title">마음 전하실 곳</h2><div class="accounts-intro">참석이 어려우신 분들을 위해 기재했습니다.<br>너그러운 마음으로 양해 부탁드립니다.</div>${accountGroup("신랑측에게",a.groom)}${accountGroup("신부측에게",a.bride)}</section>`;
+}
+function contactSection(d){
+ const rows=[];
+ if(d.groom_phone)rows.push(`<a href="tel:${esc(d.groom_phone)}">신랑 · ${esc(d.groom_phone)}</a>`);
+ if(d.bride_phone)rows.push(`<a href="tel:${esc(d.bride_phone)}">신부 · ${esc(d.bride_phone)}</a>`);
+ if(!rows.length)return "";
+ return `<section class="contact"><h2 class="section-title">CONTACT</h2><div class="contact-row">${rows.join("")}</div></section>`;
+}
+function momentsImages(d){
+ return (Array.isArray(d.moment_images)?d.moment_images:[]).filter(Boolean).slice(0,6);
+}
+function momentsSection(d){
+ const imgs=momentsImages(d);if(!imgs.length)return "";
+ return `<section class="moments"><h2 class="section-title">OUR MOMENTS</h2><div class="m-grid">${imgs.map(x=>`<img src="${esc(x)}" alt="">`).join("")}</div></section>`;
+}
+function sharedTail(d){
+ return infoSection(d)+locationSection(d)+rsvpSection(d)+accountsSection(d)+contactSection(d);
+}
+function invitationCopy(d){
+ return [d.intro_line,d.invite_message_1,d.invite_message_2,d.invite_message_3].filter(Boolean).join("\n\n");
+}
+function renderQuiet(d,cfg){
+ const hero=d.hero_image_url||momentsImages(d)[0]||"";
+ return `<main class="tpl-quiet_editorial" style="--bg:${cfg.bg};--accent:${cfg.accent};--ink:${cfg.ink};--card:${cfg.card}">
+ <section class="qe-hero">${hero?`<img class="${photoClass(cfg.tone)}" src="${esc(hero)}" alt="">`:""}
+ <div class="qe-save">WE'RE<br>GETTING<br>MARRIED</div><div class="qe-overlay"><div class="qe-names">${esc(d.groom_name||"GROOM")}<br>&<br>${esc(d.bride_name||"BRIDE")}</div><div class="qe-date">${esc(d.date_summary||"")}</div></div></section>
+ <section class="qe-intro"><div class="copy">${lines(invitationCopy(d))}</div><div class="rule"></div></section>
+ ${momentsSection(d)}${sharedTail(d)}
+ <section class="ending"><div class="end-script">with all our love</div><div class="copy">따뜻한 마음으로<br>함께해 주셔서 감사합니다.</div></section></main>`;
+}
+function renderType(d,cfg){
+ const hero=d.hero_image_url||momentsImages(d)[0]||"";
+ return `<main class="tpl-type_image" style="--bg:${cfg.bg};--accent:${cfg.accent};--ink:${cfg.ink};--card:${cfg.card}">
+ <section class="ti-hero"><div class="ti-top"><span>WE'RE<br>GETTING<br>MARRIED</span><span>${esc(d.date_summary||"")}</span></div>
+ <div class="ti-name">${esc(d.groom_name||"GROOM")}</div><div class="ti-amp">&</div><div class="ti-name">${esc(d.bride_name||"BRIDE")}</div>
+ ${hero?`<div class="ti-photo"><img src="${esc(hero)}" alt=""></div>`:""}<div class="ti-script">we are getting married</div></section>
+ <section class="section-pad center" style="background:var(--accent);color:#fff"><div class="copy">${lines(invitationCopy(d))}</div></section>
+ ${momentsSection(d)}${sharedTail(d)}
+ <section class="ending"><div class="end-script">Thank you</div><div class="copy">따뜻한 마음으로 함께해 주셔서 감사합니다.</div></section></main>`;
+}
+function renderLetter(d,cfg){
+ const imgs=momentsImages(d);
+ const shots=(imgs.length?imgs:[d.hero_image_url]).filter(Boolean).map(x=>`<div class="lp-shot"><img class="${photoClass(cfg.tone)}" src="${esc(x)}" alt=""></div>`).join("");
+ return `<main class="tpl-letter_photobook" style="--bg:${cfg.bg};--accent:${cfg.accent};--ink:${cfg.ink};--card:${cfg.card}">
+ <section class="lp-letter"><div class="lp-flap"></div>
+ <span class="star" style="left:12%;top:90px">✦</span><span class="star" style="right:14%;top:160px">✧</span>
+ <div class="lp-card"><h1>You're invited</h1><div class="names">${esc(d.groom_name||"GROOM")} & ${esc(d.bride_name||"BRIDE")}</div><div class="date">${esc(d.date_summary||"")}</div></div></section>
+ <section class="lp-copy"><div class="copy">${lines(invitationCopy(d))}</div></section>
+ ${shots?`<section class="lp-book"><div class="kicker center" style="margin-bottom:30px;color:#fff">OUR MOMENTS</div>${shots}<div class="lp-note">with all our love ♡</div></section>`:""}
+ ${sharedTail(d)}
+ <section class="ending"><div class="end-script">with all our love ♡</div></section></main>`;
+}
+function bindInteractions(){
+ document.querySelectorAll(".acc-head").forEach(btn=>btn.addEventListener("click",()=>btn.parentElement.classList.toggle("open")));
+ document.querySelectorAll("[data-copy]").forEach(btn=>btn.addEventListener("click",async()=>{
+   const val=btn.dataset.copy||""; if(!val)return;
+   try{await navigator.clipboard.writeText(val);btn.textContent="복사됨";setTimeout(()=>btn.textContent="복사",1200)}catch(_){prompt("계좌번호를 복사해 주세요.",val)}
+ }));
+}
+async function load(){
+ const slug=(new URLSearchParams(location.search).get("slug")||"jisoo").trim().toLowerCase();
+ try{
+  const {data,error}=await db.from("weddings").select("*").eq("slug",slug).eq("is_published",true).single();
+  if(error)throw error;
+  document.title=data.page_title||"초대합니다";
+  const dc=data.design_config||{};
+  const bg=validHex(dc.background_hex,"#F3EEE3"),accent=validHex(dc.accent_hex,"#6F251D");
+  const cfg={bg,accent,ink:textInk(bg),card:bg.toLowerCase()==="#181818"?"#272321":"#fffdf9",tone:dc.photo_tone||"natural"};
+  const tpl=dc.template||"quiet_editorial";
+  app.style.setProperty("--bg",bg);app.style.setProperty("--accent",accent);app.style.setProperty("--ink",cfg.ink);
+  app.innerHTML=tpl==="type_image"?renderType(data,cfg):tpl==="letter_photobook"?renderLetter(data,cfg):renderQuiet(data,cfg);
+  app.style.background=bg;app.style.color=cfg.ink;
+  bindInteractions();
+ }catch(e){console.error(e);app.innerHTML='<div class="error">청첩장을 불러오지 못했습니다.<br>URL 또는 공개 상태를 확인해 주세요.</div>'}
+}
+load();
+</script>
 </body>
 </html>
