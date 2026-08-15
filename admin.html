@@ -443,6 +443,11 @@
     .moment-grid { grid-template-columns:repeat(2,1fr); }
   }
 
+
+  .ai-access-card{padding:16px;border:1px solid var(--line);border-radius:12px;background:#faf7f2}
+  .ai-access-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .ai-access-url{flex:1;min-width:220px;background:white}
+  .ai-usage{margin-top:8px;color:var(--muted);font-size:12px}
 </style>
 </head>
 <body>
@@ -705,6 +710,19 @@
               <label for="parkingDetail">주차 상세 안내</label>
               <textarea id="parkingDetail" placeholder="주말이라 공영주차장도 혼잡할 수 있습니다.&#10;너그러운 마음으로 양해 부탁드립니다."></textarea>
             </div>
+          </div>
+
+
+          <h3 class="section-title">AI DESIGN CUSTOMIZER</h3>
+          <div class="ai-access-card">
+            <strong>신랑신부 AI 디자인 링크</strong>
+            <div class="hint">이 링크를 받은 고객은 AI 시안 3개를 생성하고 원하는 디자인을 직접 적용할 수 있습니다.</div>
+            <div class="ai-access-row">
+              <input class="ai-access-url" id="aiDesignUrl" readonly placeholder="먼저 청첩장을 저장한 뒤 AI 링크를 생성하세요.">
+              <button class="btn" type="button" id="createAiLinkBtn">AI 링크 생성</button>
+              <button class="btn" type="button" id="copyAiLinkBtn">링크 복사</button>
+            </div>
+            <div class="ai-usage" id="aiUsage">생성권: 기본 5회</div>
           </div>
 
           <div class="actions">
@@ -996,6 +1014,82 @@
 
   renderMomentGrid([]);
 
+
+  const DESIGN_PAGE_BASE = "https://6athome.github.io/Wedding/design.html";
+
+  async function loadDesignAccess(weddingId) {
+    $("aiDesignUrl").value = "";
+    $("aiUsage").textContent = "생성권: 기본 5회";
+    if (!weddingId) return;
+
+    const { data, error } = await db
+      .from("wedding_design_access")
+      .select("access_token,ai_generations_used,ai_generations_max")
+      .eq("wedding_id", weddingId)
+      .maybeSingle();
+
+    if (error) { console.error(error); return; }
+    if (!data) return;
+
+    $("aiDesignUrl").value = DESIGN_PAGE_BASE + "?token=" + encodeURIComponent(data.access_token);
+    $("aiUsage").textContent = `AI 생성권: ${data.ai_generations_used} / ${data.ai_generations_max}회 사용`;
+  }
+
+  $("createAiLinkBtn").addEventListener("click", async () => {
+    const id = $("recordId").value;
+    if (!id) {
+      notice($("formNotice"), "먼저 청첩장을 저장해 주세요.", "error");
+      return;
+    }
+
+    const { data: existing, error: readError } = await db
+      .from("wedding_design_access")
+      .select("access_token,ai_generations_used,ai_generations_max")
+      .eq("wedding_id", id)
+      .maybeSingle();
+
+    if (readError) {
+      notice($("formNotice"), "AI 링크 확인 실패: " + readError.message, "error");
+      return;
+    }
+
+    if (existing) {
+      $("aiDesignUrl").value = DESIGN_PAGE_BASE + "?token=" + encodeURIComponent(existing.access_token);
+      $("aiUsage").textContent = `AI 생성권: ${existing.ai_generations_used} / ${existing.ai_generations_max}회 사용`;
+      notice($("formNotice"), "기존 AI 디자인 링크를 불러왔습니다.", "ok");
+      return;
+    }
+
+    const { data, error } = await db
+      .from("wedding_design_access")
+      .insert({ wedding_id: Number(id), ai_generations_max: 5 })
+      .select("access_token,ai_generations_used,ai_generations_max")
+      .single();
+
+    if (error) {
+      notice($("formNotice"), "AI 링크 생성 실패: " + error.message, "error");
+      return;
+    }
+
+    $("aiDesignUrl").value = DESIGN_PAGE_BASE + "?token=" + encodeURIComponent(data.access_token);
+    $("aiUsage").textContent = `AI 생성권: ${data.ai_generations_used} / ${data.ai_generations_max}회 사용`;
+    notice($("formNotice"), "고객용 AI 디자인 링크를 생성했습니다.", "ok");
+  });
+
+  $("copyAiLinkBtn").addEventListener("click", async () => {
+    const value = $("aiDesignUrl").value;
+    if (!value) {
+      notice($("formNotice"), "먼저 AI 링크를 생성해 주세요.", "error");
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(value);
+      notice($("formNotice"), "AI 디자인 링크를 복사했습니다.", "ok");
+    } catch (_) {
+      notice($("formNotice"), value, "ok");
+    }
+  });
+
   async function checkAdmin() {
     const { data: { user } } = await db.auth.getUser();
     if (!user) return false;
@@ -1187,12 +1281,15 @@
     $("editorSub").textContent = customerUrl(w.slug);
     $("unpublishBtn").style.display = w.is_published ? "inline-block" : "none";
     setPreviewLink();
+    loadDesignAccess(w.id);
   }
 
   function resetForm() {
     selectedId = null;
     form.reset();
     $("recordId").value = "";
+    $("aiDesignUrl").value = "";
+    $("aiUsage").textContent = "생성권: 기본 5회";
     $("pageTitle").value = "초대합니다";
     imageFields.forEach(field => {
       $(field.fileId).value = "";

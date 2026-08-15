@@ -29,6 +29,27 @@ nav.topnav a.active{color:var(--accent)}
 .back-home a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:.15em;text-transform:uppercase}
 .load-error{display:none;text-align:center;color:#9b2c2c;padding:40px 0}
 @media(max-width:600px){nav.topnav ul{gap:22px;padding:16px}nav.topnav a{font-size:13px;letter-spacing:.1em}.container{padding:40px 24px 60px}.info-block h2{font-size:22px}.address{font-size:15px}.lot{font-size:14px}.detail{font-size:12px}}
+
+  /* AI design tokens */
+  :root {
+    --ai-heading-font: Georgia, "Times New Roman", serif;
+    --ai-body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    --ai-radius: 6px;
+    --ai-photo-radius: 6px;
+  }
+  body { font-family: var(--ai-body-font); }
+  body.ai-theme-editorial h1, body.ai-theme-editorial h2, body.ai-theme-editorial h3,
+  body.ai-theme-romantic h1, body.ai-theme-romantic h2, body.ai-theme-romantic h3 {
+    font-family: var(--ai-heading-font);
+  }
+  body.ai-photo-rounded img { border-radius: var(--ai-photo-radius); }
+  body.ai-photo-polaroid .photo-frame { padding: 8px; background: #fff; }
+  body.ai-photo-polaroid .photo-frame img { border-radius: 2px; }
+  body.ai-animation-none *, body.ai-animation-none *::before, body.ai-animation-none *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+
 </style>
 </head>
 <body>
@@ -84,11 +105,53 @@ document.getElementById("backHome").href=withSlug("index.html");
 function text(id,value){const el=document.getElementById(id); if(el)el.textContent=value||"";}
 function link(id,value){const el=document.getElementById(id); if(!el)return; if(value){el.href=value;el.style.display="inline-flex"}else{el.style.display="none"}}
 
+
+  function applyDesignConfig(config) {
+    if (!config || typeof config !== "object") return;
+    const root = document.documentElement;
+    const colorMap = {
+      background: "--bg",
+      background_alt: "--bg-alt",
+      foreground: "--fg",
+      muted: "--muted",
+      accent: "--accent",
+      card_background: "--card-bg",
+      card_text: "--card-text"
+    };
+    Object.entries(colorMap).forEach(([key, cssVar]) => {
+      if (config[key]) root.style.setProperty(cssVar, config[key]);
+    });
+
+    const fontMap = {
+      playfair: '"Playfair Display", Georgia, serif',
+      cormorant: '"Cormorant Garamond", Georgia, serif',
+      myeongjo: '"Nanum Myeongjo", "Noto Serif KR", Georgia, serif',
+      noto_sans: '"Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif'
+    };
+    root.style.setProperty("--ai-heading-font", fontMap[config.heading_font] || fontMap.playfair);
+    root.style.setProperty("--ai-body-font", fontMap[config.body_font] || fontMap.noto_sans);
+
+    const radiusMap = { none: "0px", small: "6px", medium: "14px", large: "24px" };
+    root.style.setProperty("--ai-radius", radiusMap[config.border_radius] || "6px");
+    root.style.setProperty("--ai-photo-radius", radiusMap[config.border_radius] || "6px");
+
+    document.body.classList.remove(
+      "ai-theme-minimal","ai-theme-editorial","ai-theme-romantic","ai-theme-playful",
+      "ai-photo-square","ai-photo-rounded","ai-photo-polaroid","ai-photo-full",
+      "ai-animation-none","ai-animation-subtle","ai-animation-soft","ai-animation-playful"
+    );
+    document.body.classList.add("ai-theme-" + (config.layout || "editorial"));
+    document.body.classList.add("ai-photo-" + (config.photo_style || "square"));
+    document.body.classList.add("ai-animation-" + (config.animation || "soft"));
+  }
+
+
 async function loadLocation(){
  const {data,error}=await db.from("weddings")
- .select("location_address,location_detail_1,location_detail_2,parking_line_1,parking_line_2,parking_detail,map_image_url,naver_map_url,kakao_map_url")
+ .select("location_address,location_detail_1,location_detail_2,parking_line_1,parking_line_2,parking_detail,map_image_url,naver_map_url,kakao_map_url,design_config")
  .eq("slug",slug).eq("is_published",true).single();
  if(error){const e=document.getElementById("loadError");e.style.display="block";e.textContent="위치 정보를 불러오지 못했습니다.";return;}
+ applyDesignConfig(data.design_config);
  text("address",data.location_address);
  text("locationDetail1",data.location_detail_1);
  text("locationDetail2",data.location_detail_2);

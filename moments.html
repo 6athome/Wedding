@@ -40,6 +40,27 @@
   .comment-form button { background:#333; color:white; border:none; padding:12px; font-size:13px; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; border-radius:4px; }
   @media(max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:600px){nav.topnav ul{gap:22px;padding:16px} nav.topnav a{font-size:13px;letter-spacing:.1em}.container{padding:40px 20px 80px}.gallery{grid-template-columns:1fr 1fr;gap:24px 16px}.gallery-item{padding:10px 10px 42px}}
+
+  /* AI design tokens */
+  :root {
+    --ai-heading-font: Georgia, "Times New Roman", serif;
+    --ai-body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    --ai-radius: 6px;
+    --ai-photo-radius: 6px;
+  }
+  body { font-family: var(--ai-body-font); }
+  body.ai-theme-editorial h1, body.ai-theme-editorial h2, body.ai-theme-editorial h3,
+  body.ai-theme-romantic h1, body.ai-theme-romantic h2, body.ai-theme-romantic h3 {
+    font-family: var(--ai-heading-font);
+  }
+  body.ai-photo-rounded img { border-radius: var(--ai-photo-radius); }
+  body.ai-photo-polaroid .photo-frame { padding: 8px; background: #fff; }
+  body.ai-photo-polaroid .photo-frame img { border-radius: 2px; }
+  body.ai-animation-none *, body.ai-animation-none *::before, body.ai-animation-none *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+
 </style>
 </head>
 <body>
@@ -84,9 +105,51 @@ document.getElementById("navLocation").href=withSlug("location.html");
 document.getElementById("navInvite").href=withSlug("index.html","#invitation");
 document.getElementById("backHome").href=withSlug("index.html");
 
+
+  function applyDesignConfig(config) {
+    if (!config || typeof config !== "object") return;
+    const root = document.documentElement;
+    const colorMap = {
+      background: "--bg",
+      background_alt: "--bg-alt",
+      foreground: "--fg",
+      muted: "--muted",
+      accent: "--accent",
+      card_background: "--card-bg",
+      card_text: "--card-text"
+    };
+    Object.entries(colorMap).forEach(([key, cssVar]) => {
+      if (config[key]) root.style.setProperty(cssVar, config[key]);
+    });
+
+    const fontMap = {
+      playfair: '"Playfair Display", Georgia, serif',
+      cormorant: '"Cormorant Garamond", Georgia, serif',
+      myeongjo: '"Nanum Myeongjo", "Noto Serif KR", Georgia, serif',
+      noto_sans: '"Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif'
+    };
+    root.style.setProperty("--ai-heading-font", fontMap[config.heading_font] || fontMap.playfair);
+    root.style.setProperty("--ai-body-font", fontMap[config.body_font] || fontMap.noto_sans);
+
+    const radiusMap = { none: "0px", small: "6px", medium: "14px", large: "24px" };
+    root.style.setProperty("--ai-radius", radiusMap[config.border_radius] || "6px");
+    root.style.setProperty("--ai-photo-radius", radiusMap[config.border_radius] || "6px");
+
+    document.body.classList.remove(
+      "ai-theme-minimal","ai-theme-editorial","ai-theme-romantic","ai-theme-playful",
+      "ai-photo-square","ai-photo-rounded","ai-photo-polaroid","ai-photo-full",
+      "ai-animation-none","ai-animation-subtle","ai-animation-soft","ai-animation-playful"
+    );
+    document.body.classList.add("ai-theme-" + (config.layout || "editorial"));
+    document.body.classList.add("ai-photo-" + (config.photo_style || "square"));
+    document.body.classList.add("ai-animation-" + (config.animation || "soft"));
+  }
+
+
 async function loadGallery(){
-  const {data,error}=await sdb.from("weddings").select("moment_images").eq("slug",slug).eq("is_published",true).single();
+  const {data,error}=await sdb.from("weddings").select("moment_images,design_config").eq("slug",slug).eq("is_published",true).single();
   if(error){ document.getElementById("loadError").style.display="block"; document.getElementById("loadError").textContent="갤러리를 불러오지 못했습니다."; return; }
+  applyDesignConfig(data.design_config);
   const images=Array.isArray(data.moment_images)?data.moment_images.slice(0,6):[];
   const gallery=document.getElementById("gallery");
   gallery.innerHTML="";
