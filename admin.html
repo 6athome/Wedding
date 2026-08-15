@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Admin · 6athome</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  :root {
+    --bg: #f4f1eb;
+    --panel: #fffdf9;
+    --text: #271f1a;
+    --muted: #81746a;
+    --line: #ddd4ca;
+    --accent: #7d2a1f;
+    --accent-dark: #5f1f17;
+    --soft: #efe5dc;
+    --ok: #386641;
+    --warn: #9b5d16;
+    --danger: #9b2c2c;
+    --shadow: 0 12px 34px rgba(48, 33, 24, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+  }
+
+  button, input, textarea, select { font: inherit; }
+
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .brand small {
+    display: block;
+    color: var(--muted);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .brand h1 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 500;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .login-panel {
+    max-width: 460px;
+    margin: 90px auto 0;
+    padding: 32px;
+  }
+
+  .login-panel h2 { margin: 0 0 8px; }
+  .login-panel p { margin: 0 0 26px; color: var(--muted); line-height: 1.7; }
+
+  .dashboard { display: none; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .list-panel {
+    position: sticky;
+    top: 20px;
+    overflow: hidden;
+  }
+
+  .panel-head {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .panel-head h2 {
+    font-size: 17px;
+    margin: 0;
+  }
+
+  .wedding-list {
+    max-height: calc(100vh - 190px);
+    overflow: auto;
+    padding: 10px;
+  }
+
+  .wedding-item {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 13px 14px;
+    cursor: pointer;
+    margin-bottom: 7px;
+    color: var(--text);
+  }
+
+  .wedding-item:hover { background: #faf6f1; }
+  .wedding-item.active {
+    background: var(--soft);
+    border-color: #d9c3b5;
+  }
+
+  .wedding-item strong {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 3px;
+  }
+
+  .wedding-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #aaa;
+  }
+
+  .status.live .dot { background: var(--ok); }
+
+  .editor-panel { padding: 24px; }
+
+  .editor-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .editor-title h2 {
+    margin: 0 0 5px;
+    font-size: 22px;
+  }
+
+  .editor-title p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  .section-title {
+    margin: 28px 0 14px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+    letter-spacing: .05em;
+    color: var(--accent);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .field.full { grid-column: 1 / -1; }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: white;
+    color: var(--text);
+    border-radius: 10px;
+    padding: 12px 13px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: #a96b5e;
+    box-shadow: 0 0 0 3px rgba(125, 42, 31, 0.08);
+  }
+
+  textarea { min-height: 112px; resize: vertical; line-height: 1.7; }
+
+  .hint {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .btn {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 16px;
+    cursor: pointer;
+    background: white;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .btn:hover { background: #f8f4ef; }
+  .btn.primary {
+    color: white;
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+  .btn.primary:hover { background: var(--accent-dark); }
+  .btn.small { padding: 8px 11px; font-size: 12px; }
+  .btn.ghost { background: transparent; }
+  .btn.danger { color: var(--danger); }
+
+  .publish-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 14px;
+    background: #faf7f2;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .publish-row input { width: auto; }
+
+  .notice {
+    display: none;
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .notice.show { display: block; }
+  .notice.ok { background: #edf6ee; color: #28522f; border: 1px solid #c8dfca; }
+  .notice.error { background: #fff0f0; color: #7d2222; border: 1px solid #e8c3c3; }
+
+  .empty {
+    padding: 28px 18px;
+    color: var(--muted);
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .user {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 840px) {
+    .grid { grid-template-columns: 1fr; }
+    .list-panel { position: static; }
+    .wedding-list { max-height: 280px; }
+  }
+
+  @media (max-width: 620px) {
+    .shell { padding: 20px 12px 60px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .field.full { grid-column: auto; }
+    .editor-panel { padding: 18px; }
+    .login-panel { margin-top: 45px; padding: 24px; }
+    .topbar { align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <small>6athome</small>
+      <h1>Wedding Admin</h1>
+    </div>
+    <div class="user" id="userArea">
+      <span id="userEmail"></span>
+      <button class="btn small ghost" id="logoutBtn">로그아웃</button>
+    </div>
+  </div>
+
+  <section class="panel login-panel" id="loginPanel">
+    <h2>관리자 로그인</h2>
+    <p>Supabase Auth에 등록된 관리자 계정으로 로그인하세요.</p>
+    <div class="field">
+      <label for="loginEmail">이메일</label>
+      <input id="loginEmail" type="email" autocomplete="username" placeholder="you@example.com">
+    </div>
+    <div class="field" style="margin-top:14px;">
+      <label for="loginPassword">비밀번호</label>
+      <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••">
+    </div>
+    <div id="loginNotice" class="notice"></div>
+    <button class="btn primary" id="loginBtn" style="width:100%; margin-top:18px;">로그인</button>
+  </section>
+
+  <section class="dashboard" id="dashboard">
+    <div class="grid">
+      <aside class="panel list-panel">
+        <div class="panel-head">
+          <h2>청첩장 목록</h2>
+          <button class="btn small primary" id="newBtn">+ 새 고객</button>
+        </div>
+        <div class="wedding-list" id="weddingList"></div>
+      </aside>
+
+      <main class="panel editor-panel">
+        <div class="editor-title">
+          <div>
+            <h2 id="editorHeading">새 청첩장</h2>
+            <p id="editorSub">고객 정보를 입력하면 하나의 사이트에서 개별 URL이 생성됩니다.</p>
+          </div>
+        </div>
+
+        <div id="formNotice" class="notice"></div>
+
+        <form id="weddingForm">
+          <input type="hidden" id="recordId">
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="slug">Slug *</label>
+              <input id="slug" required placeholder="minji">
+              <div class="hint">URL: /Wedding/?slug=minji · 영문 소문자/숫자/하이픈 권장</div>
+            </div>
+
+            <div class="field">
+              <label>공개 상태</label>
+              <div class="publish-row">
+                <input type="checkbox" id="isPublished">
+                <label for="isPublished" style="margin:0; font-weight:500;">고객에게 공개</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="groomName">신랑 이름</label>
+              <input id="groomName" placeholder="김민수">
+            </div>
+
+            <div class="field">
+              <label for="brideName">신부 이름</label>
+              <input id="brideName" placeholder="박민지">
+            </div>
+
+            <div class="field">
+              <label for="pageTitle">브라우저 제목</label>
+              <input id="pageTitle" value="초대합니다">
+            </div>
+
+            <div class="field">
+              <label for="tagline">한 줄 소개</label>
+              <input id="tagline" placeholder="웨딩 파티에 여러분을 초대합니다">
+            </div>
+          </div>
+
+          <h3 class="section-title">DATE & PLACE</h3>
+          <div class="form-grid">
+            <div class="field">
+              <label for="dateSummary">상단 날짜 문구</label>
+              <input id="dateSummary" placeholder="11월 7일 오후 5시 - 7시">
+            </div>
+            <div class="field">
+              <label for="dateDetail">DATE 상세</label>
+              <input id="dateDetail" placeholder="2026년 11월 7일 토요일">
+            </div>
+            <div class="field">
+              <label for="timeDetail">TIME</label>
+              <input id="timeDetail" placeholder="오후 5시">
+            </div>
+            <div class="field">
+              <label for="venueName">PLACE</label>
+              <input id="venueName" placeholder="틸티드한남">
+            </div>
+          </div>
+
+          <h3 class="section-title">INVITATION COPY</h3>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="introLine">첫 문장</label>
+              <input id="introLine" placeholder="저희.. 결혼합니다... >0<">
+            </div>
+            <div class="field full">
+              <label for="message1">초대 문구 1</label>
+              <textarea id="message1"></textarea>
+            </div>
+            <div class="field full">
+              <label for="message2">초대 문구 2</label>
+              <textarea id="message2"></textarea>
+            </div>
+            <div class="field full">
+              <label for="message3">초대 문구 3</label>
+              <textarea id="message3"></textarea>
+            </div>
+          </div>
+
+          <h3 class="section-title">IMAGES & RSVP</h3>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="heroImage">Hero 이미지 URL</label>
+              <input id="heroImage" placeholder="https://.../main.jpg 또는 images/hannam-bg.jpg">
+            </div>
+            <div class="field full">
+              <label for="spaceImage">Space 이미지 URL</label>
+              <input id="spaceImage">
+            </div>
+            <div class="field full">
+              <label for="diningImage">Dining 이미지 URL</label>
+              <input id="diningImage">
+            </div>
+            <div class="field full">
+              <label for="dessertImage">Dessert 이미지 URL</label>
+              <input id="dessertImage">
+            </div>
+            <div class="field full">
+              <label for="rsvpUrl">RSVP URL</label>
+              <input id="rsvpUrl" placeholder="https://docs.google.com/forms/...">
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" type="submit" id="saveBtn">저장</button>
+            <button class="btn" type="button" id="copyBtn">고객 URL 복사</button>
+            <a class="btn" id="previewBtn" href="#" target="_blank" rel="noopener">미리보기</a>
+            <button class="btn danger" type="button" id="unpublishBtn">비공개 전환</button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://gfpdjxdoxjonramxrlgi.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_NUhd1LmMj09rtA5RMcgAxA_cMKIuZB6";
+  const SITE_BASE = "https://6athome.github.io/Wedding/";
+
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+  const $ = (id) => document.getElementById(id);
+
+  const loginPanel = $("loginPanel");
+  const dashboard = $("dashboard");
+  const userArea = $("userArea");
+  const weddingList = $("weddingList");
+  const form = $("weddingForm");
+
+  let weddings = [];
+  let selectedId = null;
+
+  function notice(el, message, type = "ok") {
+    el.textContent = message;
+    el.className = "notice show " + type;
+    if (type === "ok") {
+      setTimeout(() => {
+        el.className = "notice";
+      }, 2600);
+    }
+  }
+
+  function normalizeSlug(value) {
+    return (value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+  }
+
+  function customerUrl(slug) {
+    return SITE_BASE + "?slug=" + encodeURIComponent(slug || "");
+  }
+
+  function setPreviewLink() {
+    const slug = normalizeSlug($("slug").value);
+    $("previewBtn").href = slug ? customerUrl(slug) : "#";
+  }
+
+  $("slug").addEventListener("input", () => {
+    const start = $("slug").selectionStart;
+    $("slug").value = normalizeSlug($("slug").value);
+    try { $("slug").setSelectionRange(start, start); } catch (_) {}
+    setPreviewLink();
+  });
+
+  async function checkAdmin() {
+    const { data: { user } } = await db.auth.getUser();
+    if (!user) return false;
+
+    const { data, error } = await db
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (error || !data) {
+      await db.auth.signOut();
+      return false;
+    }
+
+    $("userEmail").textContent = user.email || "관리자";
+    return true;
+  }
+
+  async function showApp() {
+    const isAdmin = await checkAdmin();
+    if (!isAdmin) {
+      loginPanel.style.display = "block";
+      dashboard.style.display = "none";
+      userArea.style.display = "none";
+      return;
+    }
+
+    loginPanel.style.display = "none";
+    dashboard.style.display = "block";
+    userArea.style.display = "flex";
+    await loadWeddings();
+  }
+
+  $("loginBtn").addEventListener("click", async () => {
+    const email = $("loginEmail").value.trim();
+    const password = $("loginPassword").value;
+
+    if (!email || !password) {
+      notice($("loginNotice"), "이메일과 비밀번호를 입력해 주세요.", "error");
+      return;
+    }
+
+    $("loginBtn").disabled = true;
+    $("loginBtn").textContent = "로그인 중...";
+
+    const { error } = await db.auth.signInWithPassword({ email, password });
+
+    $("loginBtn").disabled = false;
+    $("loginBtn").textContent = "로그인";
+
+    if (error) {
+      notice($("loginNotice"), "로그인 실패: " + error.message, "error");
+      return;
+    }
+
+    const ok = await checkAdmin();
+    if (!ok) {
+      notice($("loginNotice"), "이 계정은 관리자 권한이 없습니다.", "error");
+      return;
+    }
+
+    await showApp();
+  });
+
+  $("logoutBtn").addEventListener("click", async () => {
+    await db.auth.signOut();
+    selectedId = null;
+    await showApp();
+  });
+
+  async function loadWeddings() {
+    weddingList.innerHTML = '<div class="empty">불러오는 중...</div>';
+
+    const { data, error } = await db
+      .from("weddings")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      weddingList.innerHTML = '<div class="empty">목록을 불러오지 못했습니다.</div>';
+      notice($("formNotice"), error.message, "error");
+      return;
+    }
+
+    weddings = data || [];
+    renderList();
+
+    if (selectedId) {
+      const current = weddings.find(w => String(w.id) === String(selectedId));
+      if (current) fillForm(current);
+    }
+  }
+
+  function renderList() {
+    if (!weddings.length) {
+      weddingList.innerHTML = '<div class="empty">아직 등록된 청첩장이 없습니다.<br>새 고객을 추가해 주세요.</div>';
+      return;
+    }
+
+    weddingList.innerHTML = "";
+    weddings.forEach(w => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "wedding-item" + (String(w.id) === String(selectedId) ? " active" : "");
+      button.innerHTML = `
+        <strong>${escapeHtml([w.groom_name, w.bride_name].filter(Boolean).join(" · ") || w.slug)}</strong>
+        <div class="wedding-meta">
+          <span>${escapeHtml(w.slug)}</span>
+          <span class="status ${w.is_published ? "live" : ""}">
+            <span class="dot"></span>${w.is_published ? "공개" : "비공개"}
+          </span>
+        </div>
+      `;
+      button.addEventListener("click", () => {
+        selectedId = w.id;
+        fillForm(w);
+        renderList();
+      });
+      weddingList.appendChild(button);
+    });
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function val(id, value = "") {
+    $(id).value = value ?? "";
+  }
+
+  function fillForm(w) {
+    $("recordId").value = w.id || "";
+    val("slug", w.slug);
+    $("isPublished").checked = !!w.is_published;
+    val("groomName", w.groom_name);
+    val("brideName", w.bride_name);
+    val("pageTitle", w.page_title || "초대합니다");
+    val("tagline", w.tagline);
+    val("dateSummary", w.date_summary);
+    val("dateDetail", w.date_detail);
+    val("timeDetail", w.time_detail);
+    val("venueName", w.venue_name);
+    val("introLine", w.intro_line);
+    val("message1", w.invite_message_1);
+    val("message2", w.invite_message_2);
+    val("message3", w.invite_message_3);
+    val("heroImage", w.hero_image_url);
+    val("spaceImage", w.space_image_url);
+    val("diningImage", w.dining_image_url);
+    val("dessertImage", w.dessert_image_url);
+    val("rsvpUrl", w.rsvp_url);
+
+    $("editorHeading").textContent =
+      [w.groom_name, w.bride_name].filter(Boolean).join(" · ") || "청첩장 수정";
+    $("editorSub").textContent = customerUrl(w.slug);
+    $("unpublishBtn").style.display = w.is_published ? "inline-block" : "none";
+    setPreviewLink();
+  }
+
+  function resetForm() {
+    selectedId = null;
+    form.reset();
+    $("recordId").value = "";
+    $("pageTitle").value = "초대합니다";
+    $("editorHeading").textContent = "새 청첩장";
+    $("editorSub").textContent = "고객 정보를 입력하면 하나의 사이트에서 개별 URL이 생성됩니다.";
+    $("unpublishBtn").style.display = "none";
+    setPreviewLink();
+    renderList();
+  }
+
+  $("newBtn").addEventListener("click", resetForm);
+
+  function payloadFromForm() {
+    const slug = normalizeSlug($("slug").value);
+
+    return {
+      slug,
+      is_published: $("isPublished").checked,
+      page_title: $("pageTitle").value.trim() || "초대합니다",
+      groom_name: $("groomName").value.trim() || null,
+      bride_name: $("brideName").value.trim() || null,
+      date_summary: $("dateSummary").value.trim() || null,
+      tagline: $("tagline").value.trim() || null,
+      date_detail: $("dateDetail").value.trim() || null,
+      time_detail: $("timeDetail").value.trim() || null,
+      venue_name: $("venueName").value.trim() || null,
+      intro_line: $("introLine").value.trim() || null,
+      invite_message_1: $("message1").value.trim() || null,
+      invite_message_2: $("message2").value.trim() || null,
+      invite_message_3: $("message3").value.trim() || null,
+      hero_image_url: $("heroImage").value.trim() || null,
+      space_image_url: $("spaceImage").value.trim() || null,
+      dining_image_url: $("diningImage").value.trim() || null,
+      dessert_image_url: $("dessertImage").value.trim() || null,
+      rsvp_url: $("rsvpUrl").value.trim() || null,
+      updated_at: new Date().toISOString()
+    };
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const payload = payloadFromForm();
+    if (!payload.slug) {
+      notice($("formNotice"), "Slug를 입력해 주세요.", "error");
+      return;
+    }
+
+    $("saveBtn").disabled = true;
+    $("saveBtn").textContent = "저장 중...";
+
+    let result;
+    const id = $("recordId").value;
+
+    if (id) {
+      result = await db
+        .from("weddings")
+        .update(payload)
+        .eq("id", id)
+        .select()
+        .single();
+    } else {
+      result = await db
+        .from("weddings")
+        .insert(payload)
+        .select()
+        .single();
+    }
+
+    $("saveBtn").disabled = false;
+    $("saveBtn").textContent = "저장";
+
+    if (result.error) {
+      notice($("formNotice"), "저장 실패: " + result.error.message, "error");
+      return;
+    }
+
+    selectedId = result.data.id;
+    notice($("formNotice"), "저장했습니다.", "ok");
+    await loadWeddings();
+  });
+
+  $("copyBtn").addEventListener("click", async () => {
+    const slug = normalizeSlug($("slug").value);
+    if (!slug) {
+      notice($("formNotice"), "먼저 Slug를 입력해 주세요.", "error");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(customerUrl(slug));
+      notice($("formNotice"), "고객 URL을 복사했습니다.", "ok");
+    } catch (_) {
+      notice($("formNotice"), customerUrl(slug), "ok");
+    }
+  });
+
+  $("unpublishBtn").addEventListener("click", async () => {
+    const id = $("recordId").value;
+    if (!id) return;
+
+    const { error } = await db
+      .from("weddings")
+      .update({ is_published: false, updated_at: new Date().toISOString() })
+      .eq("id", id);
+
+    if (error) {
+      notice($("formNotice"), "비공개 전환 실패: " + error.message, "error");
+      return;
+    }
+
+    $("isPublished").checked = false;
+    notice($("formNotice"), "비공개로 전환했습니다.", "ok");
+    await loadWeddings();
+  });
+
+  db.auth.onAuthStateChange(() => {
+    // Initial session restoration is handled by showApp().
+  });
+
+  showApp();
+</script>
+</body>
+</html>
