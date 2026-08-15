@@ -6,9 +6,9 @@
 <meta name="robots" content="index,follow">
 <title>초대합니다</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Noto+Sans+KR:wght@300;400;500&display=swap');
 *{box-sizing:border-box}
-:root{--bg:#f3eee3;--accent:#6f251d;--ink:#211c18;--muted:#7f746b;--card:#fffdf9;--line:rgba(40,30,25,.14);--serif:"Cormorant Garamond","Noto Serif KR",serif;--sans:"Noto Sans KR",sans-serif}
+:root{--bg:#f3eee3;--accent:#6f251d;--ink:#211c18;--muted:#7f746b;--card:#fffdf9;--line:rgba(40,30,25,.14);--serif:"Gowun Batang",serif;--sans:"Noto Sans KR",sans-serif}
 html{scroll-behavior:smooth}body{margin:0;background:#e9e5df;color:var(--ink);font-family:var(--sans);font-weight:300}
 #app{width:min(100%,480px);margin:0 auto;min-height:100vh;background:var(--bg);box-shadow:0 0 40px rgba(0,0,0,.08)}
 .loading{padding:100px 24px;text-align:center;color:var(--muted)}
@@ -120,6 +120,51 @@ img{display:block;width:100%}
 .end-script{font:italic 31px var(--serif);margin-bottom:18px}
 .error{padding:80px 24px;text-align:center;color:#7c2a22}
 @media(min-width:481px){body{padding:24px 0}}
+
+/* D. DARK OLIVE & LIME DOT */
+.tpl-dark_olive_lime{
+  --olive:#474a37;--lime:#d8e592;--cream:#f7f5e9;
+  background-color:var(--olive);color:var(--cream);
+  background-image:radial-gradient(circle,rgba(216,229,146,.22) 1px,transparent 1.2px);
+  background-size:18px 18px;
+}
+.d-starline{display:flex;align-items:center;gap:12px;padding:22px 20px;color:var(--lime)}
+.d-starline:before,.d-starline:after{content:"";height:1px;flex:1;background:rgba(216,229,146,.5)}.d-starline span{font-size:14px}
+.d-hero{min-height:100svh;position:relative;background:#181b12}
+.d-hero img{height:100svh;object-fit:cover;filter:saturate(.75) brightness(.72)}
+.d-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 52%,rgba(20,25,12,.85))}
+.d-hero-copy{position:absolute;z-index:2;left:24px;right:24px;bottom:55px;text-align:center}
+.d-hero-copy h1{font:400 31px/1.35 var(--serif);margin:0;color:var(--lime)}
+.d-hero-copy p{font-size:11px;line-height:1.8}
+.d-scroll{position:absolute;z-index:3;left:50%;bottom:15px;transform:translateX(-50%);width:32px;height:32px;border:1px solid var(--lime);border-radius:50%;display:grid;place-items:center;color:var(--lime);animation:dBounce 1.5s infinite}
+@keyframes dBounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
+.d-invite{margin:0 18px;padding:48px 24px;border:1px solid rgba(216,229,146,.75);border-radius:15px;text-align:center;background:rgba(28,33,20,.45);backdrop-filter:blur(4px)}
+.d-invite .parents{font-size:11px;line-height:2;color:#eff3d8}.d-invite .copy{font-family:var(--serif);font-size:14px}
+.d-contact-open{display:block;width:calc(100% - 36px);margin:0 18px;border:0;border-radius:8px;background:var(--lime);color:#282c1c;padding:15px;font:500 12px var(--sans)}
+.d-gallery{display:flex;gap:10px;overflow-x:auto;padding:15px 20px 25px;scroll-snap-type:x mandatory;scrollbar-width:none}.d-gallery::-webkit-scrollbar{display:none}
+.d-gallery img{flex:0 0 72%;height:360px;object-fit:cover;border-radius:12px;scroll-snap-align:center;border:1px solid rgba(216,229,146,.55)}
+.d-count{padding:35px 20px;text-align:center}.d-count strong{font:400 48px var(--serif);color:var(--lime)}
+.d-count-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px}.d-count-grid div{border:1px solid rgba(216,229,146,.45);border-radius:8px;padding:11px 4px}.d-count-grid b{display:block;color:var(--lime);font-size:18px}.d-count-grid span{font-size:9px}
+.d-calendar{margin:20px;border:1px solid rgba(216,229,146,.35);border-radius:12px;padding:16px;background:rgba(20,25,13,.32)}
+.d-cal-head{text-align:center;font:400 15px var(--serif);margin-bottom:12px}.d-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center;font-size:10px}
+.d-cal-grid span{padding:7px 2px;border-radius:50%}.d-cal-grid .hit{background:var(--lime);color:#30341f;font-weight:500}
+.d-location,.d-guides,.d-accounts,.d-rsvp,.d-guest,.d-share{padding:35px 18px}
+.d-location .map{border-radius:12px;overflow:hidden}.d-location .btn,.d-share .btn{border-color:var(--lime);color:var(--lime)}
+.d-guides-grid{display:grid;gap:14px}.d-guide{background:#f7f5ec;color:#34382a;border-radius:12px;overflow:hidden}.d-guide img{aspect-ratio:16/10;object-fit:cover}.d-guide-copy{padding:15px;font-size:11px;line-height:1.8}
+.tpl-dark_olive_lime .acc-group{border-color:rgba(216,229,146,.55);background:rgba(20,25,13,.42)}.tpl-dark_olive_lime .acc-card{background:#edf0d5;color:#2c3020}.tpl-dark_olive_lime .acc-box{background:#dadfb9}.tpl-dark_olive_lime .copy-btn{color:#2c3020}
+.d-rsvp-open{width:100%;border:0;border-radius:9px;background:var(--lime);padding:15px;color:#252919;font-weight:500}
+.d-notes{columns:2;column-gap:10px}.d-note{break-inside:avoid;margin:0 0 10px;padding:14px;min-height:100px;color:#353126;font-size:11px;line-height:1.65;box-shadow:0 5px 12px rgba(0,0,0,.18);transform:rotate(var(--rot))}
+.d-note b{display:block;margin-top:10px;text-align:right;font-size:10px}.d-guest-form{display:grid;gap:9px;margin-top:18px}.d-guest-form input,.d-guest-form textarea,.d-sheet input{border:1px solid rgba(216,229,146,.55);border-radius:8px;background:#f9f8ef;padding:12px;font:inherit}.d-guest-form button{border:0;border-radius:8px;background:var(--lime);padding:13px;color:#292d1d}
+.d-share .two-btn .btn{flex:1}
+.d-sheet-wrap{position:fixed;z-index:999;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center}.d-sheet-wrap.show{display:flex}
+.d-sheet{width:min(100%,480px);max-height:88svh;overflow:auto;background:#f7f5ed;color:#303326;border-radius:22px 22px 0 0;padding:25px 20px 34px;animation:dUp .25s ease-out}
+@keyframes dUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.d-sheet-head{display:flex;justify-content:space-between;align-items:center}.d-sheet-head h3{font:400 21px var(--serif);margin:0}.d-x{border:0;background:none;font-size:24px}
+.d-form{display:grid;gap:15px;margin-top:22px}.d-label{font-size:11px;font-weight:500}.d-toggle{display:grid;grid-template-columns:1fr 1fr}.d-toggle button{border:1px solid #bbb;background:#fff;padding:11px}.d-toggle button.active{background:var(--lime);border-color:#a8b55a}
+.d-radio{display:flex;gap:16px;flex-wrap:wrap;font-size:11px}.d-submit{border:0;border-radius:8px;background:var(--lime);padding:15px;font-weight:500}
+.d-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.d-person{padding:12px 0;border-bottom:1px solid #ddd}.d-person small{display:block;color:#777}.d-person-actions{display:flex;gap:7px;margin-top:8px}.d-person-actions a{display:grid;place-items:center;width:32px;height:32px;border:1px solid #a8b55a;border-radius:50%;text-decoration:none;color:#384020}
+.fade{opacity:0;transform:translateY(12px);transition:.6s ease}.fade.show{opacity:1;transform:none}
+
 </style>
 </head>
 <body>
@@ -245,6 +290,123 @@ function bindInteractions(){
    try{await navigator.clipboard.writeText(val);btn.textContent="복사됨";setTimeout(()=>btn.textContent="복사",1200)}catch(_){prompt("계좌번호를 복사해 주세요.",val)}
  }));
 }
+
+function dStar(){return `<div class="d-starline"><span>★</span></div>`}
+function personRow(role,name,phone){
+ if(!name&&!phone)return "";
+ return `<div class="d-person"><small>${esc(role)}</small><b>${esc(name||"")}</b><div class="d-person-actions">${phone?`<a href="tel:${esc(phone)}">☎</a><a href="sms:${esc(phone)}">✉</a>`:""}</div></div>`;
+}
+function dParents(d){
+ return `<div class="parents">${esc(d.groom_father_name||"<신랑아버지>")}·${esc(d.groom_mother_name||"<신랑어머니>")}의 장남 ${esc(d.groom_name||"<신랑이름>")}<br>${esc(d.bride_father_name||"<신부아버지>")}·${esc(d.bride_mother_name||"<신부어머니>")}의 장녀 ${esc(d.bride_name||"<신부이름>")}</div>`;
+}
+function dInvitationText(d){
+ if(d.invite_message_1||d.invite_message_2)return invitationCopy(d);
+ return `오랜 시간 걸음 지키며
+서로의 하루가 되어주었습니다.
+
+이제 부부라는 이름으로
+같은 방향을 걸어가려 합니다.
+
+이 뜻깊은 시작의 자리에
+소중한 분들을 정중히 초대합니다.
+
+${d.groom_name||"신랑"}·${d.bride_name||"신부"} 드림`;
+}
+function dContactSheet(d){
+ const left=personRow("신랑",d.groom_name,d.groom_phone)+personRow("신랑 아버지",d.groom_father_name,d.groom_father_phone)+personRow("신랑 어머니",d.groom_mother_name,d.groom_mother_phone);
+ const right=personRow("신부",d.bride_name,d.bride_phone)+personRow("신부 아버지",d.bride_father_name,d.bride_father_phone)+personRow("신부 어머니",d.bride_mother_name,d.bride_mother_phone);
+ return `<div class="d-sheet-wrap" id="contactSheet"><div class="d-sheet"><div class="d-sheet-head"><h3>연락처</h3><button class="d-x" data-close="contactSheet">×</button></div><div class="d-contact-grid"><div><h4>신랑측</h4>${left}</div><div><h4>신부측</h4>${right}</div></div></div></div>`;
+}
+function calendarHTML(date){
+ const dt=date?new Date(date):null;if(!dt||Number.isNaN(dt.getTime()))return "";
+ const y=dt.getFullYear(),m=dt.getMonth(),day=dt.getDate(),first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();
+ let cells=["일","월","화","수","목","금","토"].map(x=>`<b>${x}</b>`).join("");
+ for(let i=0;i<first;i++)cells+=`<span></span>`;
+ for(let d=1;d<=last;d++)cells+=`<span class="${d===day?"hit":""}">${d}</span>`;
+ return `<div class="d-calendar"><div class="d-cal-head">${y}년 ${m+1}월</div><div class="d-cal-grid">${cells}</div></div>`;
+}
+function dCountdownSection(d){
+ if(!d.wedding_datetime)return "";
+ return `<section class="d-count fade" data-countdown="${esc(d.wedding_datetime)}"><div class="kicker">COUNTDOWN</div><p>${esc(d.groom_name||"신랑")} ♥ ${esc(d.bride_name||"신부")}의 결혼식이 <strong class="d-days">-</strong>일 남았습니다</p><div class="d-count-grid"><div><b data-dd>0</b><span>일</span></div><div><b data-hh>0</b><span>시간</span></div><div><b data-mm>0</b><span>분</span></div><div><b data-ss>0</b><span>초</span></div></div>${calendarHTML(d.wedding_datetime)}</section>`;
+}
+function dVenueGuides(d){
+ const g=Array.isArray(d.venue_guides)?d.venue_guides:[];
+ if(!g.length)return "";
+ return `<section class="d-guides fade"><h2 class="section-title" style="color:var(--lime)">예식장 안내</h2><div class="d-guides-grid">${g.slice(0,3).map((x,i)=>`<article class="d-guide">${x.image_url?`<img src="${esc(x.image_url)}" alt="">`:""}<div class="d-guide-copy"><b>안내 ${i+1}</b><br>${lines(x.text||"")}</div></article>`).join("")}</div></section>`;
+}
+function dLocation(d){
+ if(!d.location_address&&!d.map_image_url)return "";
+ return `<section class="d-location fade"><h2 class="section-title" style="color:var(--lime)">오시는 길</h2>${d.map_image_url?`<div class="map"><img src="${esc(d.map_image_url)}" alt="약도"></div>`:""}<div class="copy center">${esc(d.venue_name||"")}<br>${esc(d.location_address||"")}<br>${esc(d.location_detail_1||"")}<br>${esc(d.location_detail_2||"")}</div><div class="two-btn" style="margin-top:18px">${navButtons(d)}</div>${(d.parking_detail||d.parking_line_1)?`<div class="parking" style="background:rgba(0,0,0,.17);color:#eef2d7;border:1px solid rgba(216,229,146,.25)"><b>주차 안내</b><br>${esc(d.parking_line_1||"")}<br>${esc(d.parking_line_2||"")}<br>${lines(d.parking_detail||"")}</div>`:""}</section>`;
+}
+function dRsvpSheet(d){
+ return `<div class="d-sheet-wrap" id="rsvpSheet"><div class="d-sheet"><div class="d-sheet-head"><h3>참석 의사 전달하기</h3><button class="d-x" data-close="rsvpSheet">×</button></div><form class="d-form" id="dRsvpForm">
+ <input type="hidden" name="side" value="groom">
+ <div><div class="d-label">구분</div><div class="d-toggle"><button type="button" class="active" data-side="groom">신랑측</button><button type="button" data-side="bride">신부측</button></div></div>
+ <div><div class="d-label">성함</div><input name="name" required placeholder="성함"></div>
+ <div><div class="d-label">연락처</div><input name="phone" placeholder="010-0000-0000"></div>
+ <div><div class="d-label">참석 여부</div><div class="d-radio"><label><input type="radio" name="attendance" value="attending" required> 참석</label><label><input type="radio" name="attendance" value="not_attending"> 불참석</label></div></div>
+ <div><div class="d-label">참석인원</div><input type="number" min="0" max="30" name="guest_count" value="1" placeholder="본인 포함 총 참석인원"></div>
+ <div><div class="d-label">동행인</div><input name="companion_names" placeholder="함께 오시는 분 성함"></div>
+ <div><div class="d-label">식사여부</div><div class="d-radio"><label><input type="radio" name="meal_preference" value="yes"> 예정</label><label><input type="radio" name="meal_preference" value="no"> 안함</label><label><input type="radio" name="meal_preference" value="undecided"> 미정</label></div></div>
+ <button class="d-submit" type="submit">참석 의사 전달하기</button>
+ <label style="font-size:10px"><input type="checkbox" id="rsvpToday"> 오늘 하루 보지 않기</label>
+ </form></div></div>`;
+}
+function dGuestbook(){
+ return `<section class="d-guest fade"><h2 class="section-title" style="color:var(--lime)">축하 메시지</h2><div class="d-notes" id="dNotes"></div><form class="d-guest-form" id="guestForm"><input name="author" maxlength="30" required placeholder="이름"><textarea name="content" maxlength="500" required placeholder="축하 메시지를 남겨주세요"></textarea><button>메시지 남기기</button></form></section>`;
+}
+function dShare(){
+ return `<section class="d-share fade"><div class="copy center">함께 기쁨을 나눠주세요</div><div class="two-btn" style="margin-top:18px"><button class="btn" id="kakaoShare">카카오톡 공유</button><button class="btn" id="copyLink">링크 복사</button></div></section>`;
+}
+function renderDarkOlive(d,cfg){
+ const hero=d.hero_image_url||momentsImages(d)[0]||"";
+ const imgs=momentsImages(d);
+ return `<main class="tpl-dark_olive_lime" style="--bg:#474a37;--accent:#d8e592;--ink:#f7f5e9">
+ <section class="d-hero">${hero?`<img src="${esc(hero)}" alt="">`:""}<div class="d-hero-copy"><h1>${esc(d.groom_name||"GROOM")} & ${esc(d.bride_name||"BRIDE")}</h1><p>${esc(d.date_summary||"")}<br>${esc(d.venue_name||"")}</p></div><div class="d-scroll">⌄</div></section>
+ ${dStar()}<section class="d-invite fade">${dParents(d)}<div class="rule" style="background:var(--lime)"></div><div class="copy">${lines(dInvitationText(d))}</div></section>
+ ${dStar()}<button class="d-contact-open fade" id="contactOpen">연락하기</button>
+ ${dStar()}${imgs.length?`<section class="fade"><h2 class="section-title" style="color:var(--lime)">우리의 순간들</h2><div class="d-gallery">${imgs.map(x=>`<img src="${esc(x)}" alt="">`).join("")}</div></section>`:""}
+ ${dStar()}${dCountdownSection(d)}
+ ${dStar()}${dLocation(d)}
+ ${dStar()}${dVenueGuides(d)}
+ ${dStar()}<section class="d-accounts fade"><div style="color:#f7f5e9">${accountsSection(d).replace('<section class="accounts">','').replace('</section>','')}</div></section>
+ ${dStar()}<section class="d-rsvp fade"><h2 class="section-title" style="color:var(--lime)">참석 여부</h2><button class="d-rsvp-open" id="rsvpOpen">참석 의사 전달하기</button></section>
+ ${dStar()}${dGuestbook()}${dStar()}${dShare()}
+ <section class="ending" style="color:#f7f5e9"><div class="end-script" style="color:var(--lime)">with all our love</div><small>© ${new Date().getFullYear()} ${esc(d.groom_name||"")} & ${esc(d.bride_name||"")}</small></section>
+ ${dContactSheet(d)}${dRsvpSheet(d)}</main>`;
+}
+async function loadGuestbook(weddingId){
+ const box=document.getElementById("dNotes");if(!box)return;
+ const {data}=await db.from("guestbook_messages").select("*").eq("wedding_id",weddingId).order("created_at",{ascending:false}).limit(50);
+ renderGuestbook(data||[]);
+ db.channel("guestbook-"+weddingId).on("postgres_changes",{event:"INSERT",schema:"public",table:"guestbook_messages",filter:"wedding_id=eq."+weddingId},p=>prependGuest(p.new)).subscribe();
+}
+const noteColors=["#e7e1a1","#ead5bb","#d6dfbe","#d4dbe0","#e5c8c1","#ddd3a9"];
+function noteHtml(x){const rot=[-2,1.5,-1,2,-1.5,1][Number(x.color_index||0)%6];return `<article class="d-note" style="background:${noteColors[Number(x.color_index||0)%6]};--rot:${rot}deg">${lines(x.content)}<b>— ${esc(x.author)}</b></article>`}
+function renderGuestbook(rows){const b=document.getElementById("dNotes");if(b)b.innerHTML=rows.map(noteHtml).join("")}
+function prependGuest(x){const b=document.getElementById("dNotes");if(b)b.insertAdjacentHTML("afterbegin",noteHtml(x))}
+function startCountdown(){
+ const el=document.querySelector("[data-countdown]");if(!el)return;
+ const target=new Date(el.dataset.countdown).getTime();
+ const run=()=>{let diff=Math.max(0,target-Date.now()),days=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+ el.querySelector(".d-days").textContent=days;el.querySelector("[data-dd]").textContent=days;el.querySelector("[data-hh]").textContent=h;el.querySelector("[data-mm]").textContent=m;el.querySelector("[data-ss]").textContent=s};
+ run();setInterval(run,1000);
+}
+function bindD(d){
+ document.getElementById("contactOpen")?.addEventListener("click",()=>document.getElementById("contactSheet")?.classList.add("show"));
+ document.getElementById("rsvpOpen")?.addEventListener("click",()=>document.getElementById("rsvpSheet")?.classList.add("show"));
+ document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>document.getElementById(b.dataset.close)?.classList.remove("show"));
+ document.querySelectorAll("[data-side]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-side]").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelector('#dRsvpForm [name="side"]').value=b.dataset.side});
+ document.getElementById("dRsvpForm")?.addEventListener("submit",async e=>{e.preventDefault();const fd=new FormData(e.currentTarget);const payload={wedding_id:d.id,side:fd.get("side"),name:String(fd.get("name")||""),phone:String(fd.get("phone")||"")||null,attendance:fd.get("attendance"),guest_count:Number(fd.get("guest_count")||0),companion_names:String(fd.get("companion_names")||"")||null,meal_preference:fd.get("meal_preference")||null};
+ const {error}=await db.from("rsvp_submissions").insert(payload);if(error)return alert("저장하지 못했습니다. 다시 시도해 주세요.");if(document.getElementById("rsvpToday")?.checked)localStorage.setItem("rsvp-hide-"+d.id,new Date().toDateString());alert("참석 의사를 전달했습니다. 감사합니다.");document.getElementById("rsvpSheet")?.classList.remove("show")});
+ document.getElementById("guestForm")?.addEventListener("submit",async e=>{e.preventDefault();const fd=new FormData(e.currentTarget);const {error}=await db.from("guestbook_messages").insert({wedding_id:d.id,author:String(fd.get("author")||""),content:String(fd.get("content")||""),color_index:Math.floor(Math.random()*6)});if(error)return alert("메시지를 저장하지 못했습니다.");e.currentTarget.reset()});
+ document.getElementById("copyLink")?.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(location.href);alert("링크를 복사했습니다.")}catch(_){prompt("링크를 복사해 주세요.",location.href)}});
+ document.getElementById("kakaoShare")?.addEventListener("click",()=>{if(navigator.share)navigator.share({title:document.title,url:location.href});else alert("카카오톡 공유 SDK는 추후 앱 키 연결 후 사용할 수 있습니다. 지금은 링크 복사를 이용해 주세요.")});
+ startCountdown();loadGuestbook(d.id);
+ if(localStorage.getItem("rsvp-hide-"+d.id)!==new Date().toDateString())setTimeout(()=>document.getElementById("rsvpSheet")?.classList.add("show"),2000);
+ const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add("show")),{threshold:.12});document.querySelectorAll(".fade").forEach(x=>io.observe(x));
+}
+
 async function load(){
  const slug=(new URLSearchParams(location.search).get("slug")||"jisoo").trim().toLowerCase();
  try{
@@ -256,9 +418,10 @@ async function load(){
   const cfg={bg,accent,ink:textInk(bg),card:bg.toLowerCase()==="#181818"?"#272321":"#fffdf9",tone:dc.photo_tone||"natural"};
   const tpl=dc.template||"quiet_editorial";
   app.style.setProperty("--bg",bg);app.style.setProperty("--accent",accent);app.style.setProperty("--ink",cfg.ink);
-  app.innerHTML=tpl==="type_image"?renderType(data,cfg):tpl==="letter_photobook"?renderLetter(data,cfg):renderQuiet(data,cfg);
-  app.style.background=bg;app.style.color=cfg.ink;
+  app.innerHTML=tpl==="type_image"?renderType(data,cfg):tpl==="letter_photobook"?renderLetter(data,cfg):tpl==="dark_olive_lime"?renderDarkOlive(data,cfg):renderQuiet(data,cfg);
+  app.style.background=tpl==="dark_olive_lime"?"#474a37":bg;app.style.color=tpl==="dark_olive_lime"?"#f7f5e9":cfg.ink;
   bindInteractions();
+  if(tpl==="dark_olive_lime") bindD(data);
  }catch(e){console.error(e);app.innerHTML='<div class="error">청첩장을 불러오지 못했습니다.<br>URL 또는 공개 상태를 확인해 주세요.</div>'}
 }
 load();

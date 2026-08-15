@@ -742,6 +742,48 @@
 
 
 
+
+          <h3 class="section-title">D TYPE · DATE / FAMILY / VENUE GUIDE</h3>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="weddingDatetime">결혼 일시 (D-day / 달력용)</label>
+              <input id="weddingDatetime" type="datetime-local">
+              <div class="hint">D 타입의 실시간 카운트다운과 달력에 사용됩니다.</div>
+            </div>
+            <div class="field"><label for="groomFatherName">신랑 아버지 이름</label><input id="groomFatherName"></div>
+            <div class="field"><label for="groomFatherPhone">신랑 아버지 연락처</label><input id="groomFatherPhone"></div>
+            <div class="field"><label for="groomMotherName">신랑 어머니 이름</label><input id="groomMotherName"></div>
+            <div class="field"><label for="groomMotherPhone">신랑 어머니 연락처</label><input id="groomMotherPhone"></div>
+            <div class="field"><label for="brideFatherName">신부 아버지 이름</label><input id="brideFatherName"></div>
+            <div class="field"><label for="brideFatherPhone">신부 아버지 연락처</label><input id="brideFatherPhone"></div>
+            <div class="field"><label for="brideMotherName">신부 어머니 이름</label><input id="brideMotherName"></div>
+            <div class="field"><label for="brideMotherPhone">신부 어머니 연락처</label><input id="brideMotherPhone"></div>
+          </div>
+
+          <div class="v4-account-grid" style="margin-top:16px">
+            <div class="v4-account-card">
+              <h4>안내 1</h4>
+              <div class="field"><input id="guide1File" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></div>
+              <input id="guide1Image" placeholder="안내1 이미지 URL">
+              <textarea id="guide1Text" placeholder="안내1 내용"></textarea>
+              <div class="upload-status" id="guide1Status"></div>
+            </div>
+            <div class="v4-account-card">
+              <h4>안내 2</h4>
+              <div class="field"><input id="guide2File" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></div>
+              <input id="guide2Image" placeholder="안내2 이미지 URL">
+              <textarea id="guide2Text" placeholder="안내2 내용"></textarea>
+              <div class="upload-status" id="guide2Status"></div>
+            </div>
+            <div class="v4-account-card">
+              <h4>안내 3</h4>
+              <div class="field"><input id="guide3File" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></div>
+              <input id="guide3Image" placeholder="안내3 이미지 URL">
+              <textarea id="guide3Text" placeholder="안내3 내용"></textarea>
+              <div class="upload-status" id="guide3Status"></div>
+            </div>
+          </div>
+
           <h3 class="section-title">CONTACT & 마음 전하실 곳</h3>
           <div class="form-grid">
             <div class="field">
@@ -812,7 +854,7 @@
           <h3 class="section-title">AI DESIGN CUSTOMIZER</h3>
           <div class="ai-access-card">
             <strong>신랑신부 AI 디자인 링크</strong>
-            <div class="hint">이 링크를 받은 고객은 AI 시안 3개를 생성하고 원하는 디자인을 직접 적용할 수 있습니다.</div>
+            <div class="hint">이 링크를 받은 고객은 AI 시안 4개를 생성하고 원하는 디자인을 직접 적용할 수 있습니다.</div>
             <div class="ai-access-row">
               <input class="ai-access-url" id="aiDesignUrl" readonly placeholder="먼저 청첩장을 저장한 뒤 AI 링크를 생성하세요.">
               <button class="btn" type="button" id="createAiLinkBtn">AI 링크 생성</button>
@@ -896,7 +938,10 @@
     { fileId: "spaceFile", urlId: "spaceImage", previewId: "spacePreview", statusId: "spaceStatus", kind: "space" },
     { fileId: "diningFile", urlId: "diningImage", previewId: "diningPreview", statusId: "diningStatus", kind: "dining" },
     { fileId: "dessertFile", urlId: "dessertImage", previewId: "dessertPreview", statusId: "dessertStatus", kind: "dessert" },
-    { fileId: "mapFile", urlId: "mapImage", previewId: "mapPreview", statusId: "mapStatus", kind: "map" }
+    { fileId: "mapFile", urlId: "mapImage", previewId: "mapPreview", statusId: "mapStatus", kind: "map" },
+    { fileId: "guide1File", urlId: "guide1Image", previewId: "_none1", statusId: "guide1Status", kind: "guide1" },
+    { fileId: "guide2File", urlId: "guide2Image", previewId: "_none2", statusId: "guide2Status", kind: "guide2" },
+    { fileId: "guide3File", urlId: "guide3Image", previewId: "_none3", statusId: "guide3Status", kind: "guide3" }
   ];
 
   function setImagePreview(previewId, url) {
@@ -1359,6 +1404,25 @@
     };
   }
 
+
+  function toDatetimeLocal(value){
+    if(!value) return "";
+    const d=new Date(value);
+    if(Number.isNaN(d.getTime())) return "";
+    const pad=n=>String(n).padStart(2,"0");
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  function guideValue(guides,index,key){
+    const g=Array.isArray(guides)?guides[index]:null;
+    return g?.[key] || "";
+  }
+  function venueGuidesFromForm(){
+    return [1,2,3].map(i=>({
+      image_url:$("guide"+i+"Image").value.trim()||null,
+      text:$("guide"+i+"Text").value.trim()||null
+    })).filter(g=>g.image_url||g.text);
+  }
+
   function fillForm(w) {
     $("recordId").value = w.id || "";
     val("slug", w.slug);
@@ -1399,6 +1463,22 @@
     val("parkingLine1", w.parking_line_1);
     val("parkingLine2", w.parking_line_2);
     val("parkingDetail", w.parking_detail);
+
+
+    val("weddingDatetime", toDatetimeLocal(w.wedding_datetime));
+    val("groomFatherName", w.groom_father_name);
+    val("groomFatherPhone", w.groom_father_phone);
+    val("groomMotherName", w.groom_mother_name);
+    val("groomMotherPhone", w.groom_mother_phone);
+    val("brideFatherName", w.bride_father_name);
+    val("brideFatherPhone", w.bride_father_phone);
+    val("brideMotherName", w.bride_mother_name);
+    val("brideMotherPhone", w.bride_mother_phone);
+    const guides = Array.isArray(w.venue_guides) ? w.venue_guides : [];
+    for(let i=1;i<=3;i++){
+      val("guide"+i+"Image", guideValue(guides,i-1,"image_url"));
+      val("guide"+i+"Text", guideValue(guides,i-1,"text"));
+    }
 
     val("groomPhone", w.groom_phone);
     val("bridePhone", w.bride_phone);
@@ -1503,6 +1583,18 @@
       parking_line_2: $("parkingLine2").value.trim() || null,
       parking_detail: $("parkingDetail").value.trim() || null,
 
+
+      wedding_datetime: $("weddingDatetime").value ? new Date($("weddingDatetime").value).toISOString() : null,
+      groom_father_name: $("groomFatherName").value.trim() || null,
+      groom_father_phone: $("groomFatherPhone").value.trim() || null,
+      groom_mother_name: $("groomMotherName").value.trim() || null,
+      groom_mother_phone: $("groomMotherPhone").value.trim() || null,
+      bride_father_name: $("brideFatherName").value.trim() || null,
+      bride_father_phone: $("brideFatherPhone").value.trim() || null,
+      bride_mother_name: $("brideMotherName").value.trim() || null,
+      bride_mother_phone: $("brideMotherPhone").value.trim() || null,
+      venue_guides: venueGuidesFromForm(),
+
       groom_phone: $("groomPhone").value.trim() || null,
       bride_phone: $("bridePhone").value.trim() || null,
       wedding_accounts: accountsFromForm(),
@@ -1530,6 +1622,10 @@
       payload.dining_image_url = uploaded.dining;
       payload.dessert_image_url = uploaded.dessert;
       payload.map_image_url = uploaded.map;
+      if(uploaded.guide1) $("guide1Image").value = uploaded.guide1;
+      if(uploaded.guide2) $("guide2Image").value = uploaded.guide2;
+      if(uploaded.guide3) $("guide3Image").value = uploaded.guide3;
+      payload.venue_guides = venueGuidesFromForm();
 
       const moments = await uploadMomentImages(payload.slug);
       payload.moment_images = moments;
