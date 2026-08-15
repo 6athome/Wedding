@@ -38,12 +38,13 @@ label{display:block;font-size:13px;font-weight:650;margin-bottom:9px} textarea,i
 </div></main>
 <script>
 const SUPABASE_URL="https://gfpdjxdoxjonramxrlgi.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_NUhd1LmMj09rtA5RMcgAxA_cMKIuZB6";
 const FN=SUPABASE_URL+"/functions/v1/ai-wedding-theme";
 const token=new URLSearchParams(location.search).get("token")||"";
 let themes=[],sel=-1,slug="",preview={};
 const $=id=>document.getElementById(id), esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 function note(t,e=""){let n=$("notice");n.textContent=t;n.className="notice "+e}
-async function call(action,extra={}){let r=await fetch(FN,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action,token,...extra})});let d=await r.json();if(!r.ok)throw new Error(d.error||"요청에 실패했습니다.");return d}
+async function call(action,extra={}){let r=await fetch(FN,{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({action,token,...extra})});let d=await r.json();if(!r.ok)throw new Error(d.error||"요청에 실패했습니다.");return d}
 const bg=[["Ivory","#f3eee3"],["White","#ffffff"],["Butter","#ead9aa"],["Sky","#a9c2d6"],["Blush","#e7c8c5"],["Stone","#c9c0b4"],["Black","#181818"]];
 const ac=[["Burgundy","#6f251d"],["Red","#a8342a"],["Pink","#d67f9b"],["Navy","#24334a"],["Blue","#4f7397"],["Green","#66775b"],["Silver","#aaa9a4"],["Black","#181818"]];
 function chips(id,data,input){let w=$(id);data.forEach(([n,c])=>{let b=document.createElement("button");b.className="swatch";b.innerHTML=`<i class="dot" style="background:${c}"></i>${n}`;b.onclick=()=>{[...w.children].forEach(x=>x.classList.remove("active"));b.classList.add("active");$(input).value=n};w.appendChild(b)})}
