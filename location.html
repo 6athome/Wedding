@@ -190,6 +190,14 @@ body.family-retro_romance .info-block h2{color:#e78aab;font-family:"Cormorant Ga
 body.family-paper_poetry .map-illustration{background:#fff;padding:12px 12px 34px;box-shadow:0 8px 24px rgba(55,45,35,.12);transform:rotate(-1deg);width:88%}
 body.family-paper_poetry .info-block{max-width:520px;margin-left:auto;margin-right:auto}
 
+
+/* ===== V3 LOCATION ===== */
+body.v3loc{background:var(--v3-bg)!important;color:var(--v3-ink)!important}
+body.v3loc .map-illustration{box-shadow:none!important;transform:none!important;border-radius:0!important}
+body.v3loc[data-v3-template="quiet_editorial"] .map-illustration{padding:0;background:transparent}
+body.v3loc[data-v3-template="type_image"] .info-block h2{font-family:Georgia,serif;font-size:38px;letter-spacing:-.03em;color:var(--v3-accent)}
+body.v3loc[data-v3-template="letter_photobook"] .map-illustration{background:#fff;padding:9px 9px 34px;box-shadow:0 7px 18px rgba(40,35,30,.12)!important;transform:rotate(-1deg)!important}
+
 </style>
 </head>
 <body>
@@ -324,13 +332,23 @@ function applyFamilyClassV21(config){
   document.body.classList.add("family-"+(config.family||"photo_frame"));
 }
 
+
+function applyV3Location(config){
+ if(!config?.template)return;
+ const bg=/^#[0-9A-Fa-f]{6}$/.test(config.background_hex||"")?config.background_hex:"#f3eee3";
+ const ac=/^#[0-9A-Fa-f]{6}$/.test(config.accent_hex||"")?config.accent_hex:"#6f251d";
+ document.body.classList.add("v3loc");document.body.dataset.v3Template=config.template;
+ document.body.style.setProperty("--v3-bg",bg);document.body.style.setProperty("--v3-accent",ac);
+ document.body.style.setProperty("--v3-ink",bg.toLowerCase()==="#181818"?"#f7f1e9":"#211c18");
+}
+
 async function loadLocation(){
  const {data,error}=await db.from("weddings")
  .select("location_address,location_detail_1,location_detail_2,parking_line_1,parking_line_2,parking_detail,map_image_url,naver_map_url,kakao_map_url,design_config")
  .eq("slug",slug).eq("is_published",true).single();
  if(error){const e=document.getElementById("loadError");e.style.display="block";e.textContent="위치 정보를 불러오지 못했습니다.";return;}
  applyDesignSystemV2(data.design_config);
- applyFamilyClassV21(data.design_config);
+ applyV3Location(data.design_config);
  text("address",data.location_address);
  text("locationDetail1",data.location_detail_1);
  text("locationDetail2",data.location_detail_2);

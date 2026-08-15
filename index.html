@@ -830,9 +830,21 @@ body.family-active #family-root{display:block}
 .family-paper .paper-program figure:nth-child(2){transform:rotate(2deg);margin-top:28px}
 .family-paper .paper-program img{width:100%;aspect-ratio:1;object-fit:cover}
 
+
+/* ===== V3 CURATED TEMPLATES ===== */
+#v3-root{display:none}.v3-active>.container,.v3-active>nav.topnav{display:none}.v3-active #v3-root{display:block}
+.v3{min-height:100vh;background:var(--v3-bg);color:var(--v3-ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif}.v3-inner{max-width:640px;margin:auto}.v3 img{display:block;width:100%}.v3-serif{font-family:Georgia,"Times New Roman",serif}.v3-nav{display:flex;justify-content:center;gap:24px;padding:55px 20px 70px;font-size:10px;letter-spacing:.14em}.v3-nav a{color:inherit;text-decoration:none}.v3-copy{line-height:2;white-space:pre-line;font-size:13px}.v3-info{padding:42px 28px}.v3-info dl{margin:0}.v3-info div{display:grid;grid-template-columns:80px 1fr;padding:10px 0;border-bottom:1px solid color-mix(in srgb,currentColor 16%,transparent)}.v3-info dt{font-size:9px;letter-spacing:.12em}.v3-info dd{margin:0;font-size:12px}.v3-rsvp{display:inline-block;margin-top:25px;padding:11px 20px;border:1px solid currentColor;color:inherit;text-decoration:none;font-size:10px;letter-spacing:.12em}
+/* A Quiet Editorial */
+.v3-qe .qe-hero{position:relative}.v3-qe .qe-hero img{height:78vh;min-height:590px;object-fit:cover}.v3-qe .qe-save{position:absolute;left:28px;top:35px;color:#fff;font:12px/1.5 Georgia,serif;letter-spacing:.2em}.v3-qe .qe-meta{padding:38px 28px 65px}.v3-qe .qe-names{font:42px/.98 Georgia,serif;letter-spacing:-.03em}.v3-qe .qe-date{color:var(--v3-accent);font-size:10px;letter-spacing:.15em;margin-top:18px}.v3-qe .qe-copy{padding:70px 28px;text-align:center;background:color-mix(in srgb,var(--v3-bg) 90%,white)}.v3-qe .qe-photo{padding:0 28px 50px}.v3-qe .qe-photo img{aspect-ratio:4/5;object-fit:cover}
+/* B Type & Image */
+.v3-ti{padding-top:1px}.v3-ti .ti-head{padding:48px 28px 24px}.v3-ti .ti-save{font:11px Georgia,serif;letter-spacing:.16em;color:var(--v3-accent)}.v3-ti .ti-name{font:clamp(54px,14vw,90px)/.86 Georgia,serif;letter-spacing:-.055em;margin-top:70px}.v3-ti .ti-amp{font:48px Georgia,serif;color:var(--v3-accent);margin:15px 0}.v3-ti .ti-photo{margin:35px 28px 0}.v3-ti .ti-photo img{aspect-ratio:4/5;object-fit:cover;filter:grayscale(1)}.v3-ti .ti-script{text-align:right;padding:35px 28px;font:italic 26px/1.2 Georgia,serif;color:var(--v3-accent)}.v3-ti .ti-copy{padding:65px 28px;max-width:520px}
+/* C Letter & Photobook */
+.v3-lp .lp-letter{min-height:650px;position:relative;background:color-mix(in srgb,var(--v3-bg) 82%,white);overflow:hidden}.v3-lp .lp-flap{position:absolute;left:0;right:0;top:0;height:330px;background:color-mix(in srgb,var(--v3-bg) 70%,white);clip-path:polygon(0 0,100% 0,50% 100%)}.v3-lp .lp-card{position:absolute;z-index:2;left:10%;right:10%;top:110px;background:#fffdf8;padding:65px 28px;text-align:center;box-shadow:0 12px 35px rgba(55,45,35,.08);transform:rotate(-.7deg)}.v3-lp .lp-card h1{font:italic 42px/1.05 Georgia,serif;margin:0 0 30px}.v3-lp .lp-card .names{font:13px Georgia,serif;letter-spacing:.12em}.v3-lp .lp-card .date{font-size:10px;letter-spacing:.13em;color:var(--v3-accent);margin-top:10px}.v3-lp .lp-copy{padding:55px 34px;text-align:center}.v3-lp .lp-book{background:color-mix(in srgb,var(--v3-accent) 20%,var(--v3-bg));padding:55px 25px 65px}.v3-lp .lp-shot{background:#fff;padding:9px 9px 30px;box-shadow:0 7px 18px rgba(40,35,30,.12);margin-bottom:26px}.v3-lp .lp-shot:nth-child(odd){transform:rotate(-1.4deg)}.v3-lp .lp-shot:nth-child(even){transform:rotate(1.2deg)}.v3-lp .lp-shot img{aspect-ratio:3/2;object-fit:cover}.v3-lp .lp-note{text-align:right;font:italic 21px Georgia,serif;margin-top:25px}
+
 </style>
 </head>
 <body data-wedding-loading="true">
+<main id="v3-root"></main>
   <div id="wedding-load-error"></div>
 
   <!-- Top Navigation -->
@@ -1168,6 +1180,30 @@ function renderFamilyHome(data,slug){
 }
 
 
+
+function v3Esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function v3Hex(v,f){return /^#[0-9A-Fa-f]{6}$/.test(String(v||""))?v:f}
+function renderV3(data,slug){
+ const d=data.design_config||{}; if(!d.template)return;
+ const bg=v3Hex(d.background_hex,"#f3eee3"),ac=v3Hex(d.accent_hex,"#6f251d");
+ const ink=(bg.toLowerCase()==="#181818"?"#f7f1e9":"#211c18");
+ const root=document.getElementById("v3-root");document.body.classList.add("v3-active");
+ const hero=v3Esc(data.hero_image_url||""),imgs=(Array.isArray(data.moment_images)?data.moment_images:[]).filter(Boolean).slice(0,6);
+ const names=[data.groom_name,data.bride_name].filter(Boolean),copy=v3Esc(data.invite_message_1||"").replace(/\n/g,"<br>");
+ const info=`<div class="v3-info"><dl><div><dt>DATE</dt><dd>${v3Esc(data.date_detail||data.date_summary||"")}</dd></div><div><dt>TIME</dt><dd>${v3Esc(data.time_detail||"")}</dd></div><div><dt>PLACE</dt><dd>${v3Esc(data.venue_name||"")}</dd></div></dl>${data.rsvp_url?`<a class="v3-rsvp" href="${v3Esc(data.rsvp_url)}" target="_blank">RSVP</a>`:""}</div>`;
+ const nav=`<div class="v3-nav"><a href="moments.html?slug=${encodeURIComponent(slug)}">MOMENTS</a><a href="location.html?slug=${encodeURIComponent(slug)}">LOCATION</a></div>`;
+ if(d.template==="type_image"){
+ root.innerHTML=`<div class="v3 v3-ti" style="--v3-bg:${bg};--v3-accent:${ac};--v3-ink:${ink}"><div class="v3-inner"><div class="ti-head"><div class="ti-save">SAVE THE DATE</div><div class="ti-name">${v3Esc(names[0]||"GROOM")}</div><div class="ti-amp">&</div><div class="ti-name">${v3Esc(names[1]||"BRIDE")}</div></div><div class="ti-photo">${hero?`<img src="${hero}">`:""}</div><div class="ti-script">we are getting married</div><div class="ti-copy v3-copy">${copy}</div>${info}${nav}</div></div>`;
+ }else if(d.template==="letter_photobook"){
+ const shots=(imgs.length?imgs:[data.hero_image_url]).filter(Boolean).map(x=>`<div class="lp-shot"><img src="${v3Esc(x)}"></div>`).join("");
+ root.innerHTML=`<div class="v3 v3-lp" style="--v3-bg:${bg};--v3-accent:${ac};--v3-ink:${ink}"><div class="v3-inner"><section class="lp-letter"><div class="lp-flap"></div><div class="lp-card"><h1>Save<br>the Date</h1><div class="names">${v3Esc(names.join(" & "))}</div><div class="date">${v3Esc(data.date_summary||"")}</div></div></section><section class="lp-copy v3-copy">${copy}</section><section class="lp-book">${shots}<div class="lp-note">with all our love ♡</div></section>${info}${nav}</div></div>`;
+ }else{
+ const second=imgs[1]||imgs[0]||hero;
+ root.innerHTML=`<div class="v3 v3-qe" style="--v3-bg:${bg};--v3-accent:${ac};--v3-ink:${ink}"><div class="v3-inner"><section class="qe-hero">${hero?`<img src="${hero}">`:""}<div class="qe-save">SAVE<br>THE<br>DATE</div></section><section class="qe-meta"><div class="qe-names">${v3Esc(names[0]||"GROOM")}<br>& ${v3Esc(names[1]||"BRIDE")}</div><div class="qe-date">${v3Esc(data.date_summary||"")}</div></section><section class="qe-copy v3-copy">${copy}</section>${second?`<div class="qe-photo"><img src="${v3Esc(second)}"></div>`:""}${info}${nav}</div></div>`;
+ }
+}
+
+
     async function loadWedding() {
       const params = new URLSearchParams(window.location.search);
       const slug = (params.get("slug") || "jisoo").trim().toLowerCase();
@@ -1211,7 +1247,7 @@ function renderFamilyHome(data,slug){
         const rsvp = document.getElementById("rsvp-link");
         if (rsvp && data.rsvp_url) rsvp.href = data.rsvp_url;
 
-        renderFamilyHome(data, slug);
+        renderV3(data, slug);
 
         // Preserve the current wedding slug when moving to other pages.
         document.querySelectorAll('a[href="moments.html"], a[href="location.html"]').forEach(a => {

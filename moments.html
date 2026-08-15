@@ -229,6 +229,22 @@ body.family-paper_poetry .gallery-item:nth-child(even){transform:rotate(2deg)!im
  body.family-retro_romance .gallery{gap:22px 12px}
 }
 
+
+/* ===== V3 MOMENTS ===== */
+body.v3m{background:var(--v3-bg)!important;color:var(--v3-ink)!important}
+body.v3m .gallery-item{box-shadow:none}
+body.v3m[data-v3-template="quiet_editorial"] .gallery{grid-template-columns:1fr 1fr;gap:12px}
+body.v3m[data-v3-template="quiet_editorial"] .gallery-item{padding:0!important;transform:none!important;background:transparent}
+body.v3m[data-v3-template="quiet_editorial"] .gallery-item:nth-child(1){grid-column:span 2}
+body.v3m[data-v3-template="quiet_editorial"] .gallery-item:nth-child(1) .photo-frame{aspect-ratio:3/2}
+body.v3m[data-v3-template="type_image"] .gallery{grid-template-columns:1.3fr .7fr;gap:12px}
+body.v3m[data-v3-template="type_image"] .gallery-item{padding:0!important;transform:none!important;background:transparent}
+body.v3m[data-v3-template="type_image"] .gallery-item:nth-child(3n+1){grid-row:span 2}
+body.v3m[data-v3-template="letter_photobook"] .gallery{grid-template-columns:1fr 1fr;gap:28px 16px;padding:30px 8px;background:color-mix(in srgb,var(--v3-accent) 18%,var(--v3-bg))}
+body.v3m[data-v3-template="letter_photobook"] .gallery-item{background:#fff!important;padding:8px 8px 30px!important;box-shadow:0 7px 18px rgba(40,35,30,.12)!important}
+body.v3m[data-v3-template="letter_photobook"] .gallery-item:nth-child(odd){transform:rotate(-1.5deg)!important}
+body.v3m[data-v3-template="letter_photobook"] .gallery-item:nth-child(even){transform:rotate(1.5deg)!important;margin-top:24px}
+
 </style>
 </head>
 <body>
@@ -352,11 +368,21 @@ function applyFamilyClassV21(config){
   document.body.classList.add("family-"+(config.family||"photo_frame"));
 }
 
+
+function applyV3Moments(config){
+ if(!config?.template)return;
+ const bg=/^#[0-9A-Fa-f]{6}$/.test(config.background_hex||"")?config.background_hex:"#f3eee3";
+ const ac=/^#[0-9A-Fa-f]{6}$/.test(config.accent_hex||"")?config.accent_hex:"#6f251d";
+ document.body.classList.add("v3m");document.body.dataset.v3Template=config.template;
+ document.body.style.setProperty("--v3-bg",bg);document.body.style.setProperty("--v3-accent",ac);
+ document.body.style.setProperty("--v3-ink",bg.toLowerCase()==="#181818"?"#f7f1e9":"#211c18");
+}
+
 async function loadGallery(){
   const {data,error}=await sdb.from("weddings").select("moment_images,design_config").eq("slug",slug).eq("is_published",true).single();
   if(error){ document.getElementById("loadError").style.display="block"; document.getElementById("loadError").textContent="갤러리를 불러오지 못했습니다."; return; }
   applyDesignSystemV2(data.design_config);
-  applyFamilyClassV21(data.design_config);
+  applyV3Moments(data.design_config);
   const images=Array.isArray(data.moment_images)?data.moment_images.slice(0,6):[];
   const gallery=document.getElementById("gallery");
   gallery.innerHTML="";

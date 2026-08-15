@@ -1,84 +1,61 @@
-<!DOCTYPE html>
-<html lang="ko"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="robots" content="noindex,nofollow"><title>AI Wedding Designer · 6athome</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Cormorant+Garamond:wght@400;500&family=Nanum+Myeongjo:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Wedding Stylist · V3</title>
 <style>
-:root{--bg:#f2eee8;--panel:#fffdf9;--text:#28211d;--muted:#897c72;--line:#ddd3c9;--accent:#6f271e}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans KR",sans-serif}
-.shell{max-width:1140px;margin:auto;padding:28px 18px 90px}.header{text-align:center;margin:24px 0 34px}.header small{letter-spacing:.18em;color:var(--muted)}.header h1{font-family:"Playfair Display",serif;font-weight:500;font-size:clamp(34px,7vw,58px);margin:8px}.header p{color:var(--muted);line-height:1.75}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(48,33,24,.06);margin-bottom:22px}
-label{display:block;font-size:13px;font-weight:500;margin-bottom:8px}textarea,input{width:100%;font:inherit;border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:#fff;outline:none}textarea{min-height:105px;resize:vertical;line-height:1.7}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 20px}.chip,.btn{border:1px solid var(--line);border-radius:999px;padding:9px 13px;background:white;cursor:pointer;font:inherit}.chip.active{background:#292522;color:#fff;border-color:#292522}.btn{border-radius:10px;padding:12px 17px;font-weight:500}.btn.primary{background:var(--accent);border-color:var(--accent);color:white}.btn:disabled{opacity:.5}.actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.usage{margin-left:auto;color:var(--muted);font-size:13px}
-.notice{display:none;margin-top:14px;padding:11px 13px;border-radius:10px;font-size:13px}.notice.show{display:block}.notice.error{background:#fff0f0;color:#8a2929}.notice.ok{background:#edf6ee;color:#28522f}
-.privacy{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.65}
-.themes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.theme{background:#fff;border:2px solid transparent;border-radius:18px;overflow:hidden;cursor:pointer;box-shadow:0 9px 26px rgba(0,0,0,.07);transition:.2s}.theme:hover{transform:translateY(-3px)}.theme.selected{border-color:#294b2b}
-.phone-wrap{padding:18px;background:#e8e2da}.phone{width:100%;aspect-ratio:9/16;border-radius:24px;overflow:hidden;position:relative;box-shadow:0 10px 25px rgba(0,0,0,.14);display:flex;flex-direction:column}
-.p-hero{position:relative;overflow:hidden}.p-hero img{width:100%;height:100%;object-fit:cover;display:block}.p-hero.noimg{background:linear-gradient(135deg,rgba(255,255,255,.28),rgba(0,0,0,.08))}
-.p-copy{position:absolute;inset:0;padding:18px;display:flex;flex-direction:column;justify-content:flex-end}.p-kicker{font-size:8px;letter-spacing:.2em;margin-bottom:6px}.p-names{line-height:1.03;margin:0}.p-date{font-size:9px;margin-top:8px;opacity:.82}
-.p-body{flex:1;padding:14px;display:flex;flex-direction:column}.p-line{height:1px;width:34%;margin-bottom:9px}.p-text{font-size:8px;line-height:1.65;opacity:.78;margin-bottom:10px}.p-moments{display:grid;gap:4px;flex:1;min-height:0}.p-moments img,.ph{width:100%;height:100%;object-fit:cover;min-width:0;min-height:0;background:rgba(255,255,255,.2)}
-.theme-info{padding:15px}.theme-info strong{display:block;margin-bottom:5px}.theme-info p{font-size:12px;color:var(--muted);line-height:1.55;margin:0}.preset{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9b8e84;margin-top:8px}
-.bottom{display:none;text-align:center;margin-top:26px}.refine{max-width:700px;margin:15px auto 0;display:flex;gap:8px}.refine input{flex:1}.loading{text-align:center;padding:45px;color:var(--muted)}
-@media(max-width:840px){.themes{grid-template-columns:1fr;max-width:430px;margin:auto}.usage{width:100%;margin-left:0}.phone{aspect-ratio:9/14}.refine{flex-direction:column}}
-
-/* DESIGN FAMILY V2.1 PREVIEWS */
-.v21-preview{height:390px;overflow:hidden;position:relative}
-.v21-photo{background:#eee9df;padding:12px;height:100%}.v21-photo .film{background:white;border-radius:15px;padding:10px;height:100%}.v21-photo .shot{height:62%;overflow:hidden;border-radius:9px;background:#ddd}.v21-photo .shot img{width:100%;height:100%;object-fit:cover}.v21-photo .rail{display:flex;justify-content:space-between;font-size:7px;padding-top:7px}.v21-photo .caption{text-align:center;padding-top:24px}.v21-photo .caption strong{display:block;font-size:20px}
-.v21-doodle{background:#fffdf8;color:#111;height:100%;padding:18px;text-align:center}.v21-doodle .hand{font-family:"Comic Sans MS",cursive;font-size:23px;transform:rotate(-2deg)}.v21-doodle .poster{border:3px solid #111;margin:18px auto 0;padding:8px;width:78%;transform:rotate(1deg)}.v21-doodle .poster img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(1)}.v21-doodle .gb{display:flex;justify-content:space-between;font-family:"Comic Sans MS",cursive;font-size:15px}
-.v21-kitsch{height:100%;background:#222;position:relative;overflow:hidden}.v21-kitsch>img{width:100%;height:100%;object-fit:cover;filter:grayscale(.8)}.v21-kitsch .heart{position:absolute;left:9%;right:9%;bottom:8%;height:42%;background:#ff4774;clip-path:polygon(50% 100%,5% 42%,10% 16%,29% 5%,50% 22%,71% 5%,90% 16%,95% 42%);display:flex;align-items:center;justify-content:center;text-align:center;color:#111;padding:36px 20px 10px}.v21-kitsch .dots span{position:absolute;width:20px;height:20px;border-radius:50%;background:#ff4774;color:#111;font-size:8px;display:grid;place-items:center}.v21-kitsch .dots span:nth-child(1){left:8%;top:38%}.v21-kitsch .dots span:nth-child(2){right:12%;top:43%}.v21-kitsch .dots span:nth-child(3){left:28%;top:48%}
-.v21-retro{height:100%;background:#181818;color:#f5ece8;text-align:center;padding:22px}.v21-retro .script{font-family:"Cormorant Garamond",serif;font-style:italic;color:#e78aab;font-size:30px}.v21-retro .lace{border:6px double #f5ece8;width:72%;margin:22px auto 20px;padding:9px;border-radius:48% 48% 40% 40% / 28% 28% 33% 33%}.v21-retro .lace img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:45% 45% 37% 37% / 26% 26% 31% 31%}.v21-retro .small{font-size:9px;line-height:1.7}
-.v21-paper{height:100%;background:#f4f0e6;color:#4b463f;text-align:center;padding:20px}.v21-paper .inv{font-size:8px;letter-spacing:.3em}.v21-paper .polaroid{width:50%;margin:32px auto 24px;background:white;padding:7px 7px 23px;box-shadow:0 4px 15px rgba(0,0,0,.12);transform:rotate(-2deg);position:relative}.v21-paper .polaroid::before{content:"";position:absolute;width:45px;height:10px;background:rgba(202,181,140,.48);top:-5px;left:50%;transform:translateX(-50%) rotate(2deg)}.v21-paper .polaroid img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(.7)}.v21-paper .poem{font-size:9px;line-height:1.9}
-
-</style></head><body><div class="shell">
-<header class="header"><small>6ATHOME WEDDING</small><h1>AI Wedding Designer</h1><p>취향만 알려주세요.<br>같은 사진과 내용으로 서로 다른 세 가지 청첩장 방향을 제안합니다.</p></header>
-<div id="loading" class="panel loading">디자인 페이지를 준비하고 있습니다...</div>
-<div id="app" style="display:none"><section class="panel">
-<label for="prompt">원하는 분위기를 자유롭게 적어주세요</label><textarea id="prompt" maxlength="700" placeholder="예: 오래된 유럽 레스토랑 같은 분위기. 버건디와 크림을 좋아하고 너무 전형적인 웨딩 느낌은 싫어요. 잡지처럼 감도 높았으면 좋겠어요."></textarea>
-<label style="margin-top:18px">분위기 <span style="font-weight:400;color:var(--muted)">· 최대 3개</span></label>
-<div class="chips"><button class="chip" data-value="minimal">미니멀</button><button class="chip" data-value="vintage">빈티지</button><button class="chip" data-value="romantic">로맨틱</button><button class="chip" data-value="playful">키치</button><button class="chip" data-value="modern">모던</button><button class="chip" data-value="natural">내추럴</button></div>
-<label for="colors">좋아하는 색 / 피하고 싶은 색</label><input id="colors" maxlength="180" placeholder="예: 버건디, 크림 / 핑크는 싫어요">
-<div class="actions" style="margin-top:20px"><button class="btn primary" id="generateBtn">✨ 우리 취향으로 디자인하기</button><span class="usage" id="usage"></span></div>
-<div class="privacy">AI에는 이 화면에 직접 입력한 디자인 취향과 추상적인 디자인 설정만 전달됩니다. 이름·날짜·장소·연락처·계좌·RSVP·사진은 OpenAI 요청에 포함하지 않습니다.</div><div class="notice" id="notice"></div>
+*{box-sizing:border-box} :root{--ink:#221d19;--muted:#81776e;--paper:#f3efe8;--line:#d9d0c5;--wine:#6f251d}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif}
+.shell{max-width:1160px;margin:auto;padding:52px 24px 90px}.header{text-align:center;margin-bottom:34px}.header small{letter-spacing:.24em;font-size:10px}.header h1{font-family:Georgia,serif;font-weight:400;font-size:38px;margin:10px 0}.header p{color:var(--muted);line-height:1.8}
+.panel{background:rgba(255,255,255,.62);border:1px solid rgba(80,60,45,.12);border-radius:22px;padding:26px;margin-bottom:28px}
+label{display:block;font-size:13px;font-weight:650;margin-bottom:9px} textarea,input{width:100%;border:1px solid var(--line);background:#fffdf9;border-radius:12px;padding:14px;font:inherit;color:inherit}textarea{min-height:112px;resize:vertical}
+.color-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}.swatches{display:flex;flex-wrap:wrap;gap:8px;margin:9px 0}.swatch{border:1px solid var(--line);background:white;border-radius:999px;padding:8px 11px;font-size:11px;cursor:pointer}.swatch.active{outline:2px solid var(--ink);outline-offset:2px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;border:1px solid rgba(0,0,0,.12);vertical-align:-1px}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:12px 18px;font-weight:650;cursor:pointer;color:inherit;text-decoration:none;font-size:13px}.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}.usage,.privacy,.notice{font-size:11px;color:var(--muted);line-height:1.7}.privacy{margin-top:16px}.notice{margin-top:12px}.notice.error{color:#a12e23}
+.themes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.theme{background:#fff;border:1px solid transparent;border-radius:20px;overflow:hidden;cursor:pointer;box-shadow:0 10px 35px rgba(55,40,30,.07)}.theme.selected{outline:2px solid var(--ink);outline-offset:3px}.preview{height:510px;overflow:hidden}.theme-info{padding:16px 17px 18px}.theme-info strong{font-family:Georgia,serif;font-weight:400;font-size:18px}.theme-info p{margin:5px 0 0;color:var(--muted);font-size:11px}.palette{display:flex;gap:5px;margin-top:10px}.palette i{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
+.qe{height:100%;position:relative;background:var(--bg);color:var(--fg);padding:20px}.qe .photo{height:76%;overflow:hidden}.qe img{width:100%;height:100%;object-fit:cover}.qe .save{position:absolute;top:34px;left:34px;color:white;font:12px/1.5 Georgia,serif;letter-spacing:.18em}.qe .names{font:28px/1.05 Georgia,serif;margin-top:22px}.qe .date{font-size:8px;letter-spacing:.16em;margin-top:8px;color:var(--accent)}
+.ti{height:100%;background:var(--bg);color:var(--fg);padding:24px;position:relative}.ti .save{font:10px Georgia,serif;letter-spacing:.14em;color:var(--accent)}.ti .big{font:44px/.9 Georgia,serif;margin-top:58px;letter-spacing:-.04em}.ti .amp{font:30px Georgia,serif;color:var(--accent);margin:12px 0}.ti .photo{position:absolute;left:24px;right:24px;bottom:76px;height:38%;overflow:hidden}.ti img{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}.ti .script{position:absolute;bottom:30px;right:24px;font:italic 17px Georgia,serif;color:var(--accent)}
+.lp{height:100%;background:var(--bg);color:var(--fg);overflow:hidden}.lp .letter{height:52%;position:relative;padding:22px;background:color-mix(in srgb,var(--bg) 86%,white)}.lp .flap{position:absolute;inset:0 0 auto;height:44%;background:color-mix(in srgb,var(--bg) 75%,white);clip-path:polygon(0 0,100% 0,50% 100%)}.lp .card{position:absolute;width:76%;left:12%;top:52px;background:#fffdf8;padding:28px 16px;text-align:center;box-shadow:0 5px 18px rgba(0,0,0,.08);transform:rotate(-1deg)}.lp .card b{display:block;font:italic 24px Georgia,serif;font-weight:400}.lp .card span{font-size:8px;letter-spacing:.13em;color:var(--accent)}.lp .book{height:48%;background:color-mix(in srgb,var(--accent) 18%,var(--bg));padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.lp .book div{background:#fff;padding:6px 6px 18px;box-shadow:0 4px 12px rgba(0,0,0,.1);transform:rotate(-2deg)}.lp .book div:nth-child(2){transform:rotate(2deg);margin-top:18px}.lp img{width:100%;height:100%;object-fit:cover}
+.bottom{display:none;margin-top:26px}.refine{display:flex;gap:8px;margin-top:14px}.refine input{flex:1}
+@media(max-width:800px){.themes{grid-template-columns:1fr}.theme{max-width:420px;margin:auto;width:100%}.color-row{grid-template-columns:1fr}.preview{height:560px}.shell{padding:30px 15px 70px}}
+</style>
+</head>
+<body><main class="shell">
+<header class="header"><small>6ATHOME WEDDING</small><h1>AI Wedding Stylist</h1><p>완성된 세 가지 디자인을<br>우리의 분위기와 색으로 스타일링해보세요.</p></header>
+<div id="loading" class="panel">디자인 페이지를 준비하고 있습니다...</div>
+<div id="app" style="display:none">
+<section class="panel">
+<label for="prompt">원하는 분위기를 자유롭게 적어주세요</label>
+<textarea id="prompt" maxlength="700" placeholder="예: 너무 웨딩스럽지 않고 차분했으면 좋겠어요. 잡지 같은 느낌에 빈티지가 살짝 섞였으면 좋겠어요."></textarea>
+<div class="color-row">
+<div><label>원하는 배경색</label><div class="swatches" id="bgSwatches"></div><input id="background" maxlength="80" placeholder="예: 아이보리, 탁한 하늘색"></div>
+<div><label>원하는 포인트 색상</label><div class="swatches" id="accentSwatches"></div><input id="accent" maxlength="80" placeholder="예: 진한 버건디, 실버"></div>
+</div>
+<div class="actions" style="margin-top:22px"><button class="btn primary" id="generateBtn">세 디자인 스타일링하기</button><span id="usage" class="usage"></span></div>
+<div class="privacy">AI에는 이 화면에 직접 입력한 분위기와 색상, 추상적인 디자인 설정만 전달됩니다. 이름·날짜·장소·연락처·계좌·RSVP·사진은 AI로 전송하지 않습니다.</div><div id="notice" class="notice"></div>
 </section>
-<section class="themes" id="themes"></section>
-<div class="bottom" id="bottom"><button class="btn primary" id="applyBtn">이 디자인 적용하기</button>
-<div class="refine"><input id="refineInput" maxlength="300" placeholder="예: 이 느낌에서 조금 더 밝고 미니멀하게"><button class="btn" id="refineBtn">AI로 미세조정</button></div></div>
-</div></div>
+<section id="themes" class="themes"></section>
+<section id="bottom" class="panel bottom"><div class="actions"><button class="btn primary" id="applyBtn">이 디자인 적용하기</button></div><div class="refine"><input id="refineInput" maxlength="300" placeholder="예: 버건디를 조금 더 어둡게, 사진은 자연스럽게"><button class="btn" id="refineBtn">AI로 미세조정</button></div></section>
+</div></main>
 <script>
-const U="https://gfpdjxdoxjonramxrlgi.supabase.co",K="sb_publishable_NUhd1LmMj09rtA5RMcgAxA_cMKIuZB6",F=U+"/functions/v1/ai-wedding-theme";
-const token=new URLSearchParams(location.search).get("token")||"";let moods=[],themes=[],sel=-1,slug="",preview={};const $=id=>document.getElementById(id);
-const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
-const ff=k=>({playfair:'"Playfair Display",serif',cormorant:'"Cormorant Garamond",serif',myeongjo:'"Nanum Myeongjo",serif',noto_sans:'"Noto Sans KR",sans-serif'}[k]||'"Playfair Display",serif');
-function note(m,t="ok"){let n=$("notice");n.textContent=m;n.className="notice show "+t}
-async function call(action,p={}){let r=await fetch(F,{method:"POST",headers:{"Content-Type":"application/json","apikey":K},body:JSON.stringify({action,token,...p})});let d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"요청 실패");return d}
-document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{if(!b.classList.contains("active")&&document.querySelectorAll(".chip.active").length>=3)return;b.classList.toggle("active");moods=[...document.querySelectorAll(".chip.active")].map(x=>x.dataset.value)});
-function cols(d){return {grid_3x2:"repeat(3,1fr)",editorial_mosaic:"1.5fr .8fr 1fr",polaroid_stack:"repeat(3,1fr)",film_strip:"repeat(6,1fr)",large_pair:"repeat(2,1fr)",asymmetric_grid:"1.4fr .8fr"}[d.moment_layout]||"repeat(3,1fr)"}
-function renderMoments(d){let a=(preview.moment_images||[]).slice(0,6);while(a.length<6)a.push("");return a.map(u=>u?`<img src="${esc(u)}">`:`<div class="ph"></div>`).join("")}
-
-function mainPhoto(){return preview.hero_image_url||((preview.moment_images||[])[0])||""}
-function familyPreview(t){
-  const d=t.design||{}, family=d.family||"photo_frame", img=esc(mainPhoto());
-  const names=`${esc(preview.groom_name||"GROOM")} & ${esc(preview.bride_name||"BRIDE")}`;
-  const date=esc(preview.date_summary||"OUR WEDDING DAY");
-  if(family==="doodle_wedding") return `<div class="v21-preview v21-doodle"><div class="hand">Save the date!</div><div class="poster">${img?`<img src="${img}">`:""}<div class="gb"><span>GROOM</span><span>BRIDE</span></div></div><div class="hand" style="font-size:15px;margin-top:16px">${names}</div></div>`;
-  if(family==="kitsch_collage") return `<div class="v21-preview v21-kitsch">${img?`<img src="${img}">`:""}<div class="dots"><span>K</span><span>I</span><span>T</span></div><div class="heart"><div><strong>${names}</strong><br><span style="font-size:9px">${date}</span></div></div></div>`;
-  if(family==="retro_romance") return `<div class="v21-preview v21-retro"><div class="script">Save the Date</div><div class="lace">${img?`<img src="${img}">`:""}</div><div class="small">${names}<br>${date}<br><span style="color:#e78aab">YOU'RE INVITED TO OUR WEDDING</span></div></div>`;
-  if(family==="paper_poetry") return `<div class="v21-preview v21-paper"><div class="inv">INVITATION</div><div class="polaroid">${img?`<img src="${img}">`:""}</div><div class="poem"><strong>${names}</strong><br><br>좋은 친구 사이로 시작해<br>함께 내일을 만들어가려 합니다.</div></div>`;
-  return `<div class="v21-preview v21-photo"><div class="film"><div class="shot">${img?`<img src="${img}">`:""}</div><div class="rail"><span>${date}</span><span>▲13A</span></div><div class="caption"><span style="font-size:8px;letter-spacing:.18em">SAVE THE DATE</span><strong>${names}</strong></div></div></div>`;
-}
-function render(){
-  const w=$("themes");w.innerHTML="";
-  themes.forEach((t,i)=>{
-    const c=document.createElement("article");
-    c.className="theme"+(i===sel?" selected":"");
-    c.onclick=()=>{sel=i;render();$("bottom").style.display="block"};
-    c.innerHTML=`<div class="phone-wrap">${familyPreview(t)}</div><div class="theme-info"><strong>${esc(t.name)}</strong><p>${esc(t.description)}</p><div class="preset">${esc((t.design.family||"photo_frame").replaceAll("_"," "))}</div></div>`;
-    w.appendChild(c);
-  });
-}
-$("generateBtn").onclick=async()=>{let p=$("prompt").value.trim();if(p.length<10){note("원하는 분위기를 조금 더 자세히 적어주세요.","error");return}let b=$("generateBtn");b.disabled=true;b.textContent="AI가 세 가지 방향을 디자인 중...";try{let d=await call("generate",{prompt:p,moods,colors:$("colors").value.trim()});themes=d.themes||[];sel=-1;render();$("bottom").style.display="none";$("usage").textContent=`AI 생성권 ${d.used} / ${d.max}회 사용`;note("같은 콘텐츠로 서로 다른 세 가지 디자인을 만들었습니다.")}catch(e){note(e.message,"error")}finally{b.disabled=false;b.textContent="✨ 우리 취향으로 디자인하기"}};
-$("refineBtn").onclick=async()=>{if(sel<0)return;let q=$("refineInput").value.trim();if(q.length<2){note("어떻게 바꾸고 싶은지 짧게 적어주세요.","error");return}let b=$("refineBtn");b.disabled=true;b.textContent="조정 중...";try{let d=await call("refine",{request:q,current:themes[sel]});themes[sel]=d.theme;render();$("usage").textContent=`AI 생성권 ${d.used} / ${d.max}회 사용`;note("선택한 시안을 기준으로 미세조정했습니다.")}catch(e){note(e.message,"error")}finally{b.disabled=false;b.textContent="AI로 미세조정"}};
-$("applyBtn").onclick=async()=>{if(sel<0)return;let b=$("applyBtn");b.disabled=true;b.textContent="적용 중...";try{await call("apply",{design:themes[sel].design});note("디자인을 적용했습니다. 실제 청첩장을 확인해보세요.");if(slug&&!document.getElementById("view")){let a=document.createElement("a");a.id="view";a.className="btn";a.target="_blank";a.href="https://6athome.github.io/Wedding/?slug="+encodeURIComponent(slug);a.textContent="청첩장 확인하기";$("bottom").insertBefore(a,$("bottom").children[1])}}catch(e){note(e.message,"error")}finally{b.disabled=false;b.textContent="이 디자인 적용하기"}};
+const SUPABASE_URL="https://gfpdjxdoxjonramxrlgi.supabase.co";
+const FN=SUPABASE_URL+"/functions/v1/ai-wedding-theme";
+const token=new URLSearchParams(location.search).get("token")||"";
+let themes=[],sel=-1,slug="",preview={};
+const $=id=>document.getElementById(id), esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+function note(t,e=""){let n=$("notice");n.textContent=t;n.className="notice "+e}
+async function call(action,extra={}){let r=await fetch(FN,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action,token,...extra})});let d=await r.json();if(!r.ok)throw new Error(d.error||"요청에 실패했습니다.");return d}
+const bg=[["Ivory","#f3eee3"],["White","#ffffff"],["Butter","#ead9aa"],["Sky","#a9c2d6"],["Blush","#e7c8c5"],["Stone","#c9c0b4"],["Black","#181818"]];
+const ac=[["Burgundy","#6f251d"],["Red","#a8342a"],["Pink","#d67f9b"],["Navy","#24334a"],["Blue","#4f7397"],["Green","#66775b"],["Silver","#aaa9a4"],["Black","#181818"]];
+function chips(id,data,input){let w=$(id);data.forEach(([n,c])=>{let b=document.createElement("button");b.className="swatch";b.innerHTML=`<i class="dot" style="background:${c}"></i>${n}`;b.onclick=()=>{[...w.children].forEach(x=>x.classList.remove("active"));b.classList.add("active");$(input).value=n};w.appendChild(b)})}
+chips("bgSwatches",bg,"background");chips("accentSwatches",ac,"accent");
+function img(i=0){return esc((preview.moment_images||[])[i]||preview.hero_image_url||"")}
+function card(t){let d=t.design||{},bgc=d.background_hex||"#f3eee3",acc=d.accent_hex||"#6f251d",fg=(bgc.toLowerCase()==="#181818"?"#f7f2eb":"#211c18"),p=img(0),p2=img(1)||p;
+if(d.template==="type_image")return `<div class="preview ti" style="--bg:${bgc};--accent:${acc};--fg:${fg}"><div class="save">SAVE THE DATE</div><div class="big">${esc(preview.groom_name||"JUNWOO")}</div><div class="amp">&</div><div class="big">${esc(preview.bride_name||"HAYEON")}</div><div class="photo">${p?`<img src="${p}">`:""}</div><div class="script">we are getting married</div></div>`;
+if(d.template==="letter_photobook")return `<div class="preview lp" style="--bg:${bgc};--accent:${acc};--fg:${fg}"><div class="letter"><div class="flap"></div><div class="card"><b>Save<br>the Date</b><br><span>${esc(preview.groom_name||"GROOM")} & ${esc(preview.bride_name||"BRIDE")}</span></div></div><div class="book"><div>${p?`<img src="${p}">`:""}</div><div>${p2?`<img src="${p2}">`:""}</div></div></div>`;
+return `<div class="preview qe" style="--bg:${bgc};--accent:${acc};--fg:${fg}"><div class="photo">${p?`<img src="${p}">`:""}</div><div class="save">SAVE<br>THE<br>DATE</div><div class="names">${esc(preview.groom_name||"GROOM")}<br>& ${esc(preview.bride_name||"BRIDE")}</div><div class="date">${esc(preview.date_summary||"OUR WEDDING DAY")}</div></div>`}
+function render(){let w=$("themes");w.innerHTML="";themes.forEach((t,i)=>{let a=document.createElement("article");a.className="theme"+(i===sel?" selected":"");a.onclick=()=>{sel=i;render();$("bottom").style.display="block"};a.innerHTML=card(t)+`<div class="theme-info"><strong>${esc(t.name)}</strong><p>${esc(t.subtitle||"")}</p><div class="palette"><i style="background:${esc(t.design.background_hex)}"></i><i style="background:${esc(t.design.accent_hex)}"></i></div></div>`;w.appendChild(a)})}
+$("generateBtn").onclick=async()=>{let p=$("prompt").value.trim(),background=$("background").value.trim(),accent=$("accent").value.trim();if(p.length<10)return note("원하는 분위기를 조금 더 자세히 적어주세요.","error");if(!background)return note("원하는 배경색을 선택하거나 적어주세요.","error");if(!accent)return note("원하는 포인트 색상을 선택하거나 적어주세요.","error");let b=$("generateBtn");b.disabled=true;b.textContent="세 디자인을 스타일링 중...";try{let d=await call("generate",{prompt:p,background,accent});themes=d.themes||[];sel=-1;render();$("bottom").style.display="none";$("usage").textContent=`AI 생성권 ${d.used} / ${d.max}회 사용`;note("같은 취향으로 세 가지 고정 디자인을 스타일링했습니다.")}catch(e){note(e.message,"error")}finally{b.disabled=false;b.textContent="세 디자인 스타일링하기"}};
+$("refineBtn").onclick=async()=>{if(sel<0)return;let q=$("refineInput").value.trim();if(q.length<2)return note("어떻게 바꾸고 싶은지 짧게 적어주세요.","error");let b=$("refineBtn");b.disabled=true;try{let d=await call("refine",{request:q,current:themes[sel]});themes[sel]=d.theme;render();$("usage").textContent=`AI 생성권 ${d.used} / ${d.max}회 사용`;note("선택한 디자인의 스타일만 조정했습니다.")}catch(e){note(e.message,"error")}finally{b.disabled=false}};
+$("applyBtn").onclick=async()=>{if(sel<0)return;let b=$("applyBtn");b.disabled=true;try{await call("apply",{design:themes[sel].design});note("디자인을 적용했습니다.");if(slug&&!$("view")){let a=document.createElement("a");a.id="view";a.className="btn";a.target="_blank";a.href="https://6athome.github.io/Wedding/?slug="+encodeURIComponent(slug);a.textContent="청첩장 확인하기";b.after(a)}}catch(e){note(e.message,"error")}finally{b.disabled=false}};
 (async()=>{if(!token){$("loading").textContent="유효한 디자인 링크가 아닙니다.";return}try{let d=await call("session");slug=d.slug;preview=d.preview||{};$("usage").textContent=`AI 생성권 ${d.used} / ${d.max}회 사용`;$("loading").style.display="none";$("app").style.display="block"}catch(e){$("loading").textContent=e.message}})();
 </script></body></html>
